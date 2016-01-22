@@ -18,16 +18,23 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;
-	
+    OI oi;
+    DriveBase drive;
+    ScalingHook hook;
+	Intake intake;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	intake = new Intake();
+    	hook = new ScalingHook();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
+        oi = new OI();
+        drive = new DriveBase ();
     }
     
 	/**
@@ -64,7 +71,20 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+    	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
+    	if (oi.operator.buttonPressed(Controller.LeftTrigger)) {
+    		hook.lowerHook();
+    	} else if (oi.operator.buttonPressed(Controller.LeftBumper)) {
+    		hook.raiseHook();
+    	} else {
+    		hook.setSpeed(oi.operator.getLeftY());
+    	}
+    	
+    	if (oi.operator.buttonPressed(Controller.Left_X_ABXY)) {
+    		intake.ballIntake();
+    	} else {
+    		intake.ballOutput();
+    	}
     }
     
     /**
