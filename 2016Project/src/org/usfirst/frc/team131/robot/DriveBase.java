@@ -13,12 +13,18 @@ public class DriveBase {
 	Talon middleRight = new Talon (PortConstants.RIGHT_MIDDLE_TALON);
 	Talon backRight = new Talon (PortConstants.RIGHT_BACK_TALON);
 	
-	Encoder rightEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-	Encoder leftEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);	
+	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENDOER_1, PortConstants.RIGHT_ENDOER_2, false, Encoder.EncodingType.k4X);
+	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_1, PortConstants.LEFT_ENCODER_2, false, Encoder.EncodingType.k4X);	
 	
 	double leftDirection = 1.0;
 	double rightDirection = -1.0;
 	
+	public double getRightDistance () {
+		return rightEncoder.getDistance();
+	}
+	public double getLeftDistance () {
+		return leftEncoder.getDistance();
+	}
 	void setSpeed (double leftSpeed, double rightSpeed) {
 		frontLeft.set(leftDirection * leftSpeed);
 		middleLeft.set(leftDirection * leftSpeed);
@@ -44,6 +50,7 @@ public class DriveBase {
 		rightEncoder.setDistancePerPulse(5);
 		rightEncoder.setReverseDirection(true);
 		rightEncoder.setSamplesToAverage(7);
+		
 	}
 
 }

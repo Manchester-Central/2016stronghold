@@ -18,4 +18,10 @@ public class PortConstants {
 	
 	public static final int HOOK_TALON = 10;
 
+	public static final int LEFT_ENCODER_1 = 11;
+	public static final int LEFT_ENCODER_2 = 12;
+
+	public static final int RIGHT_ENDOER_1 = 13;
+	public static final int RIGHT_ENDOER_2 = 14;
+
 }
