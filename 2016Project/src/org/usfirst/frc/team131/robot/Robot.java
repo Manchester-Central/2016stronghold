@@ -72,15 +72,15 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
-    	if (oi.operator.buttonPressed(Controller.LeftTrigger)) {
+    	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
     		hook.lowerHook();
-    	} else if (oi.operator.buttonPressed(Controller.LeftBumper)) {
+    	} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
     		hook.raiseHook();
     	} else {
     		hook.setSpeed(oi.operator.getLeftY());
     	}
     	
-    	if (oi.operator.buttonPressed(Controller.Left_X_ABXY)) {
+    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
     		intake.ballIntake();
     	} else {
     		intake.ballOutput();
