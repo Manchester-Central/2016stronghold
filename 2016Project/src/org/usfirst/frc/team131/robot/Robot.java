@@ -21,13 +21,19 @@ public class Robot extends IterativeRobot {
     OI oi;
     DriveBase drive;
     ScalingHook hook;
-	Intake intake;
+	IntakeShooter intakeShooter;
+	BallCenterMechanism center;
+	ChaosPot chaosPot;
+	ShoulderArm arm;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	intake = new Intake();
+    	arm = new ShoulderArm();
+    	chaosPot = new ChaosPot ();
+    	center = new BallCenterMechanism();
+    	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
@@ -80,10 +86,25 @@ public class Robot extends IterativeRobot {
     		hook.setSpeed(oi.operator.getLeftY());
     	}
     	
-    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
-    		intake.ballIntake();
+    	if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
+    		intakeShooter.ballIntake();
+    	} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
+    		intakeShooter.ballShoot();
     	} else {
-    		intake.ballOutput();
+    		intakeShooter.intakeShooterManual(oi.operator.getLeftX());
+    	}
+    	
+    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
+    		center.ballCenter();
+    	} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
+    		center.ballreversal();
+    	}
+    	if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)){
+    		arm.shoulderManual(arm.UP_SPEED);
+    	} else if (oi.operator.buttonPressed(Controller.RIGHT_TRIGGER)) {
+    		arm.shoulderManual(arm.DOWN_SPEED);
+    	} else {
+    		arm.presetAngle(oi.operator.getDPad());
     	}
     }
     

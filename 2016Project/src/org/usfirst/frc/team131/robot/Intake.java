@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Talon;
 public class Intake {
 	private static final double OUTPUT_SPEED = -0.5;
 	private static final double INTAKE_SPEED = 1.0;
-	private Talon intakeTalon = new Talon(PortConstants.INTAKE_TALON);
+	private Talon intakeTalon = new Talon(PortConstants.INTAKE_SHOOTER_TALON);
 	public void ballIntake () {
 		intakeTalon.set(INTAKE_SPEED);
 		
