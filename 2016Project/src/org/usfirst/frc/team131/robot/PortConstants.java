@@ -23,5 +23,9 @@ public class PortConstants {
 
 	public static final int RIGHT_ENDOER_1 = 13;
 	public static final int RIGHT_ENDOER_2 = 14;
+	
+	public static final int RANGEFINDER = 15;
+	
+	public static final int COMPASS = 16;
 
 }
