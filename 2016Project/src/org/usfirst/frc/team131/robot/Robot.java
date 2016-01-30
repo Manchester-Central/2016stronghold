@@ -45,7 +45,15 @@ public class Robot extends IterativeRobot {
         // all smart dashboard information should go into the periodics
         SmartDashboard.putNumber("Arm Pot", arm.getAngle());
         SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        
+        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
+        SmartDashboard.putBoolean("Fly wheel up to speed", false);
+        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
+        SmartDashboard.putNumber("current position", 175.5);
+        // inital dashboard constants
+        SmartDashboard.putNumber ("First Position", ShoulderArm.FIRST_POSITION);
+        SmartDashboard.putNumber("Second Position", ShoulderArm.SECOND_POSITION);
+        SmartDashboard.putNumber("Third Position", ShoulderArm.THIRD_POSITION);
+        SmartDashboard.putNumber("Fourth Position", ShoulderArm.FOURTH_POSITION);
 
     }
     
@@ -71,8 +79,12 @@ public class Robot extends IterativeRobot {
     	
     	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
     	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        
-    	switch(autoSelected) {
+        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
+        SmartDashboard.putBoolean("Fly wheel up to speed", false);
+        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
+        SmartDashboard.putNumber("current position", 175.5);
+    	
+        switch(autoSelected) {
     	case customAuto:
         //Put custom auto code here   
             break;
@@ -90,8 +102,12 @@ public class Robot extends IterativeRobot {
     	
     	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
     	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        
-    	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
+        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
+        SmartDashboard.putBoolean("Fly wheel up to speed", false);
+        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
+        SmartDashboard.putNumber("current position", 175.5);
+    	
+        drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
     		hook.lowerHook();
     	} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
