@@ -31,7 +31,6 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	arm = new ShoulderArm();
-    	chaosPot = new ChaosPot ();
     	center = new BallCenterMechanism();
     	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
@@ -41,7 +40,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
-        SmartDashboard.putNumber("Arm Pot", chaosPot.getAngle());
+        SmartDashboard.putNumber("Arm Pot", arm.getAngle());
         SmartDashboard.putNumber("Drive Speed", drive.getRightDistance());
         
         oi = new OI();
