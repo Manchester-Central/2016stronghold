@@ -29,5 +29,5 @@ public class PortConstants {
 	public static final int COMPASS = 16;
 	
 	public static final int GYRO = 17;
-
+	public static final int ARM_POT	 = 0;
 }
