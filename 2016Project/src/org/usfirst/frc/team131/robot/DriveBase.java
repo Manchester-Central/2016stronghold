@@ -16,7 +16,7 @@ public class DriveBase {
 	Talon middleRight = new Talon (PortConstants.RIGHT_MIDDLE_TALON);
 	Talon backRight = new Talon (PortConstants.RIGHT_BACK_TALON);
 	
-	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENDOER_1, PortConstants.RIGHT_ENDOER_2, false, Encoder.EncodingType.k4X);
+	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_1, PortConstants.RIGHT_ENCODER_2, false, Encoder.EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_1, PortConstants.LEFT_ENCODER_2, false, Encoder.EncodingType.k4X);	
 	
 	double leftDirection = 1.0;
