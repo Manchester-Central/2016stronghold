@@ -35,10 +35,15 @@ public class Robot extends IterativeRobot {
     	center = new BallCenterMechanism();
     	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
+    	
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
+        
+        SmartDashboard.putNumber("Arm Pot", chaosPot.getAngle());
+        SmartDashboard.putNumber("Drive Speed", drive.getRightDistance());
+        
         oi = new OI();
         drive = new DriveBase ();
     }
