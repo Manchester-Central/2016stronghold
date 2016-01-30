@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
         
         // all smart dashboard information should go into the periodics
         SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-        SmartDashboard.putNumber("Drive Speed", drive.getRightDistance());
+        SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
         
 
     }
@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	
     	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-        SmartDashboard.putNumber("Drive Speed", drive.getRightDistance());
+    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
         
     	switch(autoSelected) {
     	case customAuto:
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	
     	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-        SmartDashboard.putNumber("Drive Speed", drive.getRightDistance());
+    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
         
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {

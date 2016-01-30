@@ -22,6 +22,9 @@ public class ShoulderArm {
 		rightShoulderTalon.set(speed);
 		leftShoulderTalon.set(speed);
 	}
+	public double getTestShoulderSpeed () {
+		return modifier.adjustSpeed(pot.getAngle(), UPPER_MIDDLE, UP_SPEED);
+	}
 	public void presetAngle (Controller.DPadDirection direction) {
 		double speed = 0;
 		switch(direction) {
