@@ -14,6 +14,10 @@ public class ShoulderArm {
 	private Talon rightShoulderTalon = new Talon(PortConstants.RIGHT_SHOULDER_TALON);
 	public final double DOWN_SPEED = 1.0;
 	public final double UP_SPEED = -1.0;
+	
+	public double getAngle () {
+		return pot.getAngle();
+	}
 	public void shoulderManual (double speed) {
 		rightShoulderTalon.set(speed);
 		leftShoulderTalon.set(speed);
