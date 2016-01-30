@@ -24,10 +24,10 @@ public class PortConstants {
 	public static final int RIGHT_ENDOER_1 = 13;
 	public static final int RIGHT_ENDOER_2 = 14;
 	
-	public static final int RANGEFINDER = 15;
+	public static final int RANGEFINDER = 3;
 	
-	public static final int COMPASS = 16;
+	public static final int COMPASS = 2;
 	
-	public static final int GYRO = 17;
-
+	public static final int GYRO = 1;
+	public static final int ARM_POT	 = 0;
 }

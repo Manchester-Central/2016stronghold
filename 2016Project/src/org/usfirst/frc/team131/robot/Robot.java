@@ -30,8 +30,10 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        oi = new OI();
+        drive = new DriveBase ();
+        
     	arm = new ShoulderArm();
-    	chaosPot = new ChaosPot ();
     	center = new BallCenterMechanism();
     	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
@@ -39,8 +41,12 @@ public class Robot extends IterativeRobot {
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
-        oi = new OI();
-        drive = new DriveBase ();
+        
+        // all smart dashboard information should go into the periodics
+        SmartDashboard.putNumber("Arm Pot", arm.getAngle());
+        SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+        
+
     }
     
 	/**
@@ -62,6 +68,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	
+    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
+    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+        
     	switch(autoSelected) {
     	case customAuto:
         //Put custom auto code here   
@@ -77,6 +87,10 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
+    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
+    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+        
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
     		hook.lowerHook();

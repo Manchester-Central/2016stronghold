@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 public class ChaosPot {
 	//pot = new AnalogPotentiometer(0, 360, 30);
-	AnalogInput ai = new AnalogInput(1);
-	AnalogPotentiometer pot = new AnalogPotentiometer(ai, 360, 30);
+	AnalogInput ai = new AnalogInput(PortConstants.ARM_POT);
+	AnalogPotentiometer pot = new AnalogPotentiometer(ai, 3600, 0);
 	
 	public double getAngle(){
-		return pot.get() * 360;
+		return pot.get();
 	}
 	
     
