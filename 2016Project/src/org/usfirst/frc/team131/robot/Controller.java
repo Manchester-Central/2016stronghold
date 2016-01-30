@@ -22,6 +22,10 @@ public class Controller {
 		RIGHT,
 		UP,
 		DOWN,
+		UP_RIGHT,
+		DOWN_RIGHT,
+		UP_LEFT,
+		DOWN_LEFT,
 		NONE
 	}
 	
@@ -48,9 +52,21 @@ public class Controller {
 		double x = stick.getRawAxis(4);
 		double y = stick.getRawAxis(5);
 		if (x >= 0.5) {
+			if (y >= 0.5) {
+				return DPadDirection.UP_RIGHT;
+			}
+			if (y <= -0.5) {
+				return DPadDirection.DOWN_RIGHT;
+			}
 			return DPadDirection.RIGHT;
 		}
 		if (x <= -0.5) {
+			if (y >= 0.5) {
+				return DPadDirection.UP_LEFT;
+			}
+			if (y <= -0.5) {
+				return DPadDirection.DOWN_LEFT;
+			}
 			return DPadDirection.LEFT;
 		}
 		if (y >= 0.5) {
