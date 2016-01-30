@@ -2,7 +2,6 @@
 package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -124,6 +123,9 @@ public class Robot extends IterativeRobot {
     		arm.shoulderManual(arm.DOWN_SPEED);
     	} else {
     		arm.presetAngle(oi.operator.getDPad());
+    	}
+    	if (oi.operator.buttonPressed(Controller.START_BUTTON)){
+    		center.readyShot();
     	}
     }
     
