@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	BallCenterMechanism center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
     	center = new BallCenterMechanism();
     	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
+    
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
@@ -45,6 +47,7 @@ public class Robot extends IterativeRobot {
         // all smart dashboard information should go into the periodics
         SmartDashboard.putNumber("Arm Pot", arm.getAngle());
         SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+
         
 
     }
@@ -90,6 +93,8 @@ public class Robot extends IterativeRobot {
     	
     	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
     	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+
+     
         
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
