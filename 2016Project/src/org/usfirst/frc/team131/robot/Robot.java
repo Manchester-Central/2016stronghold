@@ -107,7 +107,7 @@ public class Robot extends IterativeRobot {
     	if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
     		intakeShooter.ballIntake();
     	} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
-    		intakeShooter.ballShoot();
+    		intakeShooter.ballShoot1();
     	} else {
     		intakeShooter.intakeShooterManual(oi.operator.getLeftX());
     	}
@@ -127,6 +127,17 @@ public class Robot extends IterativeRobot {
     	if (oi.operator.buttonPressed(Controller.START_BUTTON)){
     		center.readyShot();
     	}
+    	
+    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)){
+    		intakeShooter.ballShoot1();
+    	}
+    	else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)){
+    		intakeShooter.ballShoot2();
+    	}
+    	else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)){
+    		intakeShooter.ballIntake();
+    	}
+    
     }
     
     /**

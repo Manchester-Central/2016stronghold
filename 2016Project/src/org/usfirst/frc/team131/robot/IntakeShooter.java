@@ -8,15 +8,20 @@ public class IntakeShooter {
 	
 	private static final double SHOOTER_RANGE = 5.0;
 	
-	private static final double OUTPUT_SPEED = 1.0; 
+	
+	private static final double OUTPUT_SPEED_1 = 1.0; 
+	private static final double OUTPUT_SPEED_2 = 2.0;
 	private static final double INTAKE_SPEED = -0.5;
 	private Talon intakeShooterTalon = new Talon(PortConstants.INTAKE_SHOOTER_TALON);
 	public void ballIntake () {
 	
 		intakeShooterTalon.set(INTAKE_SPEED);
 	}
-	public void ballShoot ()  {
-		intakeShooterTalon.set(OUTPUT_SPEED);
+	public void ballShoot1 ()  {
+		intakeShooterTalon.set(OUTPUT_SPEED_1);
+	}
+	public void ballShoot2 (){
+		intakeShooterTalon.set(OUTPUT_SPEED_2);
 	}
 	public void intakeShooterManual (double speed) {
 		intakeShooterTalon.set(speed);
