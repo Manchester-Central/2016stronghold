@@ -25,6 +25,7 @@ public class Robot extends IterativeRobot {
 	BallCenterMechanism center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
+	ChaosDashboard ui;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -42,18 +43,7 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
-        // all smart dashboard information should go into the periodics
-        SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-        SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
-        SmartDashboard.putBoolean("Fly wheel up to speed", false);
-        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
-        SmartDashboard.putNumber("current position", 175.5);
-        // inital dashboard constants
-        SmartDashboard.putNumber ("First Position", ShoulderArm.FIRST_POSITION);
-        SmartDashboard.putNumber("Second Position", ShoulderArm.SECOND_POSITION);
-        SmartDashboard.putNumber("Third Position", ShoulderArm.THIRD_POSITION);
-        SmartDashboard.putNumber("Fourth Position", ShoulderArm.FOURTH_POSITION);
+        ui.throwInformationOnDashboard(arm);
 
     }
     
@@ -77,12 +67,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	
-    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
-        SmartDashboard.putBoolean("Fly wheel up to speed", false);
-        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
-        SmartDashboard.putNumber("current position", 175.5);
+    	//ui
+    	ui.throwInformationOnDashboard(arm);
     	
         switch(autoSelected) {
     	case customAuto:
@@ -100,12 +86,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        SmartDashboard.putNumber("current flywheel angular velocity", 6.01);
-        SmartDashboard.putBoolean("Fly wheel up to speed", false);
-        SmartDashboard.putNumber("setpoint", ShoulderArm.THIRD_POSITION);
-        SmartDashboard.putNumber("current position", 175.5);
+    	//ui
+    	ui.throwInformationOnDashboard(arm);
     	
         drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {

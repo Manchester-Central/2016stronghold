@@ -2,7 +2,7 @@ package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Talon;
 
-public class ShoulderArm {
+public class ShoulderArm implements ArmInfo {
 	
 	public static final double FIRST_POSITION = 0.0;
 	public static final double SECOND_POSITION = 90.0;
