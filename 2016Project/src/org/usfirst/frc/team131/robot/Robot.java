@@ -2,7 +2,6 @@
 package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,6 +25,7 @@ public class Robot extends IterativeRobot {
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -38,12 +38,15 @@ public class Robot extends IterativeRobot {
     	center = new BallCenterMechanism();
     	intakeShooter = new IntakeShooter();
     	hook = new ScalingHook();
+    
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", defaultAuto);
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
+
         ui.throwInformationOnDashboard(arm);
+
 
     }
     
@@ -88,8 +91,8 @@ public class Robot extends IterativeRobot {
     	
     	//ui
     	ui.throwInformationOnDashboard(arm);
-    	
-        drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
+    
+    	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
     		hook.lowerHook();
     	} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
@@ -101,7 +104,7 @@ public class Robot extends IterativeRobot {
     	if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
     		intakeShooter.ballIntake();
     	} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
-    		intakeShooter.ballShoot();
+    		intakeShooter.ballShoot1();
     	} else {
     		intakeShooter.intakeShooterManual(oi.operator.getLeftX());
     	}
@@ -118,6 +121,20 @@ public class Robot extends IterativeRobot {
     	} else {
     		arm.presetAngle(oi.operator.getDPad());
     	}
+    	if (oi.operator.buttonPressed(Controller.START_BUTTON)){
+    		center.readyShot();
+    	}
+    	
+    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)){
+    		intakeShooter.ballShoot1();
+    	}
+    	else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)){
+    		intakeShooter.ballShoot2();
+    	}
+    	else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)){
+    		intakeShooter.ballIntake();
+    	}
+    
     }
     
     /**

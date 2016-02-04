@@ -13,9 +13,10 @@ public class Controller {
 	public static final int START_BUTTON = 10;
 	
 	public static final int LEFT_X_ABXY = 1;
+	public static final int DOWN_A_ABXY = 2;
 	public static final int RIGHT_B_ABXY = 3;
 	public static final int UP_Y_ABXY = 4;
-	public static final int DOWN_A_ABXY = 2;
+	
 	
 	public enum DPadDirection {
 		LEFT,

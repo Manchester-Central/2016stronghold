@@ -1,22 +1,22 @@
 package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Victor;
 
 
 public class DriveBase {
-	public static final double ENCODER_PULSES_PER_REVOLUTION = 250.0;
+	public static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
 	public static final double ENCODER_GEAR_RATIO = 1.0;
 	
-	Talon frontLeft = new Talon(PortConstants.LEFT_FRONT_TALON);
-	Talon middleLeft = new Talon (PortConstants.LEFT_MIDDLE_TALON);
-	Talon backLeft = new Talon (PortConstants.LEFT_BACK_TALON);
+	Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR);
+	Victor middleLeft = new Victor (PortConstants.LEFT_MIDDLE_VICTOR);
+	Victor backLeft = new Victor (PortConstants.LEFT_BACK_VICTOR);
 	
-	Talon frontRight = new Talon (PortConstants.RIGHT_FRONT_TALON);
-	Talon middleRight = new Talon (PortConstants.RIGHT_MIDDLE_TALON);
-	Talon backRight = new Talon (PortConstants.RIGHT_BACK_TALON);
+	Victor frontRight = new Victor (PortConstants.RIGHT_FRONT_VICTOR);
+	Victor middleRight = new Victor (PortConstants.RIGHT_MIDDLE_VICTOR);
+	Victor backRight = new Victor (PortConstants.RIGHT_BACK_VICTOR);
 	
-	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENDOER_1, PortConstants.RIGHT_ENDOER_2, false, Encoder.EncodingType.k4X);
+	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_1, PortConstants.RIGHT_ENCODER_2, false, Encoder.EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_1, PortConstants.LEFT_ENCODER_2, false, Encoder.EncodingType.k4X);	
 	
 	double leftDirection = 1.0;
