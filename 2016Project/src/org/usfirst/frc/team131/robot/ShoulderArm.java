@@ -60,4 +60,9 @@ public class ShoulderArm implements ArmInfo {
 			break;
 		}
 	}
+	@Override
+	public double getAngleSetpoint() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

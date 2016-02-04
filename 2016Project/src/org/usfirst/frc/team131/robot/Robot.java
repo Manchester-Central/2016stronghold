@@ -45,7 +45,9 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto choices", chooser);
         
 
-        ui.throwInformationOnDashboard(arm);
+        ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
 
 
     }
@@ -71,7 +73,9 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	
     	//ui
-    	ui.throwInformationOnDashboard(arm);
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
     	
         switch(autoSelected) {
     	case customAuto:
@@ -90,7 +94,9 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	
     	//ui
-    	ui.throwInformationOnDashboard(arm);
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
     
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
