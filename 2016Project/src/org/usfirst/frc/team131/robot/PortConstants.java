@@ -25,7 +25,7 @@ public class PortConstants {
 	public static final int RIGHT_ENCODER_2 = 14;
 	
 	public static final int SHOOTER_ENCODER_1 = 15;
-	public static final int SHOOTER_ENCODER_2 = 16;	
+	public static final int SHOOTER_ENCODER_2 = 16;
 	
 	public static final int HOLDING_SENSOR_PORT = 17;
 	

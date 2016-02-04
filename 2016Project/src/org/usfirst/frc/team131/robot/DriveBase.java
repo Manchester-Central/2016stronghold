@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Victor;
 
 
 public class DriveBase {
-	public static final double ENCODER_PULSES_PER_REVOLUTION = 250.0;
+	public static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
 	public static final double ENCODER_GEAR_RATIO = 1.0;
 	
 	Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR);
