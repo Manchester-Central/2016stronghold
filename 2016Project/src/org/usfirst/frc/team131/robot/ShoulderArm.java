@@ -2,15 +2,19 @@ package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Talon;
 
-public class ShoulderArm {
+
+public class ShoulderArm implements ArmInfo {
 	private double goalAngle = -1;
 	private double angleChange = 5;
+	
+	public static final double FIRST_POSITION = 0.0;
+	public static final double SECOND_POSITION = 90.0;
+	public static final double THIRD_POSITION = 180.0;
+	public static final double FOURTH_POSITION = 270.0;
+	
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
-	private final double TOP = 90;
-	private final double BOTTOM = 0;
-	private final double UPPER_MIDDLE = 60;
-	private final double LOWER_MIDDLE = 30;
+
 
 	private Talon leftShoulderTalon = new Talon(PortConstants.LEFT_SHOULDER_TALON);
 	private Talon rightShoulderTalon = new Talon(PortConstants.RIGHT_SHOULDER_TALON);
@@ -31,7 +35,7 @@ public class ShoulderArm {
 	}
 
 	public double getTestShoulderSpeed() {
-		return modifier.adjustSpeed(pot.getAngle(), UPPER_MIDDLE, UP_SPEED);
+		return modifier.adjustSpeed(pot.getAngle(), SECOND_POSITION, UP_SPEED);
 	}
 
 	public void presetAngle(Controller.DPadDirection direction) {
@@ -42,26 +46,26 @@ public class ShoulderArm {
 			// UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("right");
-			goalAngle = UPPER_MIDDLE;
+			goalAngle = FOURTH_POSITION;
 			break;
 		case LEFT:
 			// speed = modifier.adjustSpeed(pot.getAngle(), LOWER_MIDDLE,
 			// DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("left");
-			goalAngle = LOWER_MIDDLE;
+			goalAngle = SECOND_POSITION;
 			break;
 		case UP:
 			// speed = modifier.adjustSpeed(pot.getAngle(), TOP, UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("up");
-			goalAngle = TOP;
+			goalAngle = THIRD_POSITION;
 			break;
 		case DOWN:
 			// speed = modifier.adjustSpeed(pot.getAngle(), BOTTOM, DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("down");
-			goalAngle = BOTTOM;
+			goalAngle = FIRST_POSITION;
 			break;
 		default:
 			// shoulderManual (speed);
@@ -88,5 +92,10 @@ public class ShoulderArm {
 	private void setShoulderSpeed(double speed) {
 		leftShoulderTalon.set(speed);
 		rightShoulderTalon.set(speed);
+	}
+	@Override
+	public double getAngleSetpoint() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

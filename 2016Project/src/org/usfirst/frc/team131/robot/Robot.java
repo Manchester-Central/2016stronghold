@@ -24,30 +24,36 @@ public class Robot extends IterativeRobot {
 	BallCenterMechanism center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
+	ChaosDashboard ui;
 
-	/**
-	 * This function is run when the robot is first started up and should be
-	 * used for any initialization code.
-	 */
-	public void robotInit() {
-		oi = new OI();
-		drive = new DriveBase();
 
-		arm = new ShoulderArm();
-		center = new BallCenterMechanism();
-		intakeShooter = new IntakeShooter();
-		hook = new ScalingHook();
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
+    public void robotInit() {
+        oi = new OI();
+        drive = new DriveBase ();
+        
+    	arm = new ShoulderArm();
+    	center = new BallCenterMechanism();
+    	intakeShooter = new IntakeShooter();
+    	hook = new ScalingHook();
+    
+        chooser = new SendableChooser();
+        chooser.addDefault("Default Auto", defaultAuto);
+        chooser.addObject("My Auto", customAuto);
+        SmartDashboard.putData("Auto choices", chooser);
+        
 
-		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
+        ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
 
-		// all smart dashboard information should go into the periodics
-		SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-		SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
 
-	}
+    }
+    
+
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -66,33 +72,35 @@ public class Robot extends IterativeRobot {
 		// defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
-
 	/**
-	 * This function is called periodically during autonomous
-	 */
-	public void autonomousPeriodic() {
-
-		SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-		SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-
-		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
-		default:
-			// Put default auto code here
-			break;
-		}
-	}
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+    	
+    	//ui
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
+    	
+        switch(autoSelected) {
+    	case customAuto:
+        //Put custom auto code here   
+            break;
+    	case defaultAuto:
+    	default:
+    	//Put default auto code here
+            break;
+    	}
+    }
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-
-		SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-		SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
+    	//ui
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
 
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 		if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
@@ -149,4 +157,6 @@ public class Robot extends IterativeRobot {
 
 	}
 
+
+ 
 }
