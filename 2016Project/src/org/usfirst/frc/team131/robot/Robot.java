@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	BallCenterMechanism center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
+	ChaosDashboard ui;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -43,11 +44,11 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);
         
-        // all smart dashboard information should go into the periodics
-        SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-        SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
 
-        
+        ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
+
 
     }
     
@@ -71,10 +72,12 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	
-    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        
-    	switch(autoSelected) {
+    	//ui
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
+    	
+        switch(autoSelected) {
     	case customAuto:
         //Put custom auto code here   
             break;
@@ -90,11 +93,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	SmartDashboard.putNumber("Arm Pot", arm.getAngle());
-    	SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-
-     
-        
+    	//ui
+    	ui.displayArmPositions();
+        ui.diplayShooter(intakeShooter);
+        ui.displayArm(arm);
+    
     	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
     	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
     		hook.lowerHook();
