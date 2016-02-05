@@ -14,18 +14,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    final String defaultAuto = "Default";
-    final String customAuto = "My Auto";
-    String autoSelected;
-    SendableChooser chooser;
-    OI oi;
-    DriveBase drive;
-    ScalingHook hook;
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
+	SendableChooser chooser;
+	OI oi;
+	DriveBase drive;
+	ScalingHook hook;
 	IntakeShooter intakeShooter;
 	BallCenterMechanism center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -54,22 +55,26 @@ public class Robot extends IterativeRobot {
 
     }
     
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString line to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
-	 * If using the SendableChooser make sure to add them to the chooser code above as well.
-	 */
-    public void autonomousInit() {
-    	autoSelected = (String) chooser.getSelected();
-//		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
-		System.out.println("Auto selected: " + autoSelected);
-    }
 
-    /**
+
+	/**
+	 * This autonomous (along with the chooser code above) shows how to select
+	 * between different autonomous modes using the dashboard. The sendable
+	 * chooser code works with the Java SmartDashboard. If you prefer the
+	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
+	 * getString line to get the auto name from the text box below the Gyro
+	 *
+	 * You can add additional auto modes by adding additional comparisons to the
+	 * switch structure below with additional strings. If using the
+	 * SendableChooser make sure to add them to the chooser code above as well.
+	 */
+	public void autonomousInit() {
+		autoSelected = (String) chooser.getSelected();
+		// autoSelected = SmartDashboard.getString("Auto Selector",
+		// defaultAuto);
+		System.out.println("Auto selected: " + autoSelected);
+	}
+	/**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
@@ -90,66 +95,70 @@ public class Robot extends IterativeRobot {
     	}
     }
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-    	
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
     	//ui
     	ui.displayArmPositions();
         ui.diplayShooter(intakeShooter);
         ui.displayArm(arm);
-    
-    	drive.setSpeed(oi.driver.getLeftY(),oi.driver.getRightY() );
-    	if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
-    		hook.lowerHook();
-    	} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
-    		hook.raiseHook();
-    	} else {
-    		hook.setSpeed(oi.operator.getLeftY());
-    	}
-    	
-    	if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
-    		intakeShooter.ballIntake();
-    	} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
-    		intakeShooter.ballShoot1();
-    	} else {
-    		intakeShooter.intakeShooterManual(oi.operator.getLeftX());
-    	}
-    	
-    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
-    		center.ballCenter();
-    	} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
-    		center.ballreversal();
-    	}
-    	if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)){
-    		arm.shoulderManual(arm.UP_SPEED);
-    	} else if (oi.operator.buttonPressed(Controller.RIGHT_TRIGGER)) {
-    		arm.shoulderManual(arm.DOWN_SPEED);
-    	} else {
-    		arm.presetAngle(oi.operator.getDPad());
-    	}
-    	if (oi.operator.buttonPressed(Controller.START_BUTTON)){
-    		center.readyShot();
-    	}
-    	
-    	if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)){
-    		intakeShooter.ballShoot1();
-    	}
-    	else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)){
-    		intakeShooter.ballShoot2();
-    	}
-    	else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)){
-    		intakeShooter.ballIntake();
-    	}
-    
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-    
-    }
-    
+
+		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
+		if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
+			hook.lowerHook();
+		} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
+			hook.raiseHook();
+		} else {
+			hook.setSpeed(oi.operator.getLeftY());
+		}
+
+//		if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
+//			intakeShooter.ballIntake();
+//		} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
+//			intakeShooter.ballShoot1();
+//		} else {
+//			intakeShooter.intakeShooterManual(oi.operator.getLeftX());
+//		}
+
+		if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
+			center.ballCenter();
+//		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
+//			center.ballreversal();
+		}
+		
+		if (oi.operator.buttonPressed(Controller.SELECT_BUTTON)) {
+			arm.stopShoulderArm();
+		} else if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)) {
+			arm.shoulderManualAngle(true);
+		} else if (oi.operator.buttonPressed(Controller.RIGHT_TRIGGER)) {
+			arm.shoulderManualAngle(false);
+		} else {
+			arm.presetAngle(oi.operator.getDPad());
+		}
+		arm.moveToAngle();
+
+		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
+			center.readyShot();
+		}
+
+		if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
+			intakeShooter.ballShoot1();
+		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
+			intakeShooter.ballShoot2();
+		} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
+			intakeShooter.ballIntake();
+		}
+
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+
+	}
+
+
+ 
 }

@@ -78,4 +78,25 @@ public class Controller {
 		}
 		return DPadDirection.NONE;
 	}
+	/*Driver:
+	 * Joysticks Left and Right = Drive
+	 * 
+	 * Bumper/Trigger = Blink Red
+	 * 
+	 * 
+	 * Operator:
+	 * D-Pad = preset Arm Angles
+	 * Right Bumper/Trigger = Manually Move Arm
+	 * Select Button(9) = Stop Arm
+	 * 
+	 * Left Bumper/Trigger = Raise/Lower Hook
+	 *
+	 * Start Button(10) = Shoot
+	 *
+	 * "X,Y,B Button(1,4,3)" = Set Fly Wheel Speed
+	 * 
+	 *  A Button (2) = Center Ball (bring in)
+	 *  
+	 *  subject to change
+	 */
 }
