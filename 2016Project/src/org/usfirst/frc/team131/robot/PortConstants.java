@@ -29,6 +29,9 @@ public class PortConstants {
 	
 	public static final int HOLDING_SENSOR_PORT = 17;
 	
+	// kReverse is blue, kForward is red (relay is its own port)
+	public static final int RELAY_PORT = 0;
+	
 	public static final int RANGEFINDER = 3;
 	
 	public static final int COMPASS = 2;
