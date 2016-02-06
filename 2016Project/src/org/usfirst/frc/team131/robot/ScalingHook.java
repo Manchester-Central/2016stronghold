@@ -7,8 +7,11 @@ public class ScalingHook {
 	Talon climbingTalon = new Talon(PortConstants.CLIMBING_TALON);
 	final double HOOK_MOVING_SPEED = 1.0;
 	final double CLIMBING_SPEED = 1.0;
-	public void setSpeed (double speed) {
+	public void setHookSpeed (double speed) {
 		hookTalon.set(speed);
+	}
+	public void setClimbSpeed (double speed) {
+		climbingTalon.set(speed);
 	}
 	public void lowerHook() {
 		hookTalon.set(-HOOK_MOVING_SPEED);

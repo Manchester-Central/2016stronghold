@@ -28,35 +28,30 @@ public class Robot extends IterativeRobot {
 	ChaosDashboard ui;
 	LEDController LED;
 
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	public void robotInit() {
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-    	
-        oi = new OI();
-        drive = new DriveBase ();
-        
-    	arm = new ShoulderArm();
-    	center = new BallCenterMechanism();
-    	intakeShooter = new IntakeShooter();
-    	hook = new ScalingHook();
-    
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", defaultAuto);
-        chooser.addObject("My Auto", customAuto);
-        SmartDashboard.putData("Auto choices", chooser);
-        
+		oi = new OI();
+		drive = new DriveBase();
 
-        ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter, center);
-        ui.displayArm(arm);
+		arm = new ShoulderArm();
+		center = new BallCenterMechanism();
+		intakeShooter = new IntakeShooter();
+		hook = new ScalingHook();
 
+		chooser = new SendableChooser();
+		chooser.addDefault("Default Auto", defaultAuto);
+		chooser.addObject("My Auto", customAuto);
+		SmartDashboard.putData("Auto choices", chooser);
 
-    }
-    
+		ui.displayArmPositions();
+		ui.diplayShooter(intakeShooter, center);
+		ui.displayArm(arm);
 
+	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -75,69 +70,79 @@ public class Robot extends IterativeRobot {
 		// defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
+
 	/**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-    	
-    	//ui
-    	ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter, center);
-        ui.displayArm(arm);
-    	
-        switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
-            break;
-    	case defaultAuto:
-    	default:
-    	//Put default auto code here
-            break;
-    	}
-    }
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+
+		// ui display
+		ui.displayArmPositions();
+		ui.diplayShooter(intakeShooter, center);
+		ui.displayArm(arm);
+
+		switch (autoSelected) {
+		case customAuto:
+			// Put custom auto code here
+			break;
+		case defaultAuto:
+		default:
+			// Put default auto code here
+			break;
+		}
+	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-    	//ui
-    	ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter, center);
-        ui.displayArm(arm);
-        
-        if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
-        	LED.turnAlarmOn();
-        }
-        
-        if (center.isBallInSensor()) {
-        	LED.setBlue(false);
-        } else {
-        	LED.setBlue(true);
-        }
-        
+
+		// ui display
+		ui.displayArmPositions();
+		ui.diplayShooter(intakeShooter, center);
+		ui.displayArm(arm);
+
+		// ball sensor lights
+		if (center.isBallInSensor()) {
+			LED.setBlue(false);
+		} else {
+			LED.setBlue(true);
+		}
+
+		// Alarm button (driver)
+		if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
+			LED.turnAlarmOn();
+		}
+
+		// Drive (driver)
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
-		if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
+
+		// Raise/lower hook (driver)
+		if (oi.driver.buttonPressed(Controller.LEFT_TRIGGER)) {
 			hook.lowerHook();
-		} else if (oi.operator.buttonPressed(Controller.LEFT_BUMPER)) {
+		} else if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
 			hook.raiseHook();
 		} else {
-			hook.setSpeed(oi.operator.getLeftY());
+			hook.setHookSpeed(0);
 		}
 
-//		if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
-//			intakeShooter.ballIntake();
-//		} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
-//			intakeShooter.ballShoot1();
-//		} else {
-//			intakeShooter.intakeShooterManual(oi.operator.getLeftX());
-//		}
+		// Climb/descend (driver)
+		if (oi.driver.buttonPressed(Controller.DOWN_A_ABXY)) {
+			hook.climbTower();
+		} else if (oi.driver.buttonPressed(Controller.RIGHT_B_ABXY)) {
+			hook.descendTower();
+		} else {
+			hook.setClimbSpeed(0);
+		}
 
-		if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
-			center.ballCenter();
-//		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
-//			center.ballreversal();
+		// Ball centering/Shoot (operator)
+		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
+			center.readyShot();
+		} else {
+			center.ballCenter();;
 		}
 		
+		// Shoulder arm movement (operator)
 		if (oi.operator.buttonPressed(Controller.SELECT_BUTTON)) {
 			arm.stopShoulderArm();
 		} else if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)) {
@@ -149,10 +154,7 @@ public class Robot extends IterativeRobot {
 		}
 		arm.moveToAngle();
 
-		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
-			center.readyShot();
-		}
-
+		// Flywheel speed presets (operator)
 		if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
 			intakeShooter.ballShoot1();
 		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
@@ -170,6 +172,4 @@ public class Robot extends IterativeRobot {
 
 	}
 
-
- 
 }
