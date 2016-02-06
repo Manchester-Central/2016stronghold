@@ -1,59 +1,69 @@
 <xml version="1.0">
 <dashboard>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
-		<location x="28" y="13"/>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1085" y="202"/>
+		<width>109</width>
+		<height>34</height>
+		<property name="Text" value="Current Setpoint"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="1077" y="2"/>
+		<width>108</width>
+		<height>39</height>
+		<property name="Text" value="Current Position"/>
 	</static-widget>
 	<widget field="current position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
-		<location x="904" y="139"/>
+		<location x="1005" y="44"/>
 		<property name="Upper Limit" value="180.0"/>
+		<property name="Tick Interval" value="30.0"/>
 	</widget>
 	<widget field="current flywheel angular velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="347" y="109"/>
+		<location x="332" y="12"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="654" y="262"/>
+		<location x="1031" y="368"/>
+		<height>14</height>
 		<property name="Text" value="Low Goal"/>
 	</static-widget>
 	<widget field="setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
-		<location x="629" y="135"/>
+		<location x="1012" y="242"/>
+		<width>250</width>
 		<property name="Upper Limit" value="180.0"/>
+		<property name="Tick Interval" value="30.0"/>
 	</widget>
 	<widget field="Fly wheel up to speed" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="796" y="56"/>
+		<location x="617" y="7"/>
 		<width>149</width>
 		<height>33</height>
 	</widget>
 	<widget field="Second Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="331" y="84"/>
+		<location x="108" y="43"/>
+		<property name="Background" value="204.255.153.255"/>
 	</widget>
 	<widget field="Shoulder Arm Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="331" y="42"/>
+		<location x="392" y="41"/>
 	</widget>
 	<widget field="Third Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="331" y="21"/>
+		<location x="119" y="73"/>
+		<property name="Background" value="204.255.153.255"/>
 	</widget>
 	<widget field="First Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="321" y="0"/>
+		<location x="122" y="12"/>
+		<property name="Background" value="204.255.153.255"/>
 	</widget>
 	<widget field="Fourth Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="379" y="180"/>
+		<location x="112" y="100"/>
+		<property name="Background" value="204.255.153.255"/>
 	</widget>
 	<widget field="Arm Pot" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="339"/>
+		<location x="33" y="345"/>
 	</widget>
 	<widget field="Drive Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="360"/>
+		<location x="12" y="373"/>
 	</widget>
 	<widget field="Auto choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="0" y="272"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
-		<location x="0" y="34"/>
-		<height>237</height>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
-		<location x="0" y="0"/>
-	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="1262" y="2"/>
 		<height>17</height>
@@ -62,6 +72,11 @@
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
 		<location x="1291" y="21"/>
 		<property name="Graphics" value="Simple"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Image">
+		<location x="990" y="-5"/>
+		<width>10</width>
+		<height>420</height>
 	</static-widget>
 </dashboard>
 <live-window>

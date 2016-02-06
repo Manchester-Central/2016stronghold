@@ -2,6 +2,11 @@ package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Talon;
 
+/**
+ * This class represents the mechanism for climbing.
+ * @author Charles
+ *
+ */
 public class ScalingHook {
 	Talon hookTalon = new Talon(PortConstants.HOOK_TALON);
 	Talon climbingTalon = new Talon(PortConstants.CLIMBING_TALON);
@@ -10,6 +15,11 @@ public class ScalingHook {
 	public void setHookSpeed (double speed) {
 		hookTalon.set(speed);
 	}
+	
+	/**
+	 * 
+	 * @param speed
+	 */
 	public void setClimbSpeed (double speed) {
 		climbingTalon.set(speed);
 	}

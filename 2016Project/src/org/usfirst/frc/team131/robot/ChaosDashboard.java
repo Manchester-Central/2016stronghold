@@ -18,22 +18,22 @@ public class ChaosDashboard {
 
 
         // inital dashboard constants
-        SmartDashboard.putNumber ("First Position", ShoulderArm.FIRST_POSITION);
-        SmartDashboard.putNumber("Second Position", ShoulderArm.SECOND_POSITION);
-        SmartDashboard.putNumber("Third Position", ShoulderArm.THIRD_POSITION);
-        SmartDashboard.putNumber("Fourth Position", ShoulderArm.FOURTH_POSITION);
+        SmartDashboard.putNumber ("First Position ", ShoulderArm.FIRST_POSITION);
+        SmartDashboard.putNumber("Second Position ", ShoulderArm.SECOND_POSITION);
+        SmartDashboard.putNumber("Third Position ", ShoulderArm.THIRD_POSITION);
+        SmartDashboard.putNumber("Fourth Position ", ShoulderArm.FOURTH_POSITION);
 	}
 	
 	public void displayArm (ArmInfo arm) {
-        SmartDashboard.putNumber("Arm angle", arm.getAngle());
-        SmartDashboard.putNumber("Shoulder Arm Speed", arm.getTestShoulderSpeed());
-        SmartDashboard.putNumber("setpoint", arm.getAngleSetpoint());
+        SmartDashboard.putNumber("Arm angle ", arm.getAngle());
+        SmartDashboard.putNumber("Shoulder Arm Speed ", arm.getTestShoulderSpeed());
+        SmartDashboard.putNumber("Setpoint ", arm.getAngleSetpoint());
 	}
 	
 	public void diplayShooter (IntakeShooter shooter, BallCenterMechanism center) {
-        SmartDashboard.putNumber("current flywheel angular velocity", shooter.getSpeed());
-        SmartDashboard.putBoolean("Fly wheel up to speed", shooter.checkShooterSpeed(wantedSpeed));
-        SmartDashboard.putBoolean("ball is in position", center.isBallInSensor());
+        SmartDashboard.putNumber(" Current Flywheel Angular Velocity ", shooter.getSpeed());
+        SmartDashboard.putBoolean(" Flywheel Up to Speed ", shooter.checkShooterSpeed(wantedSpeed));
+        SmartDashboard.putBoolean(" Ball is in Position ", center.isBallInSensor());
 	}
 	
 }
