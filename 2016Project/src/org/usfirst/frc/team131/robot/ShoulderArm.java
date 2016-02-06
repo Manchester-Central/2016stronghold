@@ -2,7 +2,11 @@ package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Talon;
 
-
+/**
+ * this is the shoulder arm class, it controls its position and speed
+ * @author Charles
+ *
+ */
 public class ShoulderArm implements ArmInfo {
 	private double goalAngle = -1;
 	private double angleChange = 5;
@@ -23,11 +27,18 @@ public class ShoulderArm implements ArmInfo {
 	private Talon rightShoulderTalon = new Talon(PortConstants.RIGHT_SHOULDER_TALON);
 	public final double DOWN_SPEED = 1.0;
 	public final double UP_SPEED = -1.0;
-
+	
+	/**
+	 * get the angle for shoulder arm
+	 */
 	public double getAngle() {
 		return pot.getAngle();
 	}
 
+	/**
+	 * sees which direction the motor needs to go
+	 * @param isUp (if true, go up; if false, go down)
+	 */
 	public void shoulderManualAngle(boolean isUp) {
 		if (isUp) {
 			goalAngle = Math.min(maxAngle, goalAngle + angleChange);
@@ -36,11 +47,18 @@ public class ShoulderArm implements ArmInfo {
 		}
 
 	}
-
+	
+	/**
+	 * gets the shoulder speed
+	 */
 	public double getTestShoulderSpeed() {
 		return modifier.adjustSpeed(pot.getAngle(), SECOND_POSITION, UP_SPEED);
 	}
 
+	/**
+	 * sets arm to preset angles
+	 * @param direction (goes to angle)
+	 */
 	public void presetAngle(Controller.DPadDirection direction) {
 		// double speed = 0;
 		switch (direction) {
@@ -77,11 +95,17 @@ public class ShoulderArm implements ArmInfo {
 		}
 
 	}
-
+	
+	/**
+	 * stops shoulder arm
+	 */
 	public void stopShoulderArm() {
 		goalAngle = -1;
 	}
-
+	
+	/**
+	 * moves arm to and angle
+	 */
 	public void moveToAngle() {
 		if (goalAngle != -1) {
 			double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, UP_SPEED);
@@ -91,12 +115,20 @@ public class ShoulderArm implements ArmInfo {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * sets shoulder speed
+	 * @param speed (speed)
+	 */
 	private void setShoulderSpeed(double speed) {
 		leftShoulderTalon.set(speed);
 		rightShoulderTalon.set(speed);
 	}
+	
 	@Override
+	/**
+	 * gets the angle setpoint
+	 */
 	public double getAngleSetpoint() {
 		// TODO Auto-generated method stub
 		return 0;

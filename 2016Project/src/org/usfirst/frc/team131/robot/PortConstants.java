@@ -1,5 +1,10 @@
 package org.usfirst.frc.team131.robot;
 
+/**
+ * sets the port numbers for various components
+ * @author Charles
+ *
+ */
 public class PortConstants {
 	public static final int LEFT_FRONT_VICTOR = 0;
 	public static final int LEFT_MIDDLE_VICTOR = 1;

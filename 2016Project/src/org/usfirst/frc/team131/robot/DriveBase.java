@@ -44,8 +44,8 @@ public class DriveBase {
 	
 	/**
 	 * This function sets the speed of the drive
-	 * @param leftSpeed (
-	 * @param rightSpeed
+	 * @param leftSpeed (speed of left motors)
+	 * @param rightSpeed (speed of right motors
 	 */
 	void setSpeed (double leftSpeed, double rightSpeed) {
 		frontLeft.set(leftDirection * leftSpeed);
@@ -55,13 +55,15 @@ public class DriveBase {
 		frontRight.set(rightDirection * rightSpeed);
 		middleRight.set(rightDirection * rightSpeed);
 		backRight.set(rightDirection * rightSpeed);
-		
-		
 	}
+	
+	/**
+	 * This is the constructor for the encoders
+	 */
 	public DriveBase() {
 		// TODO Auto-generated constructor stub
 		double distancePerPulse = ENCODER_GEAR_RATIO / ENCODER_PULSES_PER_REVOLUTION;
-				
+		
 		leftEncoder.setMaxPeriod(0.1);
 		leftEncoder.setDistancePerPulse(distancePerPulse);
 		leftEncoder.setReverseDirection(true);
