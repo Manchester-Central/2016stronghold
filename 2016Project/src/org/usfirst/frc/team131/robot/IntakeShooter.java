@@ -1,9 +1,16 @@
 package org.usfirst.frc.team131.robot;
 
+import javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
 public class IntakeShooter {
+	
+	private double DEAD_BAND = 2.0;
+	private double RATE_TO_POWER = 0.01; // NEED TO CHANGE
+	private double MAX_CORRECTION = 0.1;
+	
 	private Encoder shooterEncoder = new Encoder(PortConstants.SHOOTER_ENCODER_1, PortConstants.SHOOTER_ENCODER_2);
 	
 	private static final double SHOOTER_RANGE = 5.0;
@@ -47,4 +54,24 @@ public class IntakeShooter {
 			return false;
 		}
 	}
+	
+	public void shooterUpToSpeed (float wantedSpeed) {
+		targetSpeed = wantedSpeed;
+		if (shooterEncoder.getRate() >= wantedSpeed - DEAD_BAND && shooterEncoder.getRate() <= wantedSpeed + DEAD_BAND) { // If shooter rate is acceptable
+			intakeShooterTalon.set(intakeShooterTalon.get()); 
+		} else if (shooterEncoder.getRate() > wantedSpeed + DEAD_BAND) { //If shooter rate is too high
+			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
+			if (correction < -MAX_CORRECTION) {
+				correction = -MAX_CORRECTION;
+			}
+			intakeShooterTalon.set(correction + intakeShooterTalon.get());
+		} else if (shooterEncoder.getRate() < wantedSpeed - DEAD_BAND) { //If shooter rate is too low
+			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
+			if (correction > MAX_CORRECTION) {
+				correction = MAX_CORRECTION;
+			}
+			intakeShooterTalon.set(correction + intakeShooterTalon.get());
+		}
+	}
+	
 }
