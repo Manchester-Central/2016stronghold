@@ -3,7 +3,11 @@ package org.usfirst.frc.team131.robot;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Victor;
 
-
+/**
+ * This class is the drive base
+ * @author Charles
+ *
+ */
 public class DriveBase {
 	public static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
 	public static final double ENCODER_GEAR_RATIO = 1.0;
@@ -22,12 +26,27 @@ public class DriveBase {
 	double leftDirection = 1.0;
 	double rightDirection = -1.0;
 	
+	/**
+	 * This function gets the distance traveled of the right side motors
+	 * @return (distance traveled)
+	 */
 	public double getRightDistance () {
 		return rightEncoder.getDistance();
 	}
+	
+	/**
+	 * This function gets the distance traveled of the left side motors
+	 * @return (distance traveled)
+	 */
 	public double getLeftDistance () {
 		return leftEncoder.getDistance();
 	}
+	
+	/**
+	 * This function sets the speed of the drive
+	 * @param leftSpeed (
+	 * @param rightSpeed
+	 */
 	void setSpeed (double leftSpeed, double rightSpeed) {
 		frontLeft.set(leftDirection * leftSpeed);
 		middleLeft.set(leftDirection * leftSpeed);
