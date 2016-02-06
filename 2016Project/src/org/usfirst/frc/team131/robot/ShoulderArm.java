@@ -7,10 +7,13 @@ public class ShoulderArm implements ArmInfo {
 	private double goalAngle = -1;
 	private double angleChange = 5;
 	
+	private static final double maxAngle = 180;
+	private static final double minAngle = 0;
+	
 	public static final double FIRST_POSITION = 0.0;
 	public static final double SECOND_POSITION = 90.0;
-	public static final double THIRD_POSITION = 180.0;
-	public static final double FOURTH_POSITION = 270.0;
+	public static final double THIRD_POSITION = 135.0;
+	public static final double FOURTH_POSITION = 180.0;
 	
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
@@ -27,9 +30,9 @@ public class ShoulderArm implements ArmInfo {
 
 	public void shoulderManualAngle(boolean isUp) {
 		if (isUp) {
-			goalAngle = goalAngle + angleChange;
+			goalAngle = Math.min(maxAngle, goalAngle + angleChange);
 		} else {
-			goalAngle = goalAngle - angleChange;
+			goalAngle = Math.max(minAngle, goalAngle - angleChange);
 		}
 
 	}
