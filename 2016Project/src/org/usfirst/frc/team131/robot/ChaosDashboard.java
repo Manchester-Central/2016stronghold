@@ -30,9 +30,10 @@ public class ChaosDashboard {
         SmartDashboard.putNumber("setpoint", arm.getAngleSetpoint());
 	}
 	
-	public void diplayShooter (IntakeShooter shooter) {
+	public void diplayShooter (IntakeShooter shooter, BallCenterMechanism center) {
         SmartDashboard.putNumber("current flywheel angular velocity", shooter.getSpeed());
         SmartDashboard.putBoolean("Fly wheel up to speed", shooter.checkShooterSpeed(wantedSpeed));
+        SmartDashboard.putBoolean("ball is in position", center.isBallInSensor());
 	}
 	
 }

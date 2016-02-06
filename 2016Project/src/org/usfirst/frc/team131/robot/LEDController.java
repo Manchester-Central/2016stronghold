@@ -1,4 +1,6 @@
-package org.usfirst.frc.team131.robot;
+ package org.usfirst.frc.team131.robot;
+
+import java.util.Date;
 
 import edu.wpi.first.wpilibj.Relay;
 
@@ -37,5 +39,12 @@ public class LEDController {
 		setLightStatus();
 	}
 	
-	
+	public void turnAlarmOn () {
+		Date date = new Date ();
+		if ((date.getTime() % 500) < 250) {
+			setRed (true);
+		} else {
+			setRed (false);
+		}
+	}
 }
