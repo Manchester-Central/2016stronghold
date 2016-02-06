@@ -26,6 +26,7 @@ public class Robot extends IterativeRobot {
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
+	LEDController LED;
 
 
     /**
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
         
 
         ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter);
+        ui.diplayShooter(intakeShooter, center);
         ui.displayArm(arm);
 
 
@@ -81,7 +82,7 @@ public class Robot extends IterativeRobot {
     	
     	//ui
     	ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter);
+        ui.diplayShooter(intakeShooter, center);
         ui.displayArm(arm);
     	
         switch(autoSelected) {
@@ -101,9 +102,19 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
     	//ui
     	ui.displayArmPositions();
-        ui.diplayShooter(intakeShooter);
+        ui.diplayShooter(intakeShooter, center);
         ui.displayArm(arm);
-
+        
+        if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
+        	LED.turnAlarmOn();
+        }
+        
+        if (center.isBallInSensor()) {
+        	LED.setBlue(false);
+        } else {
+        	LED.setBlue(true);
+        }
+        
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 		if (oi.operator.buttonPressed(Controller.LEFT_TRIGGER)) {
 			hook.lowerHook();

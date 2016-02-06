@@ -10,6 +10,11 @@ public class BallCenterMechanism {
 	private static final double OUTPUT_SPEED = 1.0;
 	private static final double INTAKE_SPEED = -0.5;
 	private Talon centeringTalon = new Talon(PortConstants.CENTERING_TALON);
+	
+	public boolean isBallInSensor () {
+		return holdingSensor.get();
+	}
+	
 	public void ballCenter () {
 	
 		centeringTalon.set(INTAKE_SPEED);
