@@ -81,15 +81,15 @@ public class Controller {
 	/*Driver:
 	 * Joysticks Left and Right = Drive
 	 * 
-	 * Bumper/Trigger = Blink Red
+	 * Left Bumper = Blink Red
 	 * 
+	 * Right Bumper/Trigger = Raise/Lower Hook
+	 * Regular Buttons(Diver Preference) = Climb/Descend Tower
 	 * 
 	 * Operator:
 	 * D-Pad = preset Arm Angles
 	 * Right Bumper/Trigger = Manually Move Arm
 	 * Select Button(9) = Stop Arm
-	 * 
-	 * Left Bumper/Trigger = Raise/Lower Hook
 	 *
 	 * Start Button(10) = Shoot
 	 *
@@ -97,6 +97,6 @@ public class Controller {
 	 * 
 	 *  A Button (2) = Center Ball (bring in)
 	 *  
-	 *  subject to change
+	 *  (subject to change)
 	 */
 }

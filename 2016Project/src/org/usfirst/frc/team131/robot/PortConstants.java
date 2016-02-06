@@ -17,6 +17,7 @@ public class PortConstants {
 	public static final int INTAKE_SHOOTER_TALON = 9;
 	
 	public static final int HOOK_TALON = 10;
+	public static final int CLIMBING_TALON = 18;
 
 	public static final int LEFT_ENCODER_1 = 11;
 	public static final int LEFT_ENCODER_2 = 12;
