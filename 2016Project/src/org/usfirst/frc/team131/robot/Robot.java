@@ -145,9 +145,10 @@ public class Robot extends IterativeRobot {
 		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
 			center.readyShot();
 		} else {
-			center.ballCenter();;
+			center.ballCenter();
+			;
 		}
-		
+
 		// Shoulder arm movement (operator)
 		if (oi.operator.buttonPressed(Controller.SELECT_BUTTON)) {
 			arm.stopShoulderArm();
@@ -167,7 +168,11 @@ public class Robot extends IterativeRobot {
 			intakeShooter.ballShoot2();
 		} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
 			intakeShooter.ballIntake();
+		} else if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
+			intakeShooter.flywheelStop();
 		}
+
+		intakeShooter.updateFlywheelSpeed();
 
 	}
 
