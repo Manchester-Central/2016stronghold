@@ -103,29 +103,18 @@ public class IntakeShooter {
 	public void shooterUpToSpeed(float wantedSpeed) {
 		targetSpeed = wantedSpeed;
 		if (shooterEncoder.getRate() >= wantedSpeed - DEAD_BAND
-				&& shooterEncoder.getRate() <= wantedSpeed + DEAD_BAND) { // If
-																			// shooter
-																			// rate
-																			// is
-																			// acceptable
+				&& shooterEncoder.getRate() <= wantedSpeed + DEAD_BAND) { 
 			intakeShooterTalon.set(intakeShooterTalon.get());
-		} else if (shooterEncoder.getRate() > wantedSpeed + DEAD_BAND) { // If
-																			// shooter
-																			// rate
-																			// is
-																			// too
-																			// high
+			// If shooter rate is acceptable
+		} else if (shooterEncoder.getRate() > wantedSpeed + DEAD_BAND) { 
+			// If  shooter rate is too high
 			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
 			if (correction < -MAX_CORRECTION) {
 				correction = -MAX_CORRECTION;
 			}
 			intakeShooterTalon.set(correction + intakeShooterTalon.get());
-		} else if (shooterEncoder.getRate() < wantedSpeed - DEAD_BAND) { // If
-																			// shooter
-																			// rate
-																			// is
-																			// too
-																			// low
+		} else if (shooterEncoder.getRate() < wantedSpeed - DEAD_BAND) { 
+			// If shooter rate is too low
 			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
 			if (correction > MAX_CORRECTION) {
 				correction = MAX_CORRECTION;

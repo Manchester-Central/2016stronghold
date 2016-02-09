@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 	CameraServer server;
 
 	/**
-	 * This function is run when the robot is first started up and should be
+	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
@@ -103,19 +103,19 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 
-		// ui display
+		// UI Display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, center);
 		ui.displayArm(arm);
 
-		// ball sensor lights
+		// Ball Sensor Lights
 		if (center.isBallInSensor()) {
 			LED.setBlue(false);
 		} else {
 			LED.setBlue(true);
 		}
 
-		// Alarm button (driver)
+		// Alarm Button (driver)
 		if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
 			LED.turnAlarmOn();
 		}
@@ -123,7 +123,7 @@ public class Robot extends IterativeRobot {
 		// Drive (driver)
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 
-		// Raise/lower hook (driver)
+		// Raise/Lower Hook (driver)
 		if (oi.driver.buttonPressed(Controller.LEFT_TRIGGER)) {
 			hook.lowerHook();
 		} else if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
@@ -132,7 +132,7 @@ public class Robot extends IterativeRobot {
 			hook.setHookSpeed(0);
 		}
 
-		// Climb/descend (driver)
+		// Climb/Descend Tower (driver)
 		if (oi.driver.buttonPressed(Controller.DOWN_A_ABXY)) {
 			hook.climbTower();
 		} else if (oi.driver.buttonPressed(Controller.RIGHT_B_ABXY)) {
@@ -141,7 +141,7 @@ public class Robot extends IterativeRobot {
 			hook.setClimbSpeed(0);
 		}
 
-		// Ball centering/Shoot (operator)
+		// Ball Centering/Shoot (operator)
 		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
 			center.readyShot();
 		} else {
@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot {
 			;
 		}
 
-		// Shoulder arm movement (operator)
+		// Shoulder Arm Movement (operator)
 		if (oi.operator.buttonPressed(Controller.SELECT_BUTTON)) {
 			arm.stopShoulderArm();
 		} else if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)) {
@@ -161,7 +161,7 @@ public class Robot extends IterativeRobot {
 		}
 		arm.moveToAngle();
 
-		// Flywheel speed presets (operator)
+		// Flywheel Speed Presets (operator)
 		if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
 			intakeShooter.ballShoot1();
 		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
