@@ -28,17 +28,20 @@ public class Robot extends IterativeRobot {
 	ChaosDashboard ui;
 	LEDController LED;
 	CameraServer server;
-
+	boolean isReverseButtonPressed;
+	
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
 		
-        server = CameraServer.getInstance();
-        server.setQuality(50);
+		isReverseButtonPressed = false;
+		
+        //server = CameraServer.getInstance();
+        //server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
-        server.startAutomaticCapture("cam0");
+        //server.startAutomaticCapture("cam0");
 		
 		oi = new OI();
 		drive = new DriveBase();
@@ -53,6 +56,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
+		ui = new ChaosDashboard();
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, center);
 		ui.displayArm(arm);
@@ -110,18 +114,26 @@ public class Robot extends IterativeRobot {
 
 		// Ball Sensor Lights
 		if (center.isBallInSensor()) {
-			LED.setBlue(false);
+			//LED.setBlue(false);
 		} else {
-			LED.setBlue(true);
+			//LED.setBlue(true);
 		}
 
 		// Alarm Button (driver)
 		if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
-			LED.turnAlarmOn();
+			//LED.turnAlarmOn();
 		}
 
 		// Drive (driver)
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
+		
+		// Reverse drive direction
+		if (oi.driver.buttonPressed(Controller.START_BUTTON) && !isReverseButtonPressed) {
+			isReverseButtonPressed = true;
+			drive.reverseDirection();
+		} else if (!oi.driver.buttonPressed(Controller.START_BUTTON)) {
+			isReverseButtonPressed = false;
+		}
 
 		// Raise/Lower Hook (driver)
 		if (oi.driver.buttonPressed(Controller.LEFT_TRIGGER)) {
