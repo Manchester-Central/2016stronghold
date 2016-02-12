@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.Victor;
  *
  */
 public class DriveBase {
-	public static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
-	public static final double ENCODER_GEAR_RATIO = 1.0;
+	private static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
+	private static final double ENCODER_GEAR_RATIO = 1.0;
+	private final double wheelCircumference = 8.0 * Math.PI;
 	
 	Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR);
 	Victor middleLeft = new Victor (PortConstants.LEFT_MIDDLE_VICTOR);
@@ -55,6 +56,22 @@ public class DriveBase {
 		frontRight.set(rightDirection * rightSpeed);
 		middleRight.set(rightDirection * rightSpeed);
 		backRight.set(rightDirection * rightSpeed);
+	}
+	
+	public double getLeftRotationalDistance () {
+		return rightEncoder.getDistance();
+	}
+	
+	public double getRightRotationalDistance () {
+		return leftEncoder.getDistance();
+	}
+	
+	public double getleftDistanceInInches () {
+		return wheelCircumference * getLeftRotationalDistance();
+	}
+	
+	public double getRightDistanceInInches () {
+		return wheelCircumference * getRightRotationalDistance();
 	}
 	
 	/**

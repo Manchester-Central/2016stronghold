@@ -94,6 +94,11 @@ public class Robot extends IterativeRobot {
 		case defaultAuto:
 		default:
 			// Put default auto code here
+			if (drive.getRightDistanceInInches() <= 24 && drive.getleftDistanceInInches() <= 24) {
+				drive.setSpeed(0.2, 0.2);
+			} else {
+				drive.setSpeed(0, 0);
+			}
 			break;
 		}
 	}
