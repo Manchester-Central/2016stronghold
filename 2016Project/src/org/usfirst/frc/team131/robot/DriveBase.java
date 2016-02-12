@@ -24,8 +24,13 @@ public class DriveBase {
 	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_1, PortConstants.RIGHT_ENCODER_2, false, Encoder.EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_1, PortConstants.LEFT_ENCODER_2, false, Encoder.EncodingType.k4X);	
 	
-	double leftDirection = 1.0;
-	double rightDirection = -1.0;
+	double leftDirection = -1.0;
+	double rightDirection = 1.0;
+	
+	public void reverseDirection () {
+		rightDirection *= -1.0;
+		leftDirection *= -1.0;
+	}
 	
 	/**
 	 * This function gets the distance traveled of the right side motors
