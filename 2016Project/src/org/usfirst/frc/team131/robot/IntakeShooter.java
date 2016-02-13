@@ -1,7 +1,5 @@
 package org.usfirst.frc.team131.robot;
 
-import javax.swing.plaf.basic.BasicComboPopup.InvocationKeyHandler;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -17,7 +15,7 @@ public class IntakeShooter {
 	private double RATE_TO_POWER = 0.01; // NEED TO CHANGE
 	private double MAX_CORRECTION = 0.1;
 
-	private Encoder shooterEncoder = new Encoder(PortConstants.SHOOTER_ENCODER_1, PortConstants.SHOOTER_ENCODER_2);
+	private Encoder shooterEncoder = new Encoder(PortConstants.SHOOTER_ENCODER_PORT_A, PortConstants.SHOOTER_ENCODER_PORT_B);
 
 	private static final double SHOOTER_RANGE = 5.0;
 	private double targetSpeed = 0;
@@ -25,7 +23,8 @@ public class IntakeShooter {
 	private static final double OUTPUT_SPEED_1 = 1.0;
 	private static final double OUTPUT_SPEED_2 = 0.5;
 	private static final double INTAKE_SPEED = -0.5;
-	private Talon intakeShooterTalon = new Talon(PortConstants.INTAKE_SHOOTER_TALON);
+	private Talon shooterTalon1 = new Talon(PortConstants.SHOOTER_TALON_PORT_1);
+	private Talon shooterTalon2 = new Talon(PortConstants.SHOOTER_TALON_PORT_2);
 
 	/**
 	 * This function gets the speed of the shooter
@@ -71,7 +70,8 @@ public class IntakeShooter {
 	 * This function sets the speed of the flywheel to the current target speed
 	 */
 	public void updateFlywheelSpeed() {
-		intakeShooterTalon.set(targetSpeed);
+		shooterTalon1.set(targetSpeed);
+		shooterTalon2.set(targetSpeed);
 	}
 
 	/**
@@ -79,7 +79,8 @@ public class IntakeShooter {
 	 * @param speed (the speed that is manually set)
 	 */
 	public void intakeShooterManual(double speed) {
-		intakeShooterTalon.set(speed);
+		shooterTalon1.set(speed);
+		shooterTalon2.set(speed);
 	}
 
 	/**
@@ -104,7 +105,8 @@ public class IntakeShooter {
 		targetSpeed = wantedSpeed;
 		if (shooterEncoder.getRate() >= wantedSpeed - DEAD_BAND
 				&& shooterEncoder.getRate() <= wantedSpeed + DEAD_BAND) { 
-			intakeShooterTalon.set(intakeShooterTalon.get());
+			shooterTalon1.set(shooterTalon1.get());
+			shooterTalon2.set(shooterTalon2.get());
 			// If shooter rate is acceptable
 		} else if (shooterEncoder.getRate() > wantedSpeed + DEAD_BAND) { 
 			// If  shooter rate is too high
@@ -112,14 +114,16 @@ public class IntakeShooter {
 			if (correction < -MAX_CORRECTION) {
 				correction = -MAX_CORRECTION;
 			}
-			intakeShooterTalon.set(correction + intakeShooterTalon.get());
+			shooterTalon1.set(correction + shooterTalon1.get());
+			shooterTalon2.set(correction + shooterTalon2.get());
 		} else if (shooterEncoder.getRate() < wantedSpeed - DEAD_BAND) { 
 			// If shooter rate is too low
 			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
 			if (correction > MAX_CORRECTION) {
 				correction = MAX_CORRECTION;
 			}
-			intakeShooterTalon.set(correction + intakeShooterTalon.get());
+			shooterTalon1.set(correction + shooterTalon1.get());
+			shooterTalon2.set(correction + shooterTalon2.get());
 		}
 	}
 

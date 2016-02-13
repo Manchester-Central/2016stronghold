@@ -23,8 +23,8 @@ public class ShoulderArm implements ArmInfo {
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
 
 
-	private Talon leftShoulderTalon = new Talon(PortConstants.LEFT_SHOULDER_TALON);
-	private Talon rightShoulderTalon = new Talon(PortConstants.RIGHT_SHOULDER_TALON);
+	//private Talon leftShoulderTalon = new Talon(PortConstants.LEFT_SHOULDER_TALON);
+	private Talon shoulderTalon = new Talon(PortConstants.SHOULDER_TALON_PORT);
 	public final double DOWN_SPEED = 1.0;
 	public final double UP_SPEED = -1.0;
 	
@@ -121,8 +121,8 @@ public class ShoulderArm implements ArmInfo {
 	 * @param speed (speed)
 	 */
 	private void setShoulderSpeed(double speed) {
-		leftShoulderTalon.set(speed);
-		rightShoulderTalon.set(speed);
+		//leftShoulderTalon.set(speed);
+		shoulderTalon.set(speed);
 	}
 	
 	@Override

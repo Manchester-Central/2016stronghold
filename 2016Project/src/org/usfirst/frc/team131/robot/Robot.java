@@ -2,6 +2,7 @@
 package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
+	final String easonAuto = "Eason's Auto";
 	String autoSelected;
 	SendableChooser chooser;
 	OI oi;
@@ -29,6 +31,8 @@ public class Robot extends IterativeRobot {
 	LEDController LED;
 	CameraServer server;
 	boolean isReverseButtonPressed;
+//	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
+//	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
 	
 	/**
 	 * This function is run when the robot is initially booted up and should be
@@ -54,6 +58,7 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
+		chooser.addObject("Eason's Autonomous", easonAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		ui = new ChaosDashboard();
@@ -94,6 +99,9 @@ public class Robot extends IterativeRobot {
 		switch (autoSelected) {
 		case customAuto:
 			// Put custom auto code here
+			break;
+		case easonAuto:
+			drive.setSpeed(0.2, 0.2);
 			break;
 		case defaultAuto:
 		default:
@@ -140,15 +148,6 @@ public class Robot extends IterativeRobot {
 			isReverseButtonPressed = false;
 		}
 
-		/* Raise/Lower Hook (driver)
-		if (oi.driver.buttonPressed(Controller.LEFT_TRIGGER)) {
-			hook.lowerHook();
-		} else if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
-			hook.raiseHook();
-		} else {
-			hook.setHookSpeed(0);
-		}
-		*/
 
 		// Climb/Descend Tower (driver)
 		if (oi.driver.buttonPressed(DriverController.CLIMB)) {

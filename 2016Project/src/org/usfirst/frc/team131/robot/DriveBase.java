@@ -13,16 +13,16 @@ public class DriveBase {
 	private static final double ENCODER_GEAR_RATIO = 1.0;
 	private final double wheelCircumference = 8.0 * Math.PI;
 	
-	Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR);
-	Victor middleLeft = new Victor (PortConstants.LEFT_MIDDLE_VICTOR);
-	Victor backLeft = new Victor (PortConstants.LEFT_BACK_VICTOR);
+	Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR_PORT);
+	Victor middleLeft = new Victor (PortConstants.LEFT_MIDDLE_VICTOR_PORT);
+	Victor backLeft = new Victor (PortConstants.LEFT_BACK_VICTOR_PORT);
 	
-	Victor frontRight = new Victor (PortConstants.RIGHT_FRONT_VICTOR);
-	Victor middleRight = new Victor (PortConstants.RIGHT_MIDDLE_VICTOR);
-	Victor backRight = new Victor (PortConstants.RIGHT_BACK_VICTOR);
+	Victor frontRight = new Victor (PortConstants.RIGHT_FRONT_VICTOR_PORT);
+	Victor middleRight = new Victor (PortConstants.RIGHT_MIDDLE_VICTOR_PORT);
+	Victor backRight = new Victor (PortConstants.RIGHT_BACK_VICTOR_PORT);
 	
-	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_1, PortConstants.RIGHT_ENCODER_2, false, Encoder.EncodingType.k4X);
-	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_1, PortConstants.LEFT_ENCODER_2, false, Encoder.EncodingType.k4X);	
+	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_PORT_A, PortConstants.RIGHT_ENCODER_PORT_A, false, Encoder.EncodingType.k4X);
+	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_PORT_A, PortConstants.LEFT_ENCODER_PORT_B, false, Encoder.EncodingType.k4X);	
 	
 	double leftDirection = -1.0;
 	double rightDirection = 1.0;
