@@ -14,10 +14,10 @@ public class ShoulderArm implements ArmInfo {
 	private static final double maxAngle = 180;
 	private static final double minAngle = 0;
 	
-	public static final double FIRST_POSITION = 0.0;
-	public static final double SECOND_POSITION = 90.0;
-	public static final double THIRD_POSITION = 135.0;
-	public static final double FOURTH_POSITION = 180.0;
+	public static final double FORWARD_POSITION = 90.0;
+	public static final double STARTING_POSITION = 0.0;
+	public static final double BACKWARD_POSITION = -90.0;
+	public static final double BACKWARDS_RAMP_POSITION = -110.0;
 	
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
@@ -52,7 +52,7 @@ public class ShoulderArm implements ArmInfo {
 	 * gets the shoulder speed
 	 */
 	public double getTestShoulderSpeed() {
-		return modifier.adjustSpeed(pot.getAngle(), SECOND_POSITION, UP_SPEED);
+		return modifier.adjustSpeed(pot.getAngle(), STARTING_POSITION, UP_SPEED);
 	}
 
 	/**
@@ -67,26 +67,26 @@ public class ShoulderArm implements ArmInfo {
 			// UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("right");
-			goalAngle = FOURTH_POSITION;
+			goalAngle = BACKWARDS_RAMP_POSITION;
 			break;
 		case LEFT:
 			// speed = modifier.adjustSpeed(pot.getAngle(), LOWER_MIDDLE,
 			// DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("left");
-			goalAngle = SECOND_POSITION;
+			goalAngle = STARTING_POSITION;
 			break;
 		case UP:
 			// speed = modifier.adjustSpeed(pot.getAngle(), TOP, UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("up");
-			goalAngle = THIRD_POSITION;
+			goalAngle = BACKWARD_POSITION;
 			break;
 		case DOWN:
 			// speed = modifier.adjustSpeed(pot.getAngle(), BOTTOM, DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("down");
-			goalAngle = FIRST_POSITION;
+			goalAngle = FORWARD_POSITION;
 			break;
 		default:
 			// shoulderManual (speed);

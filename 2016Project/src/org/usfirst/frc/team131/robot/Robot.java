@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team131.robot;
 
+import org.usfirst.frc.team131.robot.Controller.DPadDirection;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -16,8 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	final String easonAuto = "Eason's Auto";
+	final String backwardAuto = "Backward Auto";
+	final String forwardAuto = "Forward Auto";
+	final String spyAuto = "Spy Auto";
 	String autoSelected;
 	SendableChooser chooser;
 	OI oi;
@@ -57,8 +60,8 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		chooser.addObject("Eason's Autonomous", easonAuto);
+		chooser.addObject("Backward Auto", backwardAuto);
+		chooser.addObject("Forward Autonomous", forwardAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		ui = new ChaosDashboard();
@@ -97,11 +100,25 @@ public class Robot extends IterativeRobot {
 		ui.displayArm(arm);
 
 		switch (autoSelected) {
-		case customAuto:
+		case backwardAuto:
 			// Put custom auto code here
+			arm.presetAngle(DPadDirection.UP);
+			if (arm.getAngle() == arm.getAngleSetpoint()){
+				drive.setSpeed(-0.2, -0.2);
+			}
+			
+			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+				drive.setSpeed(0, 0);
+			}
 			break;
-		case easonAuto:
-			drive.setSpeed(0.2, 0.2);
+		case forwardAuto:
+			arm.presetAngle(DPadDirection.DOWN);
+			if (arm.getAngle() == arm.getAngleSetpoint()){
+				drive.setSpeed(0.2, 0.2);
+			}
+			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+				drive.setSpeed(0, 0);
+			}
 			break;
 		case defaultAuto:
 		default:
