@@ -6,44 +6,48 @@ package org.usfirst.frc.team131.robot;
  *
  */
 public class PortConstants {
-	public static final int LEFT_FRONT_VICTOR = 0;
-	public static final int LEFT_MIDDLE_VICTOR = 1;
-	public static final int LEFT_BACK_VICTOR = 2;
+	// Digital Output
+	public static final int LEFT_FRONT_VICTOR_PORT = 0;
+	public static final int LEFT_MIDDLE_VICTOR_PORT = 1;
+	public static final int LEFT_BACK_VICTOR_PORT = 2;
 	
-	public static final int RIGHT_FRONT_VICTOR = 3;
-	public static final int RIGHT_MIDDLE_VICTOR = 4;
-	public static final int RIGHT_BACK_VICTOR = 5;
+	public static final int RIGHT_FRONT_VICTOR_PORT = 3;
+	public static final int RIGHT_MIDDLE_VICTOR_PORT = 4;
+	public static final int RIGHT_BACK_VICTOR_PORT = 5;
 	
-	public static final int LEFT_SHOULDER_TALON = 6;
-	public static final int RIGHT_SHOULDER_TALON = 7;
+	public static final int SHOULDER_TALON_PORT = 6;
 	
-	public static final int CENTERING_TALON = 8;
+	public static final int SHOOTER_TRIGGER_TALON_PORT = 7;
 	
-	public static final int INTAKE_SHOOTER_TALON = 9;
+	public static final int SHOOTER_TALON_PORT_1 = 8;
+	public static final int SHOOTER_TALON_PORT_2 = 9;
 	
-	public static final int HOOK_TALON = 10;
-	public static final int CLIMBING_TALON = 18;
+	public static final int CLIMBING_TALON_PORT = 10;
 
-	public static final int LEFT_ENCODER_1 = 11;
-	public static final int LEFT_ENCODER_2 = 12;
+	// Digital Input
+	public static final int LEFT_ENCODER_PORT_A = 0;
+	public static final int LEFT_ENCODER_PORT_B = 1;
 
-	public static final int RIGHT_ENCODER_1 = 13;
-	public static final int RIGHT_ENCODER_2 = 14;
+	public static final int RIGHT_ENCODER_PORT_A = 2;
+	public static final int RIGHT_ENCODER_PORT_B = 3;
 	
-	public static final int SHOOTER_ENCODER_1 = 15;
-	public static final int SHOOTER_ENCODER_2 = 16;
+	public static final int SHOOTER_ENCODER_PORT_A = 4;
+	public static final int SHOOTER_ENCODER_PORT_B = 5;
 	
-	public static final int HOLDING_SENSOR_PORT = 17;
+	public static final int HOLDING_SENSOR_PORT = 6;
 	
+	
+	// Relay
 	// kReverse is blue, kForward is red (relay is its own port)
-	public static final int RELAY_PORT = 0;
+	public static final int LED_RELAY_PORT = 0;
 	
-	public static final int RANGEFINDER = 3;
+	// Analog
+	public static final int GYRO = 0;
+	public static final int ARM_POT	 = 1;
 	
-	public static final int COMPASS = 2;
-	
-	public static final int GYRO = 1;
-	public static final int ARM_POT	 = 0;
-	
+	// Maybe for Autonomous
+//	public static final int OPTICAL_SENSOR_PORT_SIDE = 19;   
+//	public static final int OPTICAL_SENSOR_PORT_FRONT = 20;
+//  public static final int RANGEFINDER = 2;
 	
 }
