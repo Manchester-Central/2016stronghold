@@ -23,7 +23,7 @@ public class IntakeShooter {
 	private double targetSpeed = 0;
 
 	private static final double OUTPUT_SPEED_1 = 1.0;
-	private static final double OUTPUT_SPEED_2 = 2.0;
+	private static final double OUTPUT_SPEED_2 = 0.5;
 	private static final double INTAKE_SPEED = -0.5;
 	private Talon intakeShooterTalon = new Talon(PortConstants.INTAKE_SHOOTER_TALON);
 
