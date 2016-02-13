@@ -24,7 +24,7 @@ public class ShoulderArm implements ArmInfo {
 
 
 	//private Talon leftShoulderTalon = new Talon(PortConstants.LEFT_SHOULDER_TALON);
-	private Talon rightShoulderTalon = new Talon(PortConstants.SHOULDER_TALON_PORT);
+	private Talon shoulderTalon = new Talon(PortConstants.SHOULDER_TALON_PORT);
 	public final double DOWN_SPEED = 1.0;
 	public final double UP_SPEED = -1.0;
 	
@@ -122,7 +122,7 @@ public class ShoulderArm implements ArmInfo {
 	 */
 	private void setShoulderSpeed(double speed) {
 		//leftShoulderTalon.set(speed);
-		rightShoulderTalon.set(speed);
+		shoulderTalon.set(speed);
 	}
 	
 	@Override
