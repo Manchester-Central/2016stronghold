@@ -20,7 +20,7 @@ public class LEDController {
 	 * the contructor, defines relay port and initializes the lights on
 	 */
 	public LEDController () {
-    	lights = new Relay (PortConstants.RELAY_PORT);
+    	lights = new Relay (PortConstants.LED_RELAY_PORT);
     	redLightOn = true;
     	blueLightOn = true;
 	}

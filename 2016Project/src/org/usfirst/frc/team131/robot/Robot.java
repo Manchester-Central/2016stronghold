@@ -1,7 +1,10 @@
 
 package org.usfirst.frc.team131.robot;
 
+import org.usfirst.frc.team131.robot.Controller.DPadDirection;
+
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,7 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String backwardAuto = "Backward Auto";
+	final String forwardAuto = "Forward Auto";
+	final String spyAuto = "Spy Auto";
 	String autoSelected;
 	SendableChooser chooser;
 	OI oi;
@@ -29,6 +34,8 @@ public class Robot extends IterativeRobot {
 	LEDController LED;
 	CameraServer server;
 	boolean isReverseButtonPressed;
+//	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
+//	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
 	
 	/**
 	 * This function is run when the robot is initially booted up and should be
@@ -53,7 +60,8 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser.addObject("Backward Auto", backwardAuto);
+		chooser.addObject("Forward Autonomous", forwardAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		ui = new ChaosDashboard();
@@ -92,8 +100,25 @@ public class Robot extends IterativeRobot {
 		ui.displayArm(arm);
 
 		switch (autoSelected) {
-		case customAuto:
+		case backwardAuto:
 			// Put custom auto code here
+			arm.presetAngle(DPadDirection.UP);
+			if (arm.getAngle() == arm.getAngleSetpoint()){
+				drive.setSpeed(-0.2, -0.2);
+			}
+			
+			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+				drive.setSpeed(0, 0);
+			}
+			break;
+		case forwardAuto:
+			arm.presetAngle(DPadDirection.DOWN);
+			if (arm.getAngle() == arm.getAngleSetpoint()){
+				drive.setSpeed(0.2, 0.2);
+			}
+			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+				drive.setSpeed(0, 0);
+			}
 			break;
 		case defaultAuto:
 		default:
@@ -125,7 +150,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Alarm Button (driver)
-		if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
+		if (oi.driver.buttonPressed(DriverController.FLASH_RED)) {
 			//LED.turnAlarmOn();
 		}
 
@@ -133,33 +158,25 @@ public class Robot extends IterativeRobot {
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 		
 		// Reverse drive direction
-		if (oi.driver.buttonPressed(Controller.START_BUTTON) && !isReverseButtonPressed) {
+		if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) && !isReverseButtonPressed) {
 			isReverseButtonPressed = true;
 			drive.reverseDirection();
-		} else if (!oi.driver.buttonPressed(Controller.START_BUTTON)) {
+		} else if (!oi.driver.buttonPressed(DriverController.DRIVE_REVERSE)) {
 			isReverseButtonPressed = false;
 		}
 
-		// Raise/Lower Hook (driver)
-		if (oi.driver.buttonPressed(Controller.LEFT_TRIGGER)) {
-			hook.lowerHook();
-		} else if (oi.driver.buttonPressed(Controller.LEFT_BUMPER)) {
-			hook.raiseHook();
-		} else {
-			hook.setHookSpeed(0);
-		}
 
 		// Climb/Descend Tower (driver)
-		if (oi.driver.buttonPressed(Controller.DOWN_A_ABXY)) {
+		if (oi.driver.buttonPressed(DriverController.CLIMB)) {
 			hook.climbTower();
-		} else if (oi.driver.buttonPressed(Controller.RIGHT_B_ABXY)) {
+		} else if (oi.driver.buttonPressed(DriverController.DECEND)) {
 			hook.descendTower();
 		} else {
 			hook.setClimbSpeed(0);
 		}
 
 		// Ball Centering/Shoot (operator)
-		if (oi.operator.buttonPressed(Controller.START_BUTTON)) {
+		if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)) {
 			center.readyShot();
 		} else {
 			center.ballCenter();
@@ -167,11 +184,11 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Shoulder Arm Movement (operator)
-		if (oi.operator.buttonPressed(Controller.SELECT_BUTTON)) {
+		if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
 			arm.stopShoulderArm();
-		} else if (oi.operator.buttonPressed(Controller.RIGHT_BUMPER)) {
+		} else if (oi.operator.buttonPressed(OperatorController.ARM_UP)) {
 			arm.shoulderManualAngle(true);
-		} else if (oi.operator.buttonPressed(Controller.RIGHT_TRIGGER)) {
+		} else if (oi.operator.buttonPressed(OperatorController.ARM_DOWN)) {
 			arm.shoulderManualAngle(false);
 		} else {
 			arm.presetAngle(oi.operator.getDPad());
@@ -179,13 +196,13 @@ public class Robot extends IterativeRobot {
 		arm.moveToAngle();
 
 		// Flywheel Speed Presets (operator)
-		if (oi.operator.buttonPressed(Controller.LEFT_X_ABXY)) {
+		if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
 			intakeShooter.ballShoot1();
-		} else if (oi.operator.buttonPressed(Controller.UP_Y_ABXY)) {
+		} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
 			intakeShooter.ballShoot2();
-		} else if (oi.operator.buttonPressed(Controller.RIGHT_B_ABXY)) {
+		} else if (oi.operator.buttonPressed(OperatorController.INTAKE)) {
 			intakeShooter.ballIntake();
-		} else if (oi.operator.buttonPressed(Controller.DOWN_A_ABXY)) {
+		} else if (oi.operator.buttonPressed(OperatorController.STOP_FLYWHEEL)) {
 			intakeShooter.flywheelStop();
 		}
 
