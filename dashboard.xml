@@ -1,13 +1,13 @@
 <xml version="1.0">
 <dashboard>
 	<widget field="Second Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="270" y="62"/>
+		<location x="271" y="83"/>
 	</widget>
 	<widget field="Third Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="394"/>
+		<location x="270" y="62"/>
 	</widget>
 	<widget field="Fourth Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="21" y="268"/>
+		<location x="0" y="394"/>
 	</widget>
 	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="247"/>
