@@ -3,8 +3,8 @@ package org.usfirst.frc.team131.robot;
 
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +34,8 @@ public class Robot extends IterativeRobot {
 	LEDController LED;
 	CameraServer server;
 	boolean isReverseButtonPressed;
+	private final double INCHES_TO_CROSS_DEFENSE = 96;
+	AnalogGyro gyro = new AnalogGyro (PortConstants.GYRO);
 //	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
 //	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
 	
@@ -86,8 +88,10 @@ public class Robot extends IterativeRobot {
 		autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
+		
 		System.out.println("Auto selected: " + autoSelected);
 	}
+	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -106,8 +110,7 @@ public class Robot extends IterativeRobot {
 			if (arm.getAngle() == arm.getAngleSetpoint()){
 				drive.setSpeed(-0.2, -0.2);
 			}
-			
-			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
 				drive.setSpeed(0, 0);
 			}
 			break;
@@ -116,14 +119,34 @@ public class Robot extends IterativeRobot {
 			if (arm.getAngle() == arm.getAngleSetpoint()){
 				drive.setSpeed(0.2, 0.2);
 			}
-			if (drive.getRightDistanceInInches() >= 48 && drive.getleftDistanceInInches() >= 48) {
+			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
 				drive.setSpeed(0, 0);
+			}
+			break;
+		case spyAuto:
+			arm.presetAngle(DPadDirection.LEFT);
+			intakeShooter.updateFlywheelSpeed();
+			if (arm.getAngle() == arm.getAngleSetpoint()) {
+				drive.setSpeed(-0.2, -0.2);
+			}
+			if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
+				// check to see if oriented correctly
+				drive.setSpeed( 0.1, -0.1);
+			}
+			if (gyro.getAngle() == 45) {
+				drive.setSpeed(0.2, 0.2);
+			}
+			if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
+				intakeShooter.ballShoot1();
+			}
+			if (intakeShooter.checkShooterSpeed(1)) {
+				center.readyShot();
 			}
 			break;
 		case defaultAuto:
 		default:
 			// Put default auto code here
-			if (drive.getRightDistanceInInches() <= 24 && drive.getleftDistanceInInches() <= 24) {
+			if (drive.getRightDistanceInInches() <= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() <= INCHES_TO_CROSS_DEFENSE) {
 				drive.setSpeed(0.2, 0.2);
 			} else {
 				drive.setSpeed(0, 0);

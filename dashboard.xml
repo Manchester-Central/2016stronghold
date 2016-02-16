@@ -1,5 +1,35 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Second Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="270" y="62"/>
+	</widget>
+	<widget field="Third Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="394"/>
+	</widget>
+	<widget field="Fourth Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="268"/>
+	</widget>
+	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="247"/>
+	</widget>
+	<widget field=" Ball is in Position " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="226"/>
+	</widget>
+	<widget field="Setpoint " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="205"/>
+	</widget>
+	<widget field="First Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="184"/>
+	</widget>
+	<widget field=" Current Flywheel Angular Velocity " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="163"/>
+	</widget>
+	<widget field=" Flywheel Up to Speed " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="142"/>
+	</widget>
+	<widget field="Shoulder Arm Speed " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="121"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="976" y="234"/>
 		<property name="Text" value="High Goal"/>

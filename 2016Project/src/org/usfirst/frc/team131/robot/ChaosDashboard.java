@@ -30,7 +30,7 @@ public class ChaosDashboard {
 
         // inital dashboard constants
         SmartDashboard.putNumber ("First Position ", ShoulderArm.FORWARD_POSITION);
-        SmartDashboard.putNumber("Second Position ", ShoulderArm.STARTING_POSITION);
+        SmartDashboard.putNumber("Second Position ", ShoulderArm.SCORING_POSITION);
         SmartDashboard.putNumber("Third Position ", ShoulderArm.BACKWARD_POSITION);
         SmartDashboard.putNumber("Fourth Position ", ShoulderArm.BACKWARDS_RAMP_POSITION);
 	}
