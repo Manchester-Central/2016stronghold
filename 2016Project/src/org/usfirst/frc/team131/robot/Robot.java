@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	boolean isReverseButtonPressed;
 	private final double INCHES_TO_CROSS_DEFENSE = 96;
 	AnalogGyro gyro = new AnalogGyro (PortConstants.GYRO);
-	String autoCase = "start";
+	String autoCase = "Start";
 //	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
 //	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
 	
