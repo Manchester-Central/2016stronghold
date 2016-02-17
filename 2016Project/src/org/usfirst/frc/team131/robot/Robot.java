@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot {
 	boolean isReverseButtonPressed;
 	private final double INCHES_TO_CROSS_DEFENSE = 96;
 	AnalogGyro gyro = new AnalogGyro (PortConstants.GYRO);
+	String autoCase = "start";
 //	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
 //	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
 	
@@ -105,42 +106,101 @@ public class Robot extends IterativeRobot {
 
 		switch (autoSelected) {
 		case backwardAuto:
-			// Put custom auto code here
-			arm.presetAngle(DPadDirection.UP);
+			
+			switch (autoCase) {
+				
+				case "setArmAngle":
+					arm.presetAngle(DPadDirection.UP);
+					break;
+				case "drive":
+					drive.setSpeed(-0.2, -0.2);
+					break;
+				case "hammerTime":
+					drive.setSpeed(0, 0);
+					break;
+				default:
+					
+					break;
+			}
+			if (autoCase == "start"){
+				autoCase = "setArmAngle";
+			}
 			if (arm.getAngle() == arm.getAngleSetpoint()){
-				drive.setSpeed(-0.2, -0.2);
+				autoCase = "drive";
 			}
 			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-				drive.setSpeed(0, 0);
+				autoCase = "hammerTime";
 			}
 			break;
 		case forwardAuto:
-			arm.presetAngle(DPadDirection.DOWN);
+			
+			switch (autoCase) {
+				
+				case "setArmAngle":
+					arm.presetAngle(DPadDirection.DOWN);
+					break;
+				case "drive":
+					drive.setSpeed(0.2, 0.2);
+					break;
+				case "hammerTime":
+					drive.setSpeed(0, 0);
+					break;
+				default:
+					
+					break;
+			}
+			if (autoCase == "start"){
+				autoCase = "setArmAngle";
+			}
 			if (arm.getAngle() == arm.getAngleSetpoint()){
-				drive.setSpeed(0.2, 0.2);
+				autoCase = "drive";
 			}
 			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-				drive.setSpeed(0, 0);
+				autoCase = "hammerTime";
 			}
 			break;
 		case spyAuto:
-			arm.presetAngle(DPadDirection.LEFT);
+			
+			switch (autoCase) {
+				case "setArmAngle":
+					arm.presetAngle(DPadDirection.LEFT);
+					break;
+				case "driveBackwards":
+					drive.setSpeed(-0.2, -0.2);
+					break;
+				case "turningClockwise":
+					//may need to alter
+					drive.setSpeed(0.1, -0.1);
+					break;
+				case "driveForwards":
+					drive.setSpeed(0.2, 0.2);
+					break;
+				case "ballShoot":
+					intakeShooter.ballShoot1();
+					break;
+				case "shootBall":
+					center.readyShot();
+					break;
+				
+			}
 			intakeShooter.updateFlywheelSpeed();
+			if (autoCase == "start") {
+				autoCase = "setArmAngle";
+			}
 			if (arm.getAngle() == arm.getAngleSetpoint()) {
-				drive.setSpeed(-0.2, -0.2);
+				autoCase = "driveBackwards";
 			}
 			if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
-				// check to see if oriented correctly
-				drive.setSpeed( 0.1, -0.1);
+				autoCase = "turningClockwise";
 			}
 			if (gyro.getAngle() == 45) {
-				drive.setSpeed(0.2, 0.2);
+				autoCase = "driveForwards";
 			}
 			if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
-				intakeShooter.ballShoot1();
+				autoCase = "ballShoot";
 			}
 			if (intakeShooter.checkShooterSpeed(1)) {
-				center.readyShot();
+				autoCase = "shootBall";
 			}
 			break;
 		case defaultAuto:
