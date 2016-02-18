@@ -15,7 +15,7 @@ public class ShoulderArm implements ArmInfo {
 	private static final double minAngle = 0;
 	
 	public static final double FORWARD_POSITION = 90.0;
-	public static final double STARTING_POSITION = 0.0;
+	public static final double SCORING_POSITION = 45.0;
 	public static final double BACKWARD_POSITION = -90.0;
 	public static final double BACKWARDS_RAMP_POSITION = -110.0;
 	
@@ -52,7 +52,7 @@ public class ShoulderArm implements ArmInfo {
 	 * gets the shoulder speed
 	 */
 	public double getTestShoulderSpeed() {
-		return modifier.adjustSpeed(pot.getAngle(), STARTING_POSITION, UP_SPEED);
+		return modifier.adjustSpeed(pot.getAngle(), SCORING_POSITION, UP_SPEED);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class ShoulderArm implements ArmInfo {
 			// DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("left");
-			goalAngle = STARTING_POSITION;
+			goalAngle = SCORING_POSITION;
 			break;
 		case UP:
 			// speed = modifier.adjustSpeed(pot.getAngle(), TOP, UP_SPEED);
