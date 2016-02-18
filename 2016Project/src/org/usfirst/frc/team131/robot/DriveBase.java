@@ -10,10 +10,11 @@ import edu.wpi.first.wpilibj.Victor;
  * @author Charles
  *
  */
-public class DriveBase extends RobotDrive{
+public class DriveBase extends RobotDrive {
 	private static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
 	private static final double ENCODER_GEAR_RATIO = 1.0;
 	private final double wheelCircumference = 8.0 * Math.PI;
+	double Kp = 0.03;
 
 	/*
 	 * Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR_PORT);
@@ -25,17 +26,12 @@ public class DriveBase extends RobotDrive{
 	 * Victor backRight = new Victor (PortConstants.RIGHT_BACK_VICTOR_PORT);
 	 */
 
-	private static ChaosSpeedController rightSide = new ChaosSpeedController(
-			PortConstants.RIGHT_FRONT_VICTOR_PORT,
-			PortConstants.RIGHT_MIDDLE_VICTOR_PORT,
-			PortConstants.RIGHT_BACK_VICTOR_PORT);
+	private static ChaosSpeedController rightSide = new ChaosSpeedController(PortConstants.RIGHT_FRONT_VICTOR_PORT,
+			PortConstants.RIGHT_MIDDLE_VICTOR_PORT, PortConstants.RIGHT_BACK_VICTOR_PORT);
 
-	private static ChaosSpeedController leftSide = new ChaosSpeedController(
-			PortConstants.LEFT_FRONT_VICTOR_PORT,
-			PortConstants.LEFT_MIDDLE_VICTOR_PORT,
-			PortConstants.LEFT_BACK_VICTOR_PORT);
+	private static ChaosSpeedController leftSide = new ChaosSpeedController(PortConstants.LEFT_FRONT_VICTOR_PORT,
+			PortConstants.LEFT_MIDDLE_VICTOR_PORT, PortConstants.LEFT_BACK_VICTOR_PORT);
 
-			
 	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_PORT_A, PortConstants.RIGHT_ENCODER_PORT_A, false,
 			Encoder.EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_PORT_A, PortConstants.LEFT_ENCODER_PORT_B, false,
@@ -76,17 +72,19 @@ public class DriveBase extends RobotDrive{
 	 *            (speed of right motors
 	 */
 	void setSpeed(double leftSpeed, double rightSpeed) {
-		/*frontLeft.set(leftDirection * leftSpeed);
-		middleLeft.set(leftDirection * leftSpeed);
-		backLeft.set(leftDirection * leftSpeed);
+		/*
+		 * frontLeft.set(leftDirection * leftSpeed);
+		 * middleLeft.set(leftDirection * leftSpeed); backLeft.set(leftDirection
+		 * * leftSpeed);
+		 * 
+		 * frontRight.set(rightDirection * rightSpeed);
+		 * middleRight.set(rightDirection * rightSpeed);
+		 * backRight.set(rightDirection * rightSpeed);
+		 */
 
-		frontRight.set(rightDirection * rightSpeed);
-		middleRight.set(rightDirection * rightSpeed);
-		backRight.set(rightDirection * rightSpeed);*/
-		
-		tankDrive(leftDirection*leftSpeed, rightDirection*rightSpeed);
+		tankDrive(leftDirection * leftSpeed, rightDirection * rightSpeed);
 	}
-	
+
 	public double getLeftRotationalDistance() {
 		return rightEncoder.getDistance();
 	}
@@ -108,7 +106,7 @@ public class DriveBase extends RobotDrive{
 	 */
 	public DriveBase() {
 		super(rightSide, leftSide);
-		
+
 		double distancePerPulse = ENCODER_GEAR_RATIO / ENCODER_PULSES_PER_REVOLUTION;
 
 		leftEncoder.setMaxPeriod(0.1);
@@ -121,6 +119,11 @@ public class DriveBase extends RobotDrive{
 		rightEncoder.setReverseDirection(true);
 		rightEncoder.setSamplesToAverage(7);
 
+	}
+
+	public void driveStraight(double speed, double angle, double wantedAngle) {
+
+		this.drive(speed, (wantedAngle - angle) * Kp);
 	}
 
 }
