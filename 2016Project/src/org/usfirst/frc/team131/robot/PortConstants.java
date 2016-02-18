@@ -36,6 +36,10 @@ public class PortConstants {
 	
 	public static final int HOLDING_SENSOR_PORT = 6;
 	
+	public static final int OPTICAL_SENSOR_PORT_SIDE = 7;   
+	public static final int OPTICAL_SENSOR_PORT_FRONT = 8;
+	public static final int ARM_OPTICAL_SENSOR = 9;
+	
 	
 	// Relay
 	// kReverse is blue, kForward is red (relay is its own port)
@@ -46,8 +50,7 @@ public class PortConstants {
 	public static final int ARM_POT	 = 1;
 	
 	// Maybe for Autonomous
-//	public static final int OPTICAL_SENSOR_PORT_SIDE = 19;   
-//	public static final int OPTICAL_SENSOR_PORT_FRONT = 20;
+
 //  public static final int RANGEFINDER = 2;
 	
 }
