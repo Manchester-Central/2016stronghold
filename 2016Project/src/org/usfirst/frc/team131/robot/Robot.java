@@ -5,6 +5,7 @@ import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,7 @@ public class Robot extends IterativeRobot {
 	final String backwardAuto = "Backward Auto";
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
+	AutoController autoController;
 	String autoSelected;
 	SendableChooser chooser;
 	OI oi;
@@ -34,17 +36,16 @@ public class Robot extends IterativeRobot {
 	LEDController LED;
 	CameraServer server;
 	boolean isReverseButtonPressed;
-	private final double INCHES_TO_CROSS_DEFENSE = 96;
 	AnalogGyro gyro = new AnalogGyro (PortConstants.GYRO);
-	String autoCase = "Start";
-//	DigitalInput frontSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_FRONT);
-//	DigitalInput sideSensor  = new DigitalInput (PortConstants.OPTICAL_SENSOR_PORT_SIDE);
+	DigitalInput frontOpticalSensorA = new DigitalInput(PortConstants.OPTICAL_SENSOR_PORT_A);
+	DigitalInput frontOpticalSensorB = new DigitalInput(PortConstants.OPTICAL_SENSOR_PORT_B);
 	
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		autoController = new AutoController ();
 		
 		isReverseButtonPressed = false;
 		
@@ -106,111 +107,17 @@ public class Robot extends IterativeRobot {
 
 		switch (autoSelected) {
 		case backwardAuto:
-			
-			switch (autoCase) {
-				
-				case "Set Arm Angle":
-					arm.presetAngle(DPadDirection.UP);
-					break;
-				case "Drive":
-					drive.setSpeed(-0.2, -0.2);
-					break;
-				case "Hammer Time":
-					drive.setSpeed(0, 0);
-					break;
-				default:
-					
-					break;
-			}
-			if (autoCase == "Start"){
-				autoCase = "Set Arm Angle";
-			}
-			if (arm.getAngle() == arm.getAngleSetpoint()){
-				autoCase = "Drive";
-			}
-			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-				autoCase = "Hammer Time";
-			}
+			autoController.autoStateBackward(arm, drive);
 			break;
 		case forwardAuto:
-			
-			switch (autoCase) {
-				
-				case "Set Arm Angle":
-					arm.presetAngle(DPadDirection.DOWN);
-					break;
-				case "Drive":
-					drive.setSpeed(0.2, 0.2);
-					break;
-				case "Hammer Time":
-					drive.setSpeed(0, 0);
-					break;
-				default:
-					
-					break;
-			}
-			if (autoCase == "Start"){
-				autoCase = "Set Arm Angle";
-			}
-			if (arm.getAngle() == arm.getAngleSetpoint()){
-				autoCase = "Drive";
-			}
-			if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-				autoCase = "Hammer Time";
-			}
+			autoController.autoStateForward(arm, drive);
 			break;
 		case spyAuto:
-			
-			switch (autoCase) {
-				case "Set Arm Angle":
-					arm.presetAngle(DPadDirection.LEFT);
-					break;
-				case "Drive Backwards":
-					drive.setSpeed(-0.2, -0.2);
-					break;
-				case "Turn Clockwise":
-					//may need to alter
-					drive.setSpeed(0.1, -0.1);
-					break;
-				case "Drive Forwards":
-					drive.setSpeed(0.2, 0.2);
-					break;
-				case "Set Flywheel Speed":
-					intakeShooter.ballShoot1();
-					break;
-				case "Shoot Ball":
-					center.readyShot();
-					break;
-				
-			}
-			intakeShooter.updateFlywheelSpeed();
-			if (autoCase == "Start") {
-				autoCase = "Set Arm Angle";
-			}
-			if (arm.getAngle() == arm.getAngleSetpoint()) {
-				autoCase = "Drive Backwards";
-			}
-			if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
-				autoCase = "Turn Clockwise";
-			}
-			if (gyro.getAngle() == 45) {
-				autoCase = "Drive Forwards";
-			}
-			if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
-				autoCase = "Set Flywheel Speed";
-			}
-			if (intakeShooter.checkShooterSpeed(1)) {
-				autoCase = "Shoot Ball";
-			}
+			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontOpticalSensorA, frontOpticalSensorB);
 			break;
 		case defaultAuto:
 		default:
-			// Put default auto code here
-			if (drive.getRightDistanceInInches() <= INCHES_TO_CROSS_DEFENSE && drive.getleftDistanceInInches() <= INCHES_TO_CROSS_DEFENSE) {
-				drive.setSpeed(0.2, 0.2);
-			} else {
-				drive.setSpeed(0, 0);
-			}
+			autoController.autoStateDefault(drive);
 			break;
 		}
 	}
