@@ -259,15 +259,20 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Ball Centering/Shoot (operator)
-		if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)) {
-			center.readyShot();
-		} else {
+		if (oi.operator.buttonPressed(OperatorController.CENTER_OUTPUT)) {
+			//center.readyShot();
+			center.ballCenterManual(0.5);
+		} else if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)){
+	
 			center.ballCenter();
-			;
+			
+		}
+		else {
+			center.ballCenterManual(0);
 		}
 
 		// Shoulder Arm Movement (operator)
-		if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
+		/*if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
 			arm.stopShoulderArm();
 		} else if (oi.operator.buttonPressed(OperatorController.ARM_UP)) {
 			arm.shoulderManualAngle(true);
@@ -276,20 +281,24 @@ public class Robot extends IterativeRobot {
 		} else {
 			arm.presetAngle(oi.operator.getDPad());
 		}
-		arm.moveToAngle();
+		arm.moveToAngle();*/
 
-		// Flywheel Speed Presets (operator)
-		if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
-			intakeShooter.ballShoot1();
-		} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
-			intakeShooter.ballShoot2();
-		} else if (oi.operator.buttonPressed(OperatorController.INTAKE)) {
-			intakeShooter.ballIntake();
-		} else if (oi.operator.buttonPressed(OperatorController.STOP_FLYWHEEL)) {
-			intakeShooter.flywheelStop();
-		}
-
-		intakeShooter.updateFlywheelSpeed();
+//		// Flywheel Speed Presets (operator)
+//		if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
+//			intakeShooter.ballShoot1();
+//		} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
+//			intakeShooter.ballShoot2();
+//		} else if (oi.operator.buttonPressed(OperatorController.INTAKE)) {
+//			intakeShooter.ballIntake();
+//		} else if (oi.operator.buttonPressed(OperatorController.STOP_FLYWHEEL)) {
+//			intakeShooter.flywheelStop();
+//		}
+		
+		arm.setShoulderSpeed(oi.operator.getLeftY());
+//
+//		intakeShooter.updateFlywheelSpeed();
+		
+		intakeShooter.intakeShooterManual(oi.operator.getRightY());
 
 	}
 
