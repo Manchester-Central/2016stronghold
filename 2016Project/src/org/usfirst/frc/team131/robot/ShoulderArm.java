@@ -1,5 +1,6 @@
 package org.usfirst.frc.team131.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -18,6 +19,8 @@ public class ShoulderArm implements ArmInfo {
 	public static final double SCORING_POSITION = 45.0;
 	public static final double BACKWARD_POSITION = -90.0;
 	public static final double BACKWARDS_RAMP_POSITION = -110.0;
+	
+	DigitalInput armOpticalSensor = new DigitalInput (PortConstants.ARM_OPTICAL_SENSOR);
 	
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
@@ -122,7 +125,11 @@ public class ShoulderArm implements ArmInfo {
 	 */
 	private void setShoulderSpeed(double speed) {
 		//leftShoulderTalon.set(speed);
-		shoulderTalon.set(speed);
+		if (armOpticalSensor.get() && (speed < 0)) {
+			stopShoulderMovement();
+		} else {
+			shoulderTalon.set(speed);
+		}
 	}
 	
 	@Override
@@ -131,6 +138,10 @@ public class ShoulderArm implements ArmInfo {
 	 */
 	public double getAngleSetpoint() {
 		// TODO Auto-generated method stub
-		return 0;
+		return goalAngle;
+	}
+	
+	public void stopShoulderMovement () {
+		setShoulderSpeed(0);
 	}
 }

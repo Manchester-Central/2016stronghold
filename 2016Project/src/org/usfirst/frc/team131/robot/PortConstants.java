@@ -36,8 +36,9 @@ public class PortConstants {
 	
 	public static final int HOLDING_SENSOR_PORT = 6;
 	
-	public static final int OPTICAL_SENSOR_PORT_SIDE = 7;   
-	public static final int OPTICAL_SENSOR_PORT_FRONT = 8;
+	  
+	public static final int OPTICAL_SENSOR_PORT_A = 7;
+	public static final int OPTICAL_SENSOR_PORT_B = 8; 
 	public static final int ARM_OPTICAL_SENSOR = 9;
 	
 	
