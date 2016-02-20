@@ -5,32 +5,39 @@ import edu.wpi.first.wpilibj.Talon;
 
 /**
  * this is the shoulder arm class, it controls its position and speed
+ * 
  * @author Charles
  *
  */
 public class ShoulderArm implements ArmInfo {
 	private double goalAngle = -1;
 	private double angleChange = 5;
-	
+
 	private static final double maxAngle = 180;
 	private static final double minAngle = 0;
-	
+
 	public static final double FORWARD_POSITION = 90.0;
 	public static final double SCORING_POSITION = 45.0;
 	public static final double BACKWARD_POSITION = -90.0;
 	public static final double BACKWARDS_RAMP_POSITION = -110.0;
-	
-	DigitalInput armLimitSwitch = new DigitalInput (PortConstants.ARM_LIMIT_SWITCH_PORT);
-	
+
+	DigitalInput armLimitSwitch = new DigitalInput(PortConstants.ARM_LIMIT_SWITCH_PORT);
+
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
 
-
-	//private Talon leftShoulderTalon = new Talon(PortConstants.LEFT_SHOULDER_TALON);
+	// private Talon leftShoulderTalon = new
+	// Talon(PortConstants.LEFT_SHOULDER_TALON);
 	private Talon shoulderTalon = new Talon(PortConstants.SHOULDER_TALON_PORT);
 	public final double DOWN_SPEED = 1.0;
 	public final double UP_SPEED = -1.0;
-	
+
+	public ShoulderArm() {
+		shoulderTalon.setInverted(true);
+
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * get the angle for shoulder arm
 	 */
@@ -40,7 +47,9 @@ public class ShoulderArm implements ArmInfo {
 
 	/**
 	 * sees which direction the motor needs to go
-	 * @param isUp (if true, go up; if false, go down)
+	 * 
+	 * @param isUp
+	 *            (if true, go up; if false, go down)
 	 */
 	public void shoulderManualAngle(boolean isUp) {
 		if (isUp) {
@@ -50,7 +59,7 @@ public class ShoulderArm implements ArmInfo {
 		}
 
 	}
-	
+
 	/**
 	 * gets the shoulder speed
 	 */
@@ -60,17 +69,18 @@ public class ShoulderArm implements ArmInfo {
 
 	/**
 	 * sets arm to preset angles
-	 * @param direction (goes to angle)
+	 * 
+	 * @param direction
+	 *            (goes to angle)
 	 */
-	public void angleAdjust(double rawAdjustValue){
+	public void angleAdjust(double rawAdjustValue) {
 		double adjustValue = rawAdjustValue;
 		if (rawAdjustValue > -0.1 && rawAdjustValue < 0.1) {
 			adjustValue = 0.0;
-		} 
+		}
 		goalAngle += adjustValue;
 	}
-	
-	
+
 	public void presetAngle(Controller.DPadDirection direction) {
 		// double speed = 0;
 		switch (direction) {
@@ -107,14 +117,14 @@ public class ShoulderArm implements ArmInfo {
 		}
 
 	}
-	
+
 	/**
 	 * stops shoulder arm
 	 */
 	public void stopShoulderArm() {
 		goalAngle = -1;
 	}
-	
+
 	/**
 	 * moves arm to and angle
 	 */
@@ -127,21 +137,23 @@ public class ShoulderArm implements ArmInfo {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	/**
 	 * sets shoulder speed
-	 * @param speed (speed)
+	 * 
+	 * @param speed
+	 *            (speed)
 	 */
 	public void setShoulderSpeed(double speed) {
-		//leftShoulderTalon.set(speed);
-		//if (armOpticalSensor.get() && (speed < 0)) {
-		if(false){
-			//stopShoulderMovement();
+		// leftShoulderTalon.set(speed);
+		// if (armOpticalSensor.get() && (speed < 0)) {
+		if (false) {
+			// stopShoulderMovement();
 		} else {
 			shoulderTalon.set(speed);
 		}
 	}
-	
+
 	@Override
 	/**
 	 * gets the angle setpoint
@@ -150,8 +162,8 @@ public class ShoulderArm implements ArmInfo {
 		// TODO Auto-generated method stub
 		return goalAngle;
 	}
-	
-	public void stopShoulderMovement () {
+
+	public void stopShoulderMovement() {
 		setShoulderSpeed(0);
 	}
 }

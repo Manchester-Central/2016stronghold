@@ -153,12 +153,12 @@ public class Robot extends IterativeRobot {
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 
 		// Reverse drive direction
-		if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) && !isReverseButtonPressed) {
-			isReverseButtonPressed = true;
-			drive.reverseDirection();
-		} else if (!oi.driver.buttonPressed(DriverController.DRIVE_REVERSE)) {
-			isReverseButtonPressed = false;
-		}
+//		if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) && !isReverseButtonPressed) {
+//			isReverseButtonPressed = true;
+//			drive.reverseDirection();
+//		} else if (!oi.driver.buttonPressed(DriverController.DRIVE_REVERSE)) {
+//			isReverseButtonPressed = false;
+//		}
 
 		// Climb/Descend Tower (driver)
 		if (oi.driver.buttonPressed(DriverController.CLIMB)) {

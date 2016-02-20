@@ -40,10 +40,10 @@ public class DriveBase extends RobotDrive {
 	double leftDirection = -1.0;
 	double rightDirection = 1.0;
 
-	public void reverseDirection() {
-		rightDirection *= -1.0;
-		leftDirection *= -1.0;
-	}
+//	public void reverseDirection() {
+//		rightDirection *= -1.0;
+//		leftDirection *= -1.0;
+//	}
 
 	/**
 	 * This function gets the distance traveled of the right side motors
@@ -82,7 +82,7 @@ public class DriveBase extends RobotDrive {
 		 * backRight.set(rightDirection * rightSpeed);
 		 */
 
-		tankDrive(leftDirection * leftSpeed, rightDirection * rightSpeed);
+		tankDrive(leftSpeed, rightSpeed);
 	}
 
 	public double getLeftRotationalDistance() {
@@ -105,7 +105,10 @@ public class DriveBase extends RobotDrive {
 	 * This is the constructor for the encoders
 	 */
 	public DriveBase() {
-		super(rightSide, leftSide);
+		super(leftSide, rightSide);
+		
+		leftSide.setInverted(true);
+		
 
 		double distancePerPulse = ENCODER_GEAR_RATIO / ENCODER_PULSES_PER_REVOLUTION;
 
