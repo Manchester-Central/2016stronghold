@@ -94,7 +94,7 @@ public class AutoController {
 		}
 	}
 
-	public void autoStateSpy(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, BallCenterMechanism center,
+	public void autoStateSpy(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
 			DigitalInput frontOpticalSensorA, DigitalInput frontOpticalSensorB) {
 		switch (autoCase) {
 		case SET_ARM_SHOOT:

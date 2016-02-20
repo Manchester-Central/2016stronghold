@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Talon;
  * @author Charles
  *
  */
-public class BallCenterMechanism {
+public class ShooterTrigger {
 	
 	private DigitalInput holdingSensor = new DigitalInput(PortConstants.HOLDING_SENSOR_PORT);
 	
@@ -17,7 +17,7 @@ public class BallCenterMechanism {
 	private Talon centeringTalon = new Talon(PortConstants.SHOOTER_TRIGGER_TALON_PORT);
 	
 	
-	public BallCenterMechanism() {
+	public ShooterTrigger() {
 		centeringTalon.setInverted(true);
 	}
 	/**

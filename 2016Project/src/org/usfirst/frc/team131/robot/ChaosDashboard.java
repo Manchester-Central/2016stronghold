@@ -50,7 +50,7 @@ public class ChaosDashboard {
 	 * @param shooter (IntakeShooter class)
 	 * @param center (BallCenterMechanism class)
 	 */
-	public void diplayShooter (IntakeShooter shooter, BallCenterMechanism center) {
+	public void diplayShooter (IntakeShooter shooter, ShooterTrigger center) {
         SmartDashboard.putNumber(" Current Flywheel Angular Velocity ", shooter.getSpeed());
         SmartDashboard.putBoolean(" Flywheel Up to Speed ", shooter.checkShooterSpeed(wantedSpeed));
         SmartDashboard.putBoolean(" Ball is in Position ", center.isBallInSensor());

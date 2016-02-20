@@ -17,8 +17,8 @@ public static final int OPERATOR_CONTROLLER_PORT = 2;
 	public static final int MANUAL_MODE = Controller.RIGHT_B_ABXY;
 	public static final int AUTO_MODE = Controller.DOWN_A_ABXY;
 	
-	public static final int CENTER_BALL = Controller.LEFT_BUMPER;
-	public static final int CENTER_OUTPUT = Controller.LEFT_TRIGGER;
+	public static final int TRIGGER_IN = Controller.LEFT_BUMPER;
+	public static final int TRIGGER_OUT = Controller.LEFT_TRIGGER;
 	
 	public static final int HALF_SHOT = Controller.RIGHT_BUMPER;
 	public static final int FULL_SHOT = Controller.RIGHT_TRIGGER;

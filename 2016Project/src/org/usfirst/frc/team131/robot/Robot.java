@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	DriveBase drive;
 	ScalingHook hook;
 	IntakeShooter intakeShooter;
-	BallCenterMechanism center;
+	ShooterTrigger center;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 		drive = new DriveBase();
 
 		arm = new ShoulderArm();
-		center = new BallCenterMechanism();
+		center = new ShooterTrigger();
 		intakeShooter = new IntakeShooter();
 		hook = new ScalingHook();
 
@@ -179,10 +179,10 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Ball Centering/Shoot (operator)
-		if (oi.operator.buttonPressed(OperatorController.CENTER_OUTPUT)) {
+		if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
 			// center.readyShot();
 			center.ballCenterManual(0.5);
-		} else if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)) {
+		} else if (oi.operator.buttonPressed(OperatorController.TRIGGER_IN)) {
 			center.ballCenter();
 		} else {
 			center.ballCenterManual(0.0);
