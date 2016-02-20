@@ -15,8 +15,9 @@ public class IntakeShooter {
 	private double RATE_TO_POWER = 0.01; // NEED TO CHANGE
 	private double MAX_CORRECTION = 0.1;
 
-	private Encoder shooterEncoder = new Encoder(PortConstants.SHOOTER_ENCODER_PORT_A, PortConstants.SHOOTER_ENCODER_PORT_B);
-
+	//private Encoder shooterEncoder = new Encoder(PortConstants.SHOOTER_ENCODER_PORT_A, PortConstants.SHOOTER_ENCODER_PORT_B);
+	private ShooterSensor shooterSensor = new ShooterSensor (PortConstants.SHOOTER_RATE_SENSOR_PORT); 
+	
 	private static final double SHOOTER_RANGE = 5.0;
 	private double targetSpeed = 0;
 
@@ -32,7 +33,7 @@ public class IntakeShooter {
 	 * @return (speed of shooter)
 	 */
 	public double getSpeed() {
-		return shooterEncoder.getRate();
+		return shooterSensor.getRate();
 	}
 
 	/**
@@ -71,8 +72,9 @@ public class IntakeShooter {
 	 * This function sets the speed of the flywheel to the current target speed
 	 */
 	public void updateFlywheelSpeed() {
-		shooterTalon1.set(targetSpeed);
-		shooterTalon2.set(targetSpeed);
+		//shooterTalon1.set(targetSpeed);
+		//shooterTalon2.set(targetSpeed);
+		shooterUpToSpeed(targetSpeed);
 	}
 
 	/**
@@ -90,8 +92,8 @@ public class IntakeShooter {
 	 * @return (whether or not it is going at the wanted speed)
 	 */
 	public boolean checkShooterSpeed(double targetSpeed) {
-		if (targetSpeed > shooterEncoder.getRate() - SHOOTER_RANGE
-				&& targetSpeed < shooterEncoder.getRate() + SHOOTER_RANGE) {
+		if (targetSpeed > shooterSensor.getRate() - SHOOTER_RANGE
+				&& targetSpeed < shooterSensor.getRate() + SHOOTER_RANGE) {
 			return true;
 		} else {
 			return false;
@@ -102,24 +104,24 @@ public class IntakeShooter {
 	 * This function gradually puts the shooter up to speed
 	 * @param wantedSpeed (the wanted speed)
 	 */
-	public void shooterUpToSpeed(float wantedSpeed) {
+	public void shooterUpToSpeed(double wantedSpeed) {
 		targetSpeed = wantedSpeed;
-		if (shooterEncoder.getRate() >= wantedSpeed - DEAD_BAND
-				&& shooterEncoder.getRate() <= wantedSpeed + DEAD_BAND) { 
+		if (shooterSensor.getRate() >= wantedSpeed - DEAD_BAND
+				&& shooterSensor.getRate() <= wantedSpeed + DEAD_BAND) { 
 			shooterTalon1.set(shooterTalon1.get());
 			shooterTalon2.set(shooterTalon2.get());
 			// If shooter rate is acceptable
-		} else if (shooterEncoder.getRate() > wantedSpeed + DEAD_BAND) { 
+		} else if (shooterSensor.getRate() > wantedSpeed + DEAD_BAND) { 
 			// If  shooter rate is too high
-			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
+			double correction = (wantedSpeed - shooterSensor.getRate()) * RATE_TO_POWER;
 			if (correction < -MAX_CORRECTION) {
 				correction = -MAX_CORRECTION;
 			}
 			shooterTalon1.set(correction + shooterTalon1.get());
 			shooterTalon2.set(correction + shooterTalon2.get());
-		} else if (shooterEncoder.getRate() < wantedSpeed - DEAD_BAND) { 
+		} else if (shooterSensor.getRate() < wantedSpeed - DEAD_BAND) { 
 			// If shooter rate is too low
-			double correction = (wantedSpeed - shooterEncoder.getRate()) * RATE_TO_POWER;
+			double correction = (wantedSpeed - shooterSensor.getRate()) * RATE_TO_POWER;
 			if (correction > MAX_CORRECTION) {
 				correction = MAX_CORRECTION;
 			}
