@@ -118,11 +118,12 @@ public class Robot extends IterativeRobot {
 			autoController.autoStateForward(arm, drive);
 			break;
 		case spyAuto:
-			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontLeftOpticalSensor, frontRightOpticalSensor);
+			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontLeftOpticalSensor,
+					frontRightOpticalSensor);
 			break;
 		case defaultAuto:
 		default:
-			autoController.autoStateDefault(drive);
+			autoController.autoStateDefault();
 			break;
 		}
 	}
@@ -192,11 +193,13 @@ public class Robot extends IterativeRobot {
 		if (isManualMode == false) {
 			if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
 				arm.stopShoulderArm();
-			} 
-			else {
-				arm.presetAngle(oi.operator.getDPad());
-				arm.angleAdjust(oi.operator.getLeftY());
-				arm.moveToAngle();
+			} else {
+				if (oi.operator.getDPad() != DPadDirection.NONE) {
+					arm.presetAngle(oi.operator.getDPad());
+					arm.moveToAngle();
+				} else {
+					arm.setShoulderSpeed(oi.operator.getLeftY());
+				}
 			}
 		} else {
 			arm.setShoulderSpeed(oi.operator.getLeftY());

@@ -43,7 +43,8 @@ public class PortConstants {
 	
 	// Relay
 	// kReverse is blue, kForward is red (relay is its own port)
-	public static final int LED_RELAY_PORT = 0;
+	public static final int RG_LED_RELAY_PORT = 0;
+	public static final int B_LED_RELAY_PORT = 1;
 	
 	// Analog
 	public static final int GYRO = 0;
