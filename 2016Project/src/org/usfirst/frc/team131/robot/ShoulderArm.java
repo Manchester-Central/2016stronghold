@@ -62,6 +62,20 @@ public class ShoulderArm implements ArmInfo {
 	 * sets arm to preset angles
 	 * @param direction (goes to angle)
 	 */
+	public double angleAdjust(double rawAdjustValue){
+		double adjustValue = 0.0;
+		if (rawAdjustValue > -0.25 && rawAdjustValue < 0.25) {
+			adjustValue = 0.0;
+		} else if (rawAdjustValue <= -0.25) {
+			adjustValue = -1.0;
+		}
+		else if (rawAdjustValue >= 0.25){
+			adjustValue = 1.0;
+		}
+		return adjustValue;
+	}
+	
+	
 	public void presetAngle(Controller.DPadDirection direction) {
 		// double speed = 0;
 		switch (direction) {

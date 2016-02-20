@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
 	final String backwardAuto = "Backward Auto";
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
+	boolean isManualMode;
 	AutoController autoController;
 	String autoSelected;
 	SendableChooser chooser;
@@ -73,6 +74,7 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, center);
 		ui.displayArm(arm);
 
+		isManualMode = true;
 	}
 
 	/**
@@ -165,6 +167,14 @@ public class Robot extends IterativeRobot {
 			hook.setClimbSpeed(0);
 		}
 
+		if (oi.operator.buttonPressed(OperatorController.AUTO_MODE)){
+			isManualMode = false;
+		}
+			
+		if (oi.operator.buttonPressed(OperatorController.MANUAL_MODE)){
+			isManualMode = true;
+		}
+		
 		// Ball Centering/Shoot (operator)
 		if (oi.operator.buttonPressed(OperatorController.CENTER_OUTPUT)) {
 			//center.readyShot();
@@ -175,38 +185,39 @@ public class Robot extends IterativeRobot {
 			
 		}
 		else {
-			center.ballCenterManual(0);
+			center.ballCenterManual(0.0);
 		}
 
 		// Shoulder Arm Movement (operator)
-		/*if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
-			arm.stopShoulderArm();
-		} else if (oi.operator.buttonPressed(OperatorController.ARM_UP)) {
-			arm.shoulderManualAngle(true);
-		} else if (oi.operator.buttonPressed(OperatorController.ARM_DOWN)) {
-			arm.shoulderManualAngle(false);
-		} else {
-			arm.presetAngle(oi.operator.getDPad());
+		if (isManualMode == false){
+			if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
+				arm.stopShoulderArm();
+			} else {
+				arm.presetAngle(oi.operator.getDPad());
+				arm.moveToAngle();
+			}
 		}
-		arm.moveToAngle();*/
-
-//		// Flywheel Speed Presets (operator)
-//		if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
-//			intakeShooter.ballShoot1();
-//		} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
-//			intakeShooter.ballShoot2();
-//		} else if (oi.operator.buttonPressed(OperatorController.INTAKE)) {
-//			intakeShooter.ballIntake();
-//		} else if (oi.operator.buttonPressed(OperatorController.STOP_FLYWHEEL)) {
-//			intakeShooter.flywheelStop();
-//		}
+		else {
+				arm.setShoulderSpeed(oi.operator.getLeftY());
+			}
 		
-		arm.setShoulderSpeed(oi.operator.getLeftY());
-//
-//		intakeShooter.updateFlywheelSpeed();
-		
-		intakeShooter.intakeShooterManual(oi.operator.getRightY());
-
+		// Flywheel Speed Presets (operator)
+		if (isManualMode == false) {
+			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
+				intakeShooter.ballShoot1();
+				intakeShooter.updateFlywheelSpeed();
+			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
+				intakeShooter.ballShoot2();
+				intakeShooter.updateFlywheelSpeed();
+			}
+			else { 
+				intakeShooter.intakeShooterManual(oi.operator.getRightY());
+			}
+		}
+		else {
+	
+			intakeShooter.intakeShooterManual(oi.operator.getRightY());		
+		}
 	}
 
 	/**

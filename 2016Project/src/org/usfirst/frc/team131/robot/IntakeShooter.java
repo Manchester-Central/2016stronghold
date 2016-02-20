@@ -65,6 +65,7 @@ public class IntakeShooter {
 	public void flywheelStop() {
 		targetSpeed = 0;
 	}
+	
 
 	/**
 	 * This function sets the speed of the flywheel to the current target speed
