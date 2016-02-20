@@ -20,7 +20,7 @@ public class ShoulderArm implements ArmInfo {
 	public static final double BACKWARD_POSITION = -90.0;
 	public static final double BACKWARDS_RAMP_POSITION = -110.0;
 	
-	DigitalInput armOpticalSensor = new DigitalInput (PortConstants.ARM_OPTICAL_SENSOR);
+	DigitalInput armLimitSwitch = new DigitalInput (PortConstants.ARM_LIMIT_SWITCH_PORT);
 	
 	ChaosPot pot = new ChaosPot();
 	AngleSpeedModifier modifier = new AngleSpeedModifier();
@@ -62,17 +62,12 @@ public class ShoulderArm implements ArmInfo {
 	 * sets arm to preset angles
 	 * @param direction (goes to angle)
 	 */
-	public double angleAdjust(double rawAdjustValue){
-		double adjustValue = 0.0;
-		if (rawAdjustValue > -0.25 && rawAdjustValue < 0.25) {
+	public void angleAdjust(double rawAdjustValue){
+		double adjustValue = rawAdjustValue;
+		if (rawAdjustValue > -0.1 && rawAdjustValue < 0.1) {
 			adjustValue = 0.0;
-		} else if (rawAdjustValue <= -0.25) {
-			adjustValue = -1.0;
-		}
-		else if (rawAdjustValue >= 0.25){
-			adjustValue = 1.0;
-		}
-		return adjustValue;
+		} 
+		goalAngle += adjustValue;
 	}
 	
 	

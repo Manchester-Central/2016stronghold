@@ -22,9 +22,12 @@ public class Robot extends IterativeRobot {
 	final String backwardAuto = "Backward Auto";
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
-	boolean isManualMode;
-	AutoController autoController;
 	String autoSelected;
+
+	boolean isManualMode;
+	boolean isReverseButtonPressed;
+
+	AutoController autoController;
 	SendableChooser chooser;
 	OI oi;
 	DriveBase drive;
@@ -36,25 +39,26 @@ public class Robot extends IterativeRobot {
 	ChaosDashboard ui;
 	LEDController LED;
 	CameraServer server;
-	boolean isReverseButtonPressed;
-	AnalogGyro gyro = new AnalogGyro (PortConstants.GYRO);
-	DigitalInput frontOpticalSensorA = new DigitalInput(PortConstants.OPTICAL_SENSOR_PORT_A);
-	DigitalInput frontOpticalSensorB = new DigitalInput(PortConstants.OPTICAL_SENSOR_PORT_B);
-	
+
+	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
+	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
+	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
+
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		autoController = new AutoController ();
-		
+		autoController = new AutoController();
+
 		isReverseButtonPressed = false;
-		
-        //server = CameraServer.getInstance();
-        //server.setQuality(50);
-        //the camera name (ex "cam0") can be found through the roborio web interface
-        //server.startAutomaticCapture("cam0");
-		
+
+		// server = CameraServer.getInstance();
+		// server.setQuality(50);
+		// the camera name (ex "cam0") can be found through the roborio web
+		// interface
+		// server.startAutomaticCapture("cam0");
+
 		oi = new OI();
 		drive = new DriveBase();
 
@@ -92,10 +96,9 @@ public class Robot extends IterativeRobot {
 		autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		
+
 		System.out.println("Auto selected: " + autoSelected);
 	}
-	
 
 	/**
 	 * This function is called periodically during autonomous
@@ -115,7 +118,7 @@ public class Robot extends IterativeRobot {
 			autoController.autoStateForward(arm, drive);
 			break;
 		case spyAuto:
-			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontOpticalSensorA, frontOpticalSensorB);
+			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontLeftOpticalSensor, frontRightOpticalSensor);
 			break;
 		case defaultAuto:
 		default:
@@ -136,19 +139,19 @@ public class Robot extends IterativeRobot {
 
 		// Ball Sensor Lights
 		if (center.isBallInSensor()) {
-			//LED.setBlue(false);
+			// LED.setBlue(false);
 		} else {
-			//LED.setBlue(true);
+			// LED.setBlue(true);
 		}
 
 		// Alarm Button (driver)
 		if (oi.driver.buttonPressed(DriverController.FLASH_RED)) {
-			//LED.turnAlarmOn();
+			// LED.turnAlarmOn();
 		}
 
 		// Drive (driver)
 		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
-		
+
 		// Reverse drive direction
 		if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) && !isReverseButtonPressed) {
 			isReverseButtonPressed = true;
@@ -156,7 +159,6 @@ public class Robot extends IterativeRobot {
 		} else if (!oi.driver.buttonPressed(DriverController.DRIVE_REVERSE)) {
 			isReverseButtonPressed = false;
 		}
-
 
 		// Climb/Descend Tower (driver)
 		if (oi.driver.buttonPressed(DriverController.CLIMB)) {
@@ -167,40 +169,39 @@ public class Robot extends IterativeRobot {
 			hook.setClimbSpeed(0);
 		}
 
-		if (oi.operator.buttonPressed(OperatorController.AUTO_MODE)){
+		// Set to Manual Mode
+		if (oi.operator.buttonPressed(OperatorController.AUTO_MODE)) {
 			isManualMode = false;
 		}
-			
-		if (oi.operator.buttonPressed(OperatorController.MANUAL_MODE)){
+		// Set to Auto Mode
+		if (oi.operator.buttonPressed(OperatorController.MANUAL_MODE)) {
 			isManualMode = true;
 		}
-		
+
 		// Ball Centering/Shoot (operator)
 		if (oi.operator.buttonPressed(OperatorController.CENTER_OUTPUT)) {
-			//center.readyShot();
+			// center.readyShot();
 			center.ballCenterManual(0.5);
-		} else if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)){
-	
+		} else if (oi.operator.buttonPressed(OperatorController.CENTER_BALL)) {
 			center.ballCenter();
-			
-		}
-		else {
+		} else {
 			center.ballCenterManual(0.0);
 		}
 
 		// Shoulder Arm Movement (operator)
-		if (isManualMode == false){
+		if (isManualMode == false) {
 			if (oi.operator.buttonPressed(OperatorController.STOP_SHOULDER)) {
 				arm.stopShoulderArm();
-			} else {
+			} 
+			else {
 				arm.presetAngle(oi.operator.getDPad());
+				arm.angleAdjust(oi.operator.getLeftY());
 				arm.moveToAngle();
 			}
+		} else {
+			arm.setShoulderSpeed(oi.operator.getLeftY());
 		}
-		else {
-				arm.setShoulderSpeed(oi.operator.getLeftY());
-			}
-		
+
 		// Flywheel Speed Presets (operator)
 		if (isManualMode == false) {
 			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
@@ -209,14 +210,12 @@ public class Robot extends IterativeRobot {
 			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
 				intakeShooter.ballShoot2();
 				intakeShooter.updateFlywheelSpeed();
-			}
-			else { 
+			} else {
 				intakeShooter.intakeShooterManual(oi.operator.getRightY());
 			}
-		}
-		else {
-	
-			intakeShooter.intakeShooterManual(oi.operator.getRightY());		
+		} else {
+
+			intakeShooter.intakeShooterManual(oi.operator.getRightY());
 		}
 	}
 

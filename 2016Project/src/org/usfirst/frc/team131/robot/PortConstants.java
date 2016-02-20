@@ -37,9 +37,9 @@ public class PortConstants {
 	public static final int HOLDING_SENSOR_PORT = 6;
 	
 	  
-	public static final int OPTICAL_SENSOR_PORT_A = 7;
-	public static final int OPTICAL_SENSOR_PORT_B = 8; 
-	public static final int ARM_OPTICAL_SENSOR = 9;
+	public static final int FL_OPTICAL_SENSOR_PORT = 7;
+	public static final int FR_OPTICAL_SENSOR_PORT = 8; 
+	public static final int ARM_LIMIT_SWITCH_PORT = 9;
 	
 	
 	// Relay
