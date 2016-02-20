@@ -32,7 +32,7 @@ public class DriveBase extends RobotDrive {
 	private static ChaosSpeedController leftSide = new ChaosSpeedController(PortConstants.LEFT_FRONT_VICTOR_PORT,
 			PortConstants.LEFT_MIDDLE_VICTOR_PORT, PortConstants.LEFT_BACK_VICTOR_PORT);
 
-	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_PORT_A, PortConstants.RIGHT_ENCODER_PORT_A, false,
+	Encoder rightEncoder = new Encoder(PortConstants.RIGHT_ENCODER_PORT_A, PortConstants.RIGHT_ENCODER_PORT_B, false,
 			Encoder.EncodingType.k4X);
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_PORT_A, PortConstants.LEFT_ENCODER_PORT_B, false,
 			Encoder.EncodingType.k4X);
@@ -124,6 +124,7 @@ public class DriveBase extends RobotDrive {
 	public void driveStraight(double speed, double angle, double wantedAngle) {
 
 		this.drive(speed, (wantedAngle - angle) * Kp);
+		
 	}
 
 }

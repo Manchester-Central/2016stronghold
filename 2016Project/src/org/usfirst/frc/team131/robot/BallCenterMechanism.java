@@ -16,6 +16,10 @@ public class BallCenterMechanism {
 	private static final double INTAKE_SPEED = -0.5;
 	private Talon centeringTalon = new Talon(PortConstants.SHOOTER_TRIGGER_TALON_PORT);
 	
+	
+	public BallCenterMechanism() {
+		centeringTalon.setInverted(true);
+	}
 	/**
 	 * This function checks if the ball is in the sensor
 	 * @return (if the ball is in the sensor) (true/false)

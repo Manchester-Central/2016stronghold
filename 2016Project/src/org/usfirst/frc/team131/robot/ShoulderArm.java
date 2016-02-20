@@ -123,10 +123,11 @@ public class ShoulderArm implements ArmInfo {
 	 * sets shoulder speed
 	 * @param speed (speed)
 	 */
-	private void setShoulderSpeed(double speed) {
+	public void setShoulderSpeed(double speed) {
 		//leftShoulderTalon.set(speed);
-		if (armOpticalSensor.get() && (speed < 0)) {
-			stopShoulderMovement();
+		//if (armOpticalSensor.get() && (speed < 0)) {
+		if(false){
+			//stopShoulderMovement();
 		} else {
 			shoulderTalon.set(speed);
 		}
