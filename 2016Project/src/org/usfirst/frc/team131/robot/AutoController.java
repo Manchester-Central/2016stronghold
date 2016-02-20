@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class AutoController {
 
 	private static final double INCHES_TO_CROSS_DEFENSE = 96;
+	private static final double INCHES_TO_REACH_DEFENSE = 84;
 
 	public static enum autoState {
 		START, DRIVE_FORWARD, DRIVE_BACKWARD, TURN_CLOCKWISE, STOP, SET_ARM_FORWARD, SET_ARM_SHOOT, SET_ARM_BACKWARD, SET_ARM_BACKWARD_RAMP, SET_FLYWHEEL_SPEED, SHOOT
@@ -43,6 +44,7 @@ public class AutoController {
 		}
 	}
 	public void autoCheval (DriveBase drive, ShoulderArm arm) {
+		boolean isStopped = false;
 		switch (autoCase){
 		
 		case SET_ARM_SHOOT:
@@ -52,8 +54,7 @@ public class AutoController {
 			drive.setSpeed(0.2, 0.2);
 			break;
 		case STOP:
-			drive.setSpeed(0, 0);
-			break;
+			drive.setSpeed(0,0);
 		case SET_ARM_FORWARD:
 			arm.presetAngle(DPadDirection.DOWN);
 			break;		
@@ -61,8 +62,23 @@ public class AutoController {
 			break;
 		}
 		
-		if (autoCase == autoCase.START) {
-			
+		if (autoCase == autoState.START) {
+			autoCase = autoState.SET_ARM_SHOOT;
+		}
+		if (arm.getAngle() == arm.getAngleSetpoint()) {
+			autoCase = autoState.DRIVE_FORWARD;
+		}
+		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
+				&& drive.getleftDistanceInInches() >= INCHES_TO_REACH_DEFENSE) {
+			autoCase = autoState.STOP;
+			isStopped = true;
+		}
+		if (isStopped) {
+			autoCase = autoState.SET_ARM_FORWARD;
+			isStopped = false;
+		}
+		if (arm.getAngle() == arm.getAngleSetpoint()) {
+			autoCase = autoState.DRIVE_FORWARD;
 		}
 	}
 		
