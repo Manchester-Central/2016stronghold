@@ -42,7 +42,30 @@ public class AutoController {
 			autoCase = autoState.STOP;
 		}
 	}
-
+	public void autoCheval (DriveBase drive, ShoulderArm arm) {
+		switch (autoCase){
+		
+		case SET_ARM_SHOOT:
+			arm.presetAngle(DPadDirection.LEFT);
+		break;
+		case DRIVE_FORWARD:
+			drive.setSpeed(0.2, 0.2);
+			break;
+		case STOP:
+			drive.setSpeed(0, 0);
+			break;
+		case SET_ARM_FORWARD:
+			arm.presetAngle(DPadDirection.DOWN);
+			break;		
+		default:
+			break;
+		}
+		
+		if (autoCase == autoCase.START) {
+			
+		}
+	}
+		
 	public void autoStateForward(ShoulderArm arm, DriveBase drive) {
 		switch (autoCase) {
 
@@ -117,6 +140,7 @@ public class AutoController {
 		}
 	}
 
+	
 	public void autoStateDefault(DriveBase drive) {
 		if (drive.getRightDistanceInInches() <= INCHES_TO_CROSS_DEFENSE
 				&& drive.getleftDistanceInInches() <= INCHES_TO_CROSS_DEFENSE) {
