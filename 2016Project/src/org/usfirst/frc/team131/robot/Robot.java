@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
 	DriveBase drive;
 	ScalingHook hook;
 	IntakeShooter intakeShooter;
-	ShooterTrigger center;
+	ShooterTrigger shooterTrigger;
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 		drive = new DriveBase();
 
 		arm = new ShoulderArm();
-		center = new ShooterTrigger();
+		shooterTrigger = new ShooterTrigger();
 		intakeShooter = new IntakeShooter();
 		hook = new ScalingHook();
 
@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 
 		ui = new ChaosDashboard();
 		ui.displayArmPositions();
-		ui.diplayShooter(intakeShooter, center);
+		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 
 		isManualMode = true;
@@ -107,7 +107,7 @@ public class Robot extends IterativeRobot {
 
 		// ui display
 		ui.displayArmPositions();
-		ui.diplayShooter(intakeShooter, center);
+		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 
 		switch (autoSelected) {
@@ -118,7 +118,7 @@ public class Robot extends IterativeRobot {
 			autoController.autoStateForward(arm, drive);
 			break;
 		case spyAuto:
-			autoController.autoStateSpy(arm, drive, intakeShooter, center, frontLeftOpticalSensor,
+			autoController.autoStateSpy(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
 					frontRightOpticalSensor);
 			break;
 		case defaultAuto:
@@ -135,11 +135,11 @@ public class Robot extends IterativeRobot {
 
 		// UI Display
 		ui.displayArmPositions();
-		ui.diplayShooter(intakeShooter, center);
+		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 
 		// Ball Sensor Lights
-		if (center.isBallInSensor()) {
+		if (shooterTrigger.isBallInSensor()) {
 			// LED.setBlue(false);
 		} else {
 			// LED.setBlue(true);
@@ -182,11 +182,11 @@ public class Robot extends IterativeRobot {
 		// Ball Centering/Shoot (operator)
 		if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
 			// center.readyShot();
-			center.ballCenterManual(0.5);
+			shooterTrigger.ballCenterManual(0.5);
 		} else if (oi.operator.buttonPressed(OperatorController.TRIGGER_IN)) {
-			center.ballCenter();
+			shooterTrigger.ballCenter();
 		} else {
-			center.ballCenterManual(0.0);
+			shooterTrigger.ballCenterManual(0.0);
 		}
 
 		// Shoulder Arm Movement (operator)
@@ -217,8 +217,13 @@ public class Robot extends IterativeRobot {
 				intakeShooter.intakeShooterManual(oi.operator.getRightY());
 			}
 		} else {
-
-			intakeShooter.intakeShooterManual(oi.operator.getRightY());
+			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
+				intakeShooter.intakeShooterManual(1.0);
+			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
+				intakeShooter.intakeShooterManual(0.5);
+			} else {
+				intakeShooter.intakeShooterManual(oi.operator.getRightY());
+			}
 		}
 	}
 

@@ -15,6 +15,10 @@ public class ShooterSensor {
 		(new TickUpdater()).start();
 	}
 	
+	/**
+	 * Rotations Per Minute
+	 * @return
+	 */
 	public double getRate () {
 		return rate;
 	}
@@ -33,7 +37,8 @@ public class ShooterSensor {
 				if (ticks.size() == 0) {
 					rate = 0;
 				} else {
-					long duration = System.currentTimeMillis() - ticks.getFirst();
+					double duration = (double) (System.currentTimeMillis() - ticks.getFirst());
+					duration = (duration / 1000L) / 60L; //convert to minutes
 					if (duration == 0) {
 						rate = 0;
 					} else {
