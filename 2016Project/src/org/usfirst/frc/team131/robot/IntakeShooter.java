@@ -21,8 +21,8 @@ public class IntakeShooter {
 	private static final double SHOOTER_RANGE = 5.0;
 	private double targetSpeed = 0;
 
-	private static final double OUTPUT_SPEED_1 = 1.0;
-	private static final double OUTPUT_SPEED_2 = 0.5;
+	private static final double OUTPUT_SPEED_1 = 1000.0;
+	private static final double OUTPUT_SPEED_2 = 500.0;
 	private static final double INTAKE_SPEED = -0.5;
 	private Talon shooterTalon1 = new Talon(PortConstants.SHOOTER_TALON_PORT_1);
 	private Talon shooterTalon2 = new Talon(PortConstants.SHOOTER_TALON_PORT_2);

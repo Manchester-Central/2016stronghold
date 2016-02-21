@@ -108,6 +108,7 @@ public class DriveBase extends RobotDrive {
 		super(leftSide, rightSide);
 		
 		leftSide.setInverted(true);
+		rightSide.setInverted(true);
 		
 
 		double distancePerPulse = ENCODER_GEAR_RATIO / ENCODER_PULSES_PER_REVOLUTION;

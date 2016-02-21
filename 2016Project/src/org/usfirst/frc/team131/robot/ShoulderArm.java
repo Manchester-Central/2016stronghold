@@ -2,6 +2,7 @@ package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * this is the shoulder arm class, it controls its position and speed
@@ -16,10 +17,13 @@ public class ShoulderArm implements ArmInfo {
 	private static final double maxAngle = 180;
 	private static final double minAngle = 0;
 
-	public static final double FORWARD_POSITION = 90.0;
-	public static final double SCORING_POSITION = 45.0;
-	public static final double BACKWARD_POSITION = -90.0;
-	public static final double BACKWARDS_RAMP_POSITION = -110.0;
+	// 0 DEGREES IS VERTICAL!!!
+	// NEGATIVE IS TOWARDS THE ROBOT
+	// POSITIVE IS AWAY FROM THE ROBOT
+	public static final double DOWN_DPAD_ANGLE = 0.0;
+	public static final double LEFT_DPAD_ANGLE = 0.0;
+	public static final double UP_DPAD_ANGLE = 0.0;
+	public static final double RIGHT_DPAD_ANGLE = 0.0;
 
 	DigitalInput armLimitSwitch = new DigitalInput(PortConstants.ARM_LIMIT_SWITCH_PORT);
 
@@ -64,7 +68,7 @@ public class ShoulderArm implements ArmInfo {
 	 * gets the shoulder speed
 	 */
 	public double getTestShoulderSpeed() {
-		return modifier.adjustSpeed(pot.getAngle(), SCORING_POSITION, UP_SPEED);
+		return modifier.adjustSpeed(pot.getAngle(), LEFT_DPAD_ANGLE, UP_SPEED);
 	}
 
 	/**
@@ -89,26 +93,26 @@ public class ShoulderArm implements ArmInfo {
 			// UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("right");
-			goalAngle = BACKWARDS_RAMP_POSITION;
+			goalAngle = RIGHT_DPAD_ANGLE;
 			break;
 		case LEFT:
 			// speed = modifier.adjustSpeed(pot.getAngle(), LOWER_MIDDLE,
 			// DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("left");
-			goalAngle = SCORING_POSITION;
+			goalAngle = LEFT_DPAD_ANGLE;
 			break;
 		case UP:
 			// speed = modifier.adjustSpeed(pot.getAngle(), TOP, UP_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("up");
-			goalAngle = BACKWARD_POSITION;
+			goalAngle = UP_DPAD_ANGLE;
 			break;
 		case DOWN:
 			// speed = modifier.adjustSpeed(pot.getAngle(), BOTTOM, DOWN_SPEED);
 			// shoulderManual (speed);
 			// System.out.println("down");
-			goalAngle = FORWARD_POSITION;
+			goalAngle = DOWN_DPAD_ANGLE;
 			break;
 		default:
 			// shoulderManual (speed);
@@ -130,8 +134,10 @@ public class ShoulderArm implements ArmInfo {
 	 */
 	public void moveToAngle() {
 		if (goalAngle != -1) {
-			double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, UP_SPEED);
+			//double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, UP_SPEED);
+			double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, 0.5);
 			setShoulderSpeed(speed);
+			SmartDashboard.putNumber("shoulder speed", speed);
 		}
 
 		// TODO Auto-generated method stub
@@ -146,9 +152,9 @@ public class ShoulderArm implements ArmInfo {
 	 */
 	public void setShoulderSpeed(double speed) {
 		// leftShoulderTalon.set(speed);
-		// if (armOpticalSensor.get() && (speed < 0)) {
-		if (false) {
-			// stopShoulderMovement();
+		 if (armLimitSwitch.get() && (speed < 0)) {
+		//if (false) {
+			 stopShoulderMovement();
 		} else {
 			shoulderTalon.set(speed);
 		}

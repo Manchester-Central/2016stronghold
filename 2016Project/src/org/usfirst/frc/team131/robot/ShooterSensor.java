@@ -39,7 +39,7 @@ public class ShooterSensor {
 				} else {
 					double duration = (double) (System.currentTimeMillis() - ticks.getFirst());
 					duration = (duration / 1000L) / 60L; //convert to minutes
-					if (duration == 0) {
+					if (duration == 0 ) {
 						rate = 0;
 					} else {
 						rate = ticks.size() / duration;
