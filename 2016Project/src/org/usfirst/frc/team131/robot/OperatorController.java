@@ -16,8 +16,9 @@ public static final int OPERATOR_CONTROLLER_PORT = 2;
 	
 	public static final int INTAKE = Controller.RIGHT_B_ABXY;
 	public static final int STOP_FLYWHEEL = Controller.DOWN_A_ABXY;
-	public static final int CENTER_BALL = Controller.LEFT_TRIGGER;
-	public static final int CENTER_OUTPUT = Controller.LEFT_BUMPER;
+	
+	public static final int CENTER_BALL = Controller.LEFT_BUMPER;
+	public static final int CENTER_OUTPUT = Controller.LEFT_TRIGGER;
 	
 	public static final int ARM_UP = Controller.RIGHT_BUMPER;
 	public static final int ARM_DOWN = Controller.RIGHT_TRIGGER;

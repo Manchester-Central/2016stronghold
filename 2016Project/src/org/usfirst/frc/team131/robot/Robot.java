@@ -145,7 +145,7 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Drive (driver)
-		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
+		drive.setSpeed(-oi.driver.getRightY(), oi.driver.getLeftY());
 		
 		// Reverse drive direction
 		if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) && !isReverseButtonPressed) {
@@ -201,7 +201,7 @@ public class Robot extends IterativeRobot {
 //			intakeShooter.flywheelStop();
 //		}
 		
-		arm.setShoulderSpeed(oi.operator.getLeftY());
+		arm.setShoulderSpeed(-oi.operator.getLeftY());
 //
 //		intakeShooter.updateFlywheelSpeed();
 		
