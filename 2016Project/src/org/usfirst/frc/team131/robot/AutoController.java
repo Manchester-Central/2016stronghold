@@ -14,7 +14,7 @@ public class AutoController {
 
 	}
 
-	private autoState autoCase;
+	private autoState autoCase =  autoState.START;
 
 	public void autoStateBackward(ShoulderArm arm, DriveBase drive) {
 		switch (autoCase) {
@@ -35,7 +35,7 @@ public class AutoController {
 		if (autoCase == autoState.START) {
 			autoCase = autoState.SET_ARM_BACKWARD_RAMP;
 		}
-		if (arm.getAngle() == arm.getAngleSetpoint()) {
+		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 			autoCase = autoState.DRIVE_BACKWARD;
 		}
 		if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE
@@ -140,7 +140,7 @@ public class AutoController {
 		if (autoCase == autoState.START) {
 			autoCase = autoState.SET_ARM_SHOOT;
 		}
-		if (arm.getAngle() == arm.getAngleSetpoint()) {
+		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 			autoCase = autoState.DRIVE_BACKWARD;
 		}
 		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
@@ -156,13 +156,12 @@ public class AutoController {
 			autoCase = autoState.SHOOT;
 		}
 	}
-	public void straightForward () {
-		switch (autoCase) {
-		
-		}
-	}
+//	public void straightForward () {
+//		switch (autoCase) {
+//			
+//		}
+//	}
 
 	public void autoStateDefault() {
-
 	}
 }
