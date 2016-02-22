@@ -11,6 +11,8 @@ public class DriverController extends Controller {
 	
 	public static final int FLASH_RED = Controller.RIGHT_BUMPER;
 	
+	public static final int HALF_SPEED = Controller.LEFT_TRIGGER;
+	
 	//public static final int RAISE_HOOK = Controller.LEFT_BUMPER;
 	//public static final int LOWER_HOOK = Controller.LEFT_TRIGGER;
 	

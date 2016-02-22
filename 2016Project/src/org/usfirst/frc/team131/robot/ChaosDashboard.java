@@ -17,7 +17,7 @@ public class ChaosDashboard {
 	 * This is the constructor, intializes the wanted speed
 	 */
 	public ChaosDashboard () {
-		wantedSpeed = 1.12;
+		wantedSpeed = 2000.0;
 	}
 	
 	/**
@@ -29,10 +29,10 @@ public class ChaosDashboard {
 
 
         // inital dashboard constants
-        SmartDashboard.putNumber ("First Position ", ShoulderArm.DOWN_DPAD_ANGLE);
-        SmartDashboard.putNumber("Second Position ", ShoulderArm.LEFT_DPAD_ANGLE);
-        SmartDashboard.putNumber("Third Position ", ShoulderArm.UP_DPAD_ANGLE);
-        SmartDashboard.putNumber("Fourth Position ", ShoulderArm.RIGHT_DPAD_ANGLE);
+        SmartDashboard.putNumber ("Down DPad ", ShoulderArm.DOWN_DPAD_ANGLE);
+        SmartDashboard.putNumber("Left DPad ", ShoulderArm.LEFT_DPAD_ANGLE);
+        SmartDashboard.putNumber("Up DPad ", ShoulderArm.UP_DPAD_ANGLE);
+        SmartDashboard.putNumber("Right DPad ", ShoulderArm.RIGHT_DPAD_ANGLE);
 	}
 	
 	/**
@@ -54,6 +54,11 @@ public class ChaosDashboard {
         SmartDashboard.putNumber(" Current Flywheel Angular Velocity ", shooter.getSpeed());
         SmartDashboard.putBoolean(" Flywheel Up to Speed ", shooter.checkShooterSpeed(wantedSpeed));
         SmartDashboard.putBoolean(" Ball is in Position ", center.isBallInSensor());
+	}
+	
+	public void diplayDrive (DriveBase drive) {
+		SmartDashboard.putNumber("left encoder", drive.getleftDistanceInInches());
+		SmartDashboard.putNumber("right encoder", drive.getRightDistanceInInches());
 	}
 	
 }

@@ -86,11 +86,11 @@ public class DriveBase extends RobotDrive {
 	}
 
 	public double getLeftRotationalDistance() {
-		return rightEncoder.getDistance();
+		return leftEncoder.getDistance();
 	}
 
 	public double getRightRotationalDistance() {
-		return leftEncoder.getDistance();
+		return rightEncoder.getDistance();
 	}
 
 	public double getleftDistanceInInches() {

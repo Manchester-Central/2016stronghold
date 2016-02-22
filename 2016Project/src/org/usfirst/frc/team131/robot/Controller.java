@@ -102,17 +102,16 @@ public class Controller {
 		switch (pov) {
 		case 0:
 			return DPadDirection.UP;
-		case 2:
+		case 90:
 			return DPadDirection.RIGHT;
-		case 4:
+		case 180:
 			return DPadDirection.DOWN;
-		case 6:
+		case 270:
 			return DPadDirection.LEFT;
 		default:
 			return DPadDirection.NONE;
 
 		}
-
 		// double x = stick.getRawAxis(6);
 		// double y = stick.getRawAxis(7);
 		// if (x >= 0.5) {

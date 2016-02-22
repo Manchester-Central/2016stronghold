@@ -19,6 +19,7 @@ public static final int OPERATOR_CONTROLLER_PORT = 2;
 	public static final int HALF_SHOT = Controller.LEFT_BUMPER;
 	public static final int FULL_SHOT = Controller.LEFT_TRIGGER;
 
+	public static final int AUTO_INTAKE = Controller.DOWN_A_ABXY;
 	
 	
 	public OperatorController() {

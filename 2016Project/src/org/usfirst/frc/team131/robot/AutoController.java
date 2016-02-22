@@ -66,7 +66,7 @@ public class AutoController {
 		if (autoCase == autoState.START) {
 			autoCase = autoState.SET_ARM_SHOOT;
 		}
-		if (arm.getAngle() == arm.getAngleSetpoint()) {
+		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 			autoCase = autoState.DRIVE_FORWARD;
 		}
 		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
@@ -102,7 +102,7 @@ public class AutoController {
 		if (autoCase == autoState.START) {
 			autoCase = autoState.DRIVE_FORWARD;
 		}
-		if (arm.getAngle() == arm.getAngleSetpoint()) {
+		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 			autoCase = autoState.DRIVE_BACKWARD;
 		}
 		if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE

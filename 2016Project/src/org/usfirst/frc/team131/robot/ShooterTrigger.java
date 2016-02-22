@@ -19,13 +19,14 @@ public class ShooterTrigger {
 	
 	public ShooterTrigger() {
 		centeringTalon.setInverted(true);
+	
 	}
 	/**
 	 * This function checks if the ball is in the sensor
 	 * @return (if the ball is in the sensor) (true/false)
 	 */
 	public boolean isBallInSensor () {
-		return holdingSensor.get();
+		return !holdingSensor.get();
 	}
 	
 	/**
@@ -55,7 +56,7 @@ public class ShooterTrigger {
 	 * This function fires if the ball is centered
 	 */
 	public void readyShot() {
-		if (holdingSensor.get() == true){
+		if (holdingSensor.get() == false){
 			centeringTalon.set(OUTPUT_SPEED);
 		}
 		else {

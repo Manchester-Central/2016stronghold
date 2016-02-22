@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
 	ShoulderArm arm;
 	ChaosDashboard ui;
 	LEDController LED;
-	 Camera cam;
+	// Camera cam;
 	// CameraServer server;
-
+	int shootState = 0;
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
@@ -83,8 +83,8 @@ public class Robot extends IterativeRobot {
 
 		// isManualMode = true;
 
-		 cam = new Camera();
-		 cam.Start();
+		// cam = new Camera();
+		// cam.Start();
 	}
 
 	/**
@@ -115,6 +115,7 @@ public class Robot extends IterativeRobot {
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
+		ui.diplayDrive(drive);
 
 		switch (autoSelected) {
 		case backwardAuto:
@@ -141,7 +142,8 @@ public class Robot extends IterativeRobot {
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
-		 cam.Capture(true);
+		ui.diplayDrive(drive);
+		// cam.Capture(true);
 	}
 
 	/**
@@ -149,11 +151,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 
-		 cam.Capture(arm.getAngle() < 0);
+		// cam.Capture(arm.getAngle() < 0);
 		// UI Display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
+		ui.diplayDrive(drive);
 
 		// Ball Sensor Lights
 		if (shooterTrigger.isBallInSensor()) {
@@ -168,7 +171,12 @@ public class Robot extends IterativeRobot {
 		}
 
 		// Drive (driver)
-		drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
+		if(oi.driver.buttonPressed(DriverController.HALF_SPEED)) {
+			drive.setSpeed(oi.driver.getLeftY() / 2.0, oi.driver.getRightY() / 2.0);	
+		}
+		else{
+			drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
+		}
 
 		// Reverse drive direction
 		// if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) &&
@@ -198,16 +206,6 @@ public class Robot extends IterativeRobot {
 		// isManualMode = true;
 		// }
 
-		// Ball Centering/Shoot (operator)
-		if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
-			// center.readyShot();
-			shooterTrigger.ballCenterManual(0.5);
-		} else if (oi.operator.buttonPressed(OperatorController.TRIGGER_IN)) {
-			shooterTrigger.ballCenter();
-		} else {
-			shooterTrigger.ballCenterManual(0.0);
-		}
-
 		// Shoulder Arm Movement (operator)
 
 		if (oi.operator.getDPad() != DPadDirection.NONE) {
@@ -218,16 +216,36 @@ public class Robot extends IterativeRobot {
 		} else {
 			arm.setShoulderSpeed(oi.operator.getLeftY());
 		}
+		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
+			if(!shooterTrigger.isBallInSensor()){
+				intakeShooter.intakeShooterManual(1.0);
+				shooterTrigger.ballCenter();
+			}
+			else{
+				shooterTrigger.ballCenter();
 
-		// Flywheel Speed Presets (operator)
-		if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
-			intakeShooter.ballShoot1();
-			intakeShooter.updateFlywheelSpeed();
-		} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
-			intakeShooter.ballShoot2();
-			intakeShooter.updateFlywheelSpeed();
-		} else {
-			intakeShooter.intakeShooterManual(oi.operator.getRightY());
+				intakeShooter.intakeShooterManual(0.0);
+			}
+		}
+		else {
+			shootState =0;
+			// Ball Centering/Shoot (operator)
+			if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
+				// center.readyShot();
+				shooterTrigger.ballCenterManual(0.5);
+			} else if (oi.operator.buttonPressed(OperatorController.TRIGGER_IN)) {
+				shooterTrigger.ballCenter();
+			} else {
+				shooterTrigger.ballCenterManual(0.0);
+			}
+			// Flywheel Speed Presets (operator)
+			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
+				intakeShooter.intakeShooterManual(-1.0);
+			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
+				intakeShooter.intakeShooterManual(-0.3);
+			} else {
+				intakeShooter.intakeShooterManual(oi.operator.getRightY());
+			}
 		}
 
 	}
