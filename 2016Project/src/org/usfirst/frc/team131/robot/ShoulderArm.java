@@ -23,7 +23,7 @@ public class ShoulderArm implements ArmInfo {
 	public static final double DOWN_DPAD_ANGLE = 91.0;
 	public static final double LEFT_DPAD_ANGLE = -70.0;
 	public static final double UP_DPAD_ANGLE = -23.5; //-23.5
-	public static final double RIGHT_DPAD_ANGLE = 0.0;
+	public static final double RIGHT_DPAD_ANGLE = 85.5;
 
 	DigitalInput armLimitSwitch = new DigitalInput(PortConstants.ARM_LIMIT_SWITCH_PORT);
 
@@ -84,6 +84,10 @@ public class ShoulderArm implements ArmInfo {
 		}
 		goalAngle += adjustValue;
 	}
+	
+	public void setGoalAngleManually (double angle) {
+		goalAngle = angle;
+	}
 
 	public void presetAngle(Controller.DPadDirection direction) {
 		// double speed = 0;
@@ -135,7 +139,7 @@ public class ShoulderArm implements ArmInfo {
 	public void moveToAngle() {
 		if (goalAngle != -1) {
 			//double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, UP_SPEED);
-			double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, 1.0);
+			double speed = modifier.adjustSpeed(pot.getAngle(), goalAngle, 0.8);
 			setShoulderSpeed(speed);
 			SmartDashboard.putNumber("shoulder speed", speed);
 		}

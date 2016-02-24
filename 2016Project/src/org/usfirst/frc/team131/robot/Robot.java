@@ -4,9 +4,9 @@ package org.usfirst.frc.team131.robot;
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,30 +37,32 @@ public class Robot extends IterativeRobot {
 	ChaosPot chaosPot;
 	ShoulderArm arm;
 	ChaosDashboard ui;
+	Command test;
 	LEDController LED;
-	// Camera cam;
-	// CameraServer server;
+	//Camera cam;
+	//CameraServer server;
 	int shootState = 0;
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
-
+	int numberOfCallings; // use for debug
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		test = new Test ();
 		autoController = new AutoController();
 
 		// isReverseButtonPressed = false;
 
-		// server = CameraServer.getInstance();
-		// server.setQuality(50);
+        //server = CameraServer.getInstance();
+        //server.setQuality(50);
 		// /*
 		// * the camera name (ex "cam0") can be found through the roborio web
 		// * interface
 		// */
-		// server.startAutomaticCapture("cam0");
+        //server.startAutomaticCapture("cam0");
 
 		oi = new OI();
 		drive = new DriveBase();
@@ -83,8 +85,8 @@ public class Robot extends IterativeRobot {
 
 		// isManualMode = true;
 
-		// cam = new Camera();
-		// cam.Start();
+		//cam = new Camera();
+		//cam.Start();
 	}
 
 	/**
@@ -99,51 +101,63 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
+		SmartDashboard.putString("Debug", "autonomousInit entry ");
 		autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-
+		autoController.autoCase = AutoController.autoState.START;
 		System.out.println("Auto selected: " + autoSelected);
+		SmartDashboard.putString("Debug", "autonomousInit exit ");
+		numberOfCallings = 0;
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-
+		SmartDashboard.putNumber("encoder spins", drive.getLeftRotationalDistance());
+		SmartDashboard.putString("Debug", "autonomousPeriodic entry ");
 		// ui display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-
-		switch (autoSelected) {
-		case backwardAuto:
-			autoController.autoStateBackward(arm, drive);
-			break;
-		case forwardAuto:
-			autoController.autoStateForward(arm, drive);
-			break;
-		case spyAuto:
-			autoController.autoStateSpy(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
-					frontRightOpticalSensor);
-			break;
-		case defaultAuto:
-		default:
-			autoController.autoStateDefault();
-			break;
-		}
+		numberOfCallings ++;
+	
+		
+//		switch (autoSelected) {
+//		case backwardAuto:
+//			autoController.autoStateBackward(arm, drive);
+//			break;
+//		case forwardAuto:
+//			autoController.autoStateForward(arm, drive);
+//			break;
+//		case spyAuto:
+//			autoController.autoStateSpy(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
+//					frontRightOpticalSensor);
+//			break;
+//		case defaultAuto:
+//		default:
+			autoController.autoStateDefault(drive);
+//			break;
+		
+//		}
+		//SmartDashboard.putString("Debug", "autonomousPeriodic exit ");
+		SmartDashboard.putString("autoSelection", autoSelected);
+		SmartDashboard.putNumber("number of auto loops", numberOfCallings);
 	}
 
 	@Override
 	public void disabledPeriodic() {
+		SmartDashboard.putString("Debug", "disabledPeriodic entry ");
 		// TODO Auto-generated method stub
 		super.disabledPeriodic();
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		// cam.Capture(true);
+		//cam.Capture(arm.getAngle() < 0);
+		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
 	}
 
 	/**
@@ -151,7 +165,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 
-		// cam.Capture(arm.getAngle() < 0);
+		//cam.Capture(arm.getAngle() < 0);
 		// UI Display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
