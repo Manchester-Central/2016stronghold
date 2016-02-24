@@ -1,34 +1,62 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="right encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="126"/>
+	</widget>
+	<widget field="left encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="Right DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
+	</widget>
+	<widget field="Up DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="63"/>
+	</widget>
+	<widget field="Left DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Down DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="Dpad" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field=" Ball is in Position " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="722" y="86"/>
+		<width>157</width>
+		<height>58</height>
+	</widget>
+	<widget field=" Flywheel Up to Speed " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="719" y="10"/>
+		<width>188</width>
+		<height>61</height>
+	</widget>
+	<widget field="shoulder speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="616" y="277"/>
+	</widget>
 	<widget field="Second Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="271" y="83"/>
+		<location x="502" y="47"/>
 	</widget>
 	<widget field="Third Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="270" y="62"/>
+		<location x="512" y="80"/>
 	</widget>
 	<widget field="Fourth Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="394"/>
+		<location x="507" y="116"/>
 	</widget>
 	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="247"/>
-	</widget>
-	<widget field=" Ball is in Position " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="226"/>
+		<location x="623" y="246"/>
 	</widget>
 	<widget field="Setpoint " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="205"/>
+		<location x="628" y="211"/>
 	</widget>
 	<widget field="First Position " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="184"/>
+		<location x="516" y="16"/>
 	</widget>
 	<widget field=" Current Flywheel Angular Velocity " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="163"/>
-	</widget>
-	<widget field=" Flywheel Up to Speed " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="142"/>
+		<location x="559" y="173"/>
 	</widget>
 	<widget field="Shoulder Arm Speed " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="121"/>
+		<location x="593" y="310"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="976" y="234"/>
@@ -46,50 +74,13 @@
 		<height>39</height>
 		<property name="Text" value="Current Position"/>
 	</static-widget>
-	<widget field="current flywheel angular velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="332" y="12"/>
-		<property name="Background" value="255.204.102.255"/>
-	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="964" y="375"/>
 		<height>14</height>
 		<property name="Text" value="Low Goal"/>
 	</static-widget>
-	<widget field="Fly wheel up to speed" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="617" y="7"/>
-		<width>149</width>
-		<height>33</height>
-	</widget>
-	<widget field="Second Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="108" y="43"/>
-		<property name="Background" value="204.255.153.255"/>
-	</widget>
-	<widget field="Shoulder Arm Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="392" y="41"/>
-		<property name="Background" value="255.204.102.255"/>
-	</widget>
-	<widget field="Third Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="119" y="73"/>
-		<property name="Background" value="204.255.153.255"/>
-	</widget>
-	<widget field="First Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="122" y="12"/>
-		<property name="Background" value="204.255.153.255"/>
-	</widget>
-	<widget field="Fourth Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="112" y="100"/>
-		<property name="Background" value="204.255.153.255"/>
-	</widget>
-	<widget field="Arm Pot" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="33" y="345"/>
-		<property name="Background" value="153.255.102.255"/>
-	</widget>
-	<widget field="Drive Speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="12" y="373"/>
-		<property name="Background" value="153.255.102.255"/>
-	</widget>
 	<widget field="Auto choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="0" y="272"/>
+		<location x="773" y="324"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="1262" y="2"/>
@@ -105,17 +96,6 @@
 		<width>10</width>
 		<height>420</height>
 	</static-widget>
-	<widget field="setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
-		<location x="949" y="233"/>
-		<width>250</width>
-		<property name="Upper Limit" value="180.0"/>
-		<property name="Tick Interval" value="30.0"/>
-	</widget>
-	<widget field="current position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
-		<location x="950" y="36"/>
-		<property name="Upper Limit" value="180.0"/>
-		<property name="Tick Interval" value="30.0"/>
-	</widget>
 </dashboard>
 <live-window>
 </live-window>

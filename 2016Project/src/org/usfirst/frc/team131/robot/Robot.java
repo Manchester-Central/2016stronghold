@@ -116,7 +116,7 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-
+		
 		switch (autoSelected) {
 		case backwardAuto:
 			autoController.autoStateBackward(arm, drive);

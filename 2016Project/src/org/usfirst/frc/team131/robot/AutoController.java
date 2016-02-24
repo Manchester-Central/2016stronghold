@@ -2,6 +2,8 @@ package org.usfirst.frc.team131.robot;
 
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
+import com.ni.vision.NIVision.LegFeature;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class AutoController {
@@ -112,49 +114,69 @@ public class AutoController {
 	}
 
 	public void autoStateSpy(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
-			DigitalInput frontOpticalSensorA, DigitalInput frontOpticalSensorB) {
-		switch (autoCase) {
-		case SET_ARM_SHOOT:
-			arm.presetAngle(DPadDirection.LEFT);
-			break;
-		case DRIVE_BACKWARD:
-			drive.setSpeed(-0.2, -0.2);
-			break;
-		case TURN_CLOCKWISE:
-			// may need to alter
-			drive.setSpeed(0.1, -0.1);
-			break;
-		case DRIVE_FORWARD:
-			drive.setSpeed(0.2, 0.2);
-			break;
-		case SET_FLYWHEEL_SPEED:
-			intakeShooter.ballShoot1();
-			break;
-		case SHOOT:
-			center.readyShot();
-			break;
-		default:
-			break;
-		}
-		intakeShooter.updateFlywheelSpeed();
-		if (autoCase == autoState.START) {
-			autoCase = autoState.SET_ARM_SHOOT;
-		}
+			DigitalInput frontLeftOpticalSensor, DigitalInput frontRightOpticalSensor) {
+		arm.presetAngle(DPadDirection.UP);
+		arm.moveToAngle();
 		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-			autoCase = autoState.DRIVE_BACKWARD;
+			drive.setSpeed(-0.5, -0.5);
+			arm.stopShoulderArm();
 		}
-		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
-			autoCase = autoState.TURN_CLOCKWISE;
+		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96){
+			drive.setSpeed(0.5, -0.5);
 		}
-		if (frontOpticalSensorA.get() && frontOpticalSensorB.get()) {
-			autoCase = autoState.DRIVE_FORWARD;
+		if (frontLeftOpticalSensor.get() && frontRightOpticalSensor.get()){
+			drive.setSpeed(0.5, 0.5);
 		}
-		if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
-			autoCase = autoState.SET_FLYWHEEL_SPEED;
+		if (drive.getleftDistanceInInches() >= 210 && drive.getRightDistanceInInches() >= 210){
+			drive.setSpeed(0, 0);
+			intakeShooter.ballShoot1();
+			intakeShooter.updateFlywheelSpeed();
 		}
-		if (intakeShooter.checkShooterSpeed(1)) {
-			autoCase = autoState.SHOOT;
+		if (intakeShooter.checkShooterSpeed(1000.0)) {
+			center.ballReversal();
 		}
+//		switch (autoCase) {
+//		case SET_ARM_SHOOT:
+//			arm.presetAngle(DPadDirection.LEFT);
+//			break;
+//		case DRIVE_BACKWARD:
+//			drive.setSpeed(-0.2, -0.2);
+//			break;
+//		case TURN_CLOCKWISE:
+//			// may need to alter
+//			drive.setSpeed(0.1, -0.1);
+//			break;
+//		case DRIVE_FORWARD:
+//			drive.setSpeed(0.2, 0.2);
+//			break;
+//		case SET_FLYWHEEL_SPEED:
+//			intakeShooter.ballShoot1();
+//			break;
+//		case SHOOT:
+//			center.readyShot();
+//			break;
+//		default:
+//			break;
+//		}
+//		intakeShooter.updateFlywheelSpeed();
+//		if (autoCase == autoState.START) {
+//			autoCase = autoState.SET_ARM_SHOOT;
+//		}
+//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+//			autoCase = autoState.DRIVE_BACKWARD;
+//		}
+//		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
+//			autoCase = autoState.TURN_CLOCKWISE;
+//		}
+//		if (frontOpticalSensorA.get() && frontOpticalSensorB.get()) {
+//			autoCase = autoState.DRIVE_FORWARD;
+//		}
+//		if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
+//			autoCase = autoState.SET_FLYWHEEL_SPEED;
+//		}
+//		if (intakeShooter.checkShooterSpeed(1)) {
+//			autoCase = autoState.SHOOT;
+//		}
 	}
 //	public void straightForward () {
 //		switch (autoCase) {
