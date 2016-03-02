@@ -16,7 +16,7 @@ public class AutoController {
 
 	public autoState autoCase = autoState.START;
 
-	// auto that does nothing
+	//nothing
 	public void autoStateDefault(DriveBase drive) {
 		drive.setSpeed(0.0, 0.0);
 	}
