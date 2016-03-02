@@ -123,6 +123,7 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
+<<<<<<< HEAD
 		numberOfCallings ++;
 	
 		
@@ -146,6 +147,25 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putString("Debug", "autonomousPeriodic exit ");
 		SmartDashboard.putString("autoSelection", autoSelected);
 		SmartDashboard.putNumber("number of auto loops", numberOfCallings);
+=======
+		
+		switch (autoSelected) {
+		case backwardAuto:
+			autoController.autoStateBackward(arm, drive);
+			break;
+		case forwardAuto:
+			autoController.autoStateForward(arm, drive);
+			break;
+		case spyAuto:
+			autoController.autoStateSpy(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
+					frontRightOpticalSensor);
+			break;
+		case defaultAuto:
+		default:
+			autoController.autoStateDefault();
+			break;
+		}
+>>>>>>> 35155184a448237c40d0ec7fd55ea54a9908393d
 	}
 
 	@Override
