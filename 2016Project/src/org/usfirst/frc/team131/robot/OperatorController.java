@@ -26,6 +26,6 @@ public static final int OPERATOR_CONTROLLER_PORT = 2;
 		super(OPERATOR_CONTROLLER_PORT);
 		
 		
-				// TODO Auto-generated constructor stub
+				
 	}
 }

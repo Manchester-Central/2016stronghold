@@ -16,7 +16,7 @@ public class AutoController {
 
 	public autoState autoCase = autoState.START;
 
-	// auto that does nothing
+	//nothing
 	public void autoStateDefault(DriveBase drive) {
 		drive.setSpeed(0.0, 0.0);
 	}
@@ -75,46 +75,46 @@ public class AutoController {
 		// }
 	}
 
-	public void autoCheval(DriveBase drive, ShoulderArm arm) {
-		boolean isStopped = false;
-		switch (autoCase) {
-
-		case SET_ARM_SHOOT:
-			arm.presetAngle(DPadDirection.LEFT);
-			arm.moveToAngle();
-			break;
-		case DRIVE_FORWARD:
-			drive.setSpeed(0.2, 0.2);
-			break;
-		case STOP:
-			drive.setSpeed(0, 0);
-		case SET_ARM_FORWARD:
-			arm.presetAngle(DPadDirection.DOWN);
-			arm.moveToAngle();
-			break;
-		default:
-			break;
-		}
-
-		if (autoCase == autoState.START) {
-			autoCase = autoState.SET_ARM_SHOOT;
-		}
-		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-			autoCase = autoState.DRIVE_FORWARD;
-		}
-		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
-				&& drive.getleftDistanceInInches() >= INCHES_TO_REACH_DEFENSE) {
-			autoCase = autoState.STOP;
-			isStopped = true;
-		}
-		if (isStopped) {
-			autoCase = autoState.SET_ARM_FORWARD;
-			isStopped = false;
-		}
-		if (arm.getAngle() == arm.getAngleSetpoint()) {
-			autoCase = autoState.DRIVE_FORWARD;
-		}
-	}
+//	public void autoCheval(DriveBase drive, ShoulderArm arm) {
+//		boolean isStopped = false;
+//		switch (autoCase) {
+//
+//		case SET_ARM_SHOOT:
+//			arm.presetAngle(DPadDirection.LEFT);
+//			arm.moveToAngle();
+//			break;
+//		case DRIVE_FORWARD:
+//			drive.setSpeed(0.2, 0.2);
+//			break;
+//		case STOP:
+//			drive.setSpeed(0, 0);
+//		case SET_ARM_FORWARD:
+//			arm.presetAngle(DPadDirection.DOWN);
+//			arm.moveToAngle();
+//			break;
+//		default:
+//			break;
+//		}
+//
+//		if (autoCase == autoState.START) {
+//			autoCase = autoState.SET_ARM_SHOOT;
+//		}
+//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+//			autoCase = autoState.DRIVE_FORWARD;
+//		}
+//		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
+//				&& drive.getleftDistanceInInches() >= INCHES_TO_REACH_DEFENSE) {
+//			autoCase = autoState.STOP;
+//			isStopped = true;
+//		}
+//		if (isStopped) {
+//			autoCase = autoState.SET_ARM_FORWARD;
+//			isStopped = false;
+//		}
+//		if (arm.getAngle() == arm.getAngleSetpoint()) {
+//			autoCase = autoState.DRIVE_FORWARD;
+//		}
+//	}
 
 	// switch (autoCase) {
 	//

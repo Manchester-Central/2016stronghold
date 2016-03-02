@@ -39,13 +39,14 @@ public class Robot extends IterativeRobot {
 	ChaosDashboard ui;
 	Command test;
 	LEDController LED;
-	//Camera cam;
+	Camera cam;
 	//CameraServer server;
 	int shootState = 0;
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
 	int numberOfCallings; // use for debug
+	int updateCycles = 0;
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
@@ -85,8 +86,8 @@ public class Robot extends IterativeRobot {
 
 		// isManualMode = true;
 
-		//cam = new Camera();
-		//cam.Start();
+		cam = new Camera();
+		cam.Start();
 	}
 
 	/**
@@ -149,6 +150,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		updateCycles ++;
 		SmartDashboard.putString("Debug", "disabledPeriodic entry ");
 		// TODO Auto-generated method stub
 		super.disabledPeriodic();
@@ -156,7 +158,9 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		//cam.Capture(arm.getAngle() < 0);
+		if (updateCycles % 10 == 0) {
+			cam.Capture(arm.getAngle() < 0);
+		}
 		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
 	}
 
@@ -164,8 +168,10 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-
-		//cam.Capture(arm.getAngle() < 0);
+		updateCycles ++;
+		if (updateCycles % 10 == 0) {
+			cam.Capture(arm.getAngle() < 0);
+		}
 		// UI Display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
