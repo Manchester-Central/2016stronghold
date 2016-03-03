@@ -41,7 +41,7 @@ public class AutoController {
 	// drive over rough terrain, moat, or rock wall auto
 	public void autoStateForward(DriveBase drive) {
 			drive.setSpeed(-0.5, -0.5);
-			if(drive.getRightDistanceInInches() >= 150 && drive.getleftDistanceInInches() >= 150) {
+			if( Math.abs(drive.getRightDistanceInInches() + drive.getleftDistanceInInches()) / 2 >= 150) {
 				drive.setSpeed(0.0, 0.0);
 			}
 		

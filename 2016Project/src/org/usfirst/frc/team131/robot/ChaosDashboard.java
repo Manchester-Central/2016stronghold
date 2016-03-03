@@ -17,7 +17,7 @@ public class ChaosDashboard {
 	 * This is the constructor, intializes the wanted speed
 	 */
 	public ChaosDashboard () {
-		wantedSpeed = 2000.0;
+		wantedSpeed = 5500.0;
 	}
 	
 	/**

@@ -52,7 +52,6 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		test = new Test ();
 		autoController = new AutoController();
 
 		// isReverseButtonPressed = false;
@@ -124,7 +123,11 @@ public class Robot extends IterativeRobot {
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
 		numberOfCallings ++;
-	
+		if (chooser.getSelected() == forwardAuto) {
+			autoController.autoStateForward(drive);
+		} else {
+			autoController.autoStateDefault(drive);
+		}
 		
 //		switch (autoSelected) {
 //		case backwardAuto:
@@ -139,7 +142,6 @@ public class Robot extends IterativeRobot {
 //			break;
 //		case defaultAuto:
 //		default:
-			autoController.autoStateDefault(drive);
 //			break;
 		
 //		}
@@ -158,8 +160,9 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		if (updateCycles % 10 == 0) {
+		if (updateCycles % 6 == 0) {
 			cam.Capture(arm.getAngle() < 0);
+			updateCycles = 0;
 		}
 		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
 	}
@@ -169,8 +172,9 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		updateCycles ++;
-		if (updateCycles % 10 == 0) {
+		if (updateCycles % 6 == 0) {
 			cam.Capture(arm.getAngle() < 0);
+			updateCycles = 0;
 		}
 		// UI Display
 		ui.displayArmPositions();
