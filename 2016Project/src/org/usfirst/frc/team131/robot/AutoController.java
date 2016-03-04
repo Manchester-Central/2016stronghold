@@ -2,22 +2,10 @@ package org.usfirst.frc.team131.robot;
 
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
-import com.ni.vision.NIVision.LegFeature;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class AutoController {
-
-	private static final double INCHES_TO_CROSS_DEFENSE = 150;
-	private static final double INCHES_TO_REACH_DEFENSE = 84;
-
-	public static enum autoState {
-		START, DRIVE_FORWARD, DRIVE_BACKWARD, TURN_CLOCKWISE, STOP, SET_ARM_FORWARD, SET_ARM_SHOOT, SET_ARM_BACKWARD, SET_ARM_BACKWARD_RAMP, SET_FLYWHEEL_SPEED, SHOOT
-
-	}
-
-	public autoState autoCase = autoState.START;
-
+	
 	//nothing
 	public void autoStateDefault(DriveBase drive) {
 		drive.setSpeed(0.0, 0.0);
@@ -44,274 +32,28 @@ public class AutoController {
 			if( Math.abs(drive.getRightDistanceInInches() + drive.getleftDistanceInInches()) / 2 >= 150) {
 				drive.setSpeed(0.0, 0.0);
 			}
-		
-	
-	
-	//UNTESTED CASE AUTOS		
-			
-		//switch(autoCase)
-		// case SET_ARM_BACKWARD_RAMP:
-		// arm.setGoalAngleManually(45.0);
-		// arm.moveToAngle();
-		// break;
-		// case DRIVE_BACKWARD:
-		// drive.setSpeed(-0.2, -0.2);
-		// break;
-		// case STOP:
-		// drive.setSpeed(0, 0);
-		// break;
-		// default:
-		//
-		// break;
-		// }
-		// if (autoCase == autoState.START) {
-		// autoCase = autoState.SET_ARM_BACKWARD_RAMP;
-		// }
-		// if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle()
-		// <= arm.getAngleSetpoint() + 5.0) {
-		// autoCase = autoState.DRIVE_BACKWARD;
-		// }
-		// if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE
-		// && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-		// autoCase = autoState.STOP;
-		// }
 	}
-
-//<<<<<<< HEAD
-//	public void autoCheval(DriveBase drive, ShoulderArm arm) {
-//		boolean isStopped = false;
-//		switch (autoCase) {
-//
-//		case SET_ARM_SHOOT:
-//			arm.presetAngle(DPadDirection.LEFT);
-//			arm.moveToAngle();
-//			break;
-//		case DRIVE_FORWARD:
-//			drive.setSpeed(0.2, 0.2);
-//			break;
-//		case STOP:
-//			drive.setSpeed(0, 0);
-//		case SET_ARM_FORWARD:
-//			arm.presetAngle(DPadDirection.DOWN);
-//			arm.moveToAngle();
-//			break;
-//		default:
-//			break;
-//		}
-//
-//		if (autoCase == autoState.START) {
-//			autoCase = autoState.SET_ARM_SHOOT;
-//		}
-//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-//			autoCase = autoState.DRIVE_FORWARD;
-//		}
-//		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
-//				&& drive.getleftDistanceInInches() >= INCHES_TO_REACH_DEFENSE) {
-//			autoCase = autoState.STOP;
-//			isStopped = true;
-//		}
-//		if (isStopped) {
-//			autoCase = autoState.SET_ARM_FORWARD;
-//			isStopped = false;
-//		}
-//		if (arm.getAngle() == arm.getAngleSetpoint()) {
-//			autoCase = autoState.DRIVE_FORWARD;
-//		}
-//	}
-//=======
-//	public void autoCheval(DriveBase drive, ShoulderArm arm) {
-//		boolean isStopped = false;
-//		switch (autoCase) {
-//
-//		case SET_ARM_SHOOT:
-//			arm.presetAngle(DPadDirection.LEFT);
-//			arm.moveToAngle();
-//			break;
-//		case DRIVE_FORWARD:
-//			drive.setSpeed(0.2, 0.2);
-//			break;
-//		case STOP:
-//			drive.setSpeed(0, 0);
-//		case SET_ARM_FORWARD:
-//			arm.presetAngle(DPadDirection.DOWN);
-//			arm.moveToAngle();
-//			break;
-//		default:
-//			break;
-//		}
-//
-//		if (autoCase == autoState.START) {
-//			autoCase = autoState.SET_ARM_SHOOT;
-//		}
-//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-//			autoCase = autoState.DRIVE_FORWARD;
-//		}
-//		if (drive.getRightDistanceInInches() >= INCHES_TO_REACH_DEFENSE
-//				&& drive.getleftDistanceInInches() >= INCHES_TO_REACH_DEFENSE) {
-//			autoCase = autoState.STOP;
-//			isStopped = true;
-//		}
-//		if (isStopped) {
-//			autoCase = autoState.SET_ARM_FORWARD;
-//			isStopped = false;
-//		}
-//		if (arm.getAngle() == arm.getAngleSetpoint()) {
-//			autoCase = autoState.DRIVE_FORWARD;
-//		}
-//
-//	}
-//>>>>>>> 77444868330c0bbe7658867d079a1da842b5cfe4
-
-	// switch (autoCase) {
-	//
-	// case SET_ARM_FORWARD:
-	// arm.presetAngle(DPadDirection.DOWN);
-	// arm.moveToAngle();
-	// break;
-	// case DRIVE_FORWARD:
-	// drive.setSpeed(0.2, 0.2);
-	// break;
-	// case STOP:
-	// drive.setSpeed(0, 0);
-	// break;
-	// default:
-	//
-	// break;
-	// }
-	// if (autoCase == autoState.START) {
-	// autoCase = autoState.DRIVE_FORWARD;
-	// }
-	// if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <=
-	// arm.getAngleSetpoint() + 5.0) {
-	// autoCase = autoState.DRIVE_BACKWARD;
-	// }
-	// if (drive.getRightDistanceInInches() >= INCHES_TO_CROSS_DEFENSE
-	// && drive.getleftDistanceInInches() >= INCHES_TO_CROSS_DEFENSE) {
-	// autoCase = autoState.STOP;
-	// }
-	// }
-
-//<<<<<<< HEAD
-//	public void autoStateSpy(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
-//<<<<<<< HEAD
-//=======
-//	public void autoStateSpy(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
-//			DigitalInput frontOpticalSensorA, DigitalInput frontOpticalSensorB) {
-//		switch (autoCase) {
-//		case SET_ARM_SHOOT:
-//			arm.presetAngle(DPadDirection.LEFT);
-//			arm.moveToAngle();
-//			break;
-//		case DRIVE_BACKWARD:
-//			drive.setSpeed(-0.2, -0.2);
-//			break;
-//		case TURN_CLOCKWISE:
-//			// may need to alter
-//			drive.setSpeed(0.1, -0.1);
-//			break;
-//		case DRIVE_FORWARD:
-//			drive.setSpeed(0.2, 0.2);
-//			break;
-//		case SET_FLYWHEEL_SPEED:
-//			intakeShooter.ballShoot1();
-//			break;
-//		case SHOOT:
-//			center.readyShot();
-//			break;
-//		default:
-//			break;
-//		}
-//		intakeShooter.updateFlywheelSpeed();
-//		if (autoCase == autoState.START) {
-//			autoCase = autoState.SET_ARM_SHOOT;
-//		}
-//			DigitalInput frontLeftOpticalSensor, DigitalInput frontRightOpticalSensor) {
-//		arm.presetAngle(DPadDirection.UP);
-//		arm.moveToAngle();
-//<<<<<<< HEAD
-//>>>>>>> 35155184a448237c40d0ec7fd55ea54a9908393d
-//=======
-//
-//>>>>>>> 77444868330c0bbe7658867d079a1da842b5cfe4
-//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-//			drive.setSpeed(-0.5, -0.5);
-//			arm.stopShoulderArm();
-//		}
-//		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96){
-//			drive.setSpeed(0.5, -0.5);
-//		}
-//		if (frontLeftOpticalSensor.get() && frontRightOpticalSensor.get()){
-//			drive.setSpeed(0.5, 0.5);
-//		}
-//		if (drive.getleftDistanceInInches() >= 210 && drive.getRightDistanceInInches() >= 210){
-//			drive.setSpeed(0, 0);
-//			intakeShooter.ballShoot1();
-//			intakeShooter.updateFlywheelSpeed();
-//		}
-//		if (intakeShooter.checkShooterSpeed(1000.0)) {
-//			center.ballReversal();
-//		}
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//=======
-//=======
-//>>>>>>> 77444868330c0bbe7658867d079a1da842b5cfe4
-//		switch (autoCase) {
-//		case SET_ARM_SHOOT:
-//			arm.presetAngle(DPadDirection.LEFT);
-//			break;
-//		case DRIVE_BACKWARD:
-//			drive.setSpeed(-0.2, -0.2);
-//			break;
-//		case TURN_CLOCKWISE:
-//			// may need to alter
-//			drive.setSpeed(0.1, -0.1);
-//			break;
-//		case DRIVE_FORWARD:
-//			drive.setSpeed(0.2, 0.2);
-//			break;
-//		case SET_FLYWHEEL_SPEED:
-//			intakeShooter.ballShoot1();
-//			break;
-//		case SHOOT:
-//			center.readyShot();
-//			break;
-//		default:
-//			break;
-//		}
-//		intakeShooter.updateFlywheelSpeed();
-//		if (autoCase == autoState.START) {
-//			autoCase = autoState.SET_ARM_SHOOT;
-//		}
-//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-//			autoCase = autoState.DRIVE_BACKWARD;
-//		}
-//		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
-//			autoCase = autoState.TURN_CLOCKWISE;
-//		}
-//		if (frontOpticalSensorA.get() && frontOpticalSensorB.get()) {
-//			autoCase = autoState.DRIVE_FORWARD;
-//		}
-//		if (drive.getleftDistanceInInches() >= 196 && drive.getRightDistanceInInches() >= 196) {
-//			autoCase = autoState.SET_FLYWHEEL_SPEED;
-//		}
-//		if (intakeShooter.checkShooterSpeed(1)) {
-//			autoCase = autoState.SHOOT;
-//		}
-//	}
-//	public void straightForward () {
-//		switch (autoCase) {
-//			
-//		}
-//	}
-//>>>>>>> 35155184a448237c40d0ec7fd55ea54a9908393d
-
-	//}
-
-	// public void straightForward () {
-	// switch (autoCase) {
-	//
-	// }
-	// }
+	
+	// Start in the Spybox and score
+	public void spyAuto (ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center, DigitalInput frontLeftOpticalSensor, DigitalInput frontRightOpticalSensor) {
+		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+			drive.setSpeed(-0.5, -0.5);
+			arm.stopShoulderArm();
+		}
+		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96){
+			drive.setSpeed(0.5, -0.5);
+		}
+		if (frontLeftOpticalSensor.get() && frontRightOpticalSensor.get()){
+			drive.setSpeed(0.5, 0.5);
+		}
+		if (drive.getleftDistanceInInches() >= 210 && drive.getRightDistanceInInches() >= 210){
+			drive.setSpeed(0, 0);
+			intakeShooter.ballShoot1();
+			intakeShooter.updateFlywheelSpeed();
+		}
+		if (intakeShooter.checkShooterSpeed(5500.0)) {
+			center.ballReversal();
+		}
+	}
 
 }

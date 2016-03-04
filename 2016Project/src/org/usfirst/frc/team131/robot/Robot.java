@@ -41,12 +41,13 @@ public class Robot extends IterativeRobot {
 	LEDController LED;
 	Camera cam;
 	//CameraServer server;
-	int shootState = 0;
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
+	
 	int numberOfCallings; // use for debug
 	int updateCycles = 0;
+	int shootState = 0;
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
@@ -76,6 +77,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("Backward Auto", backwardAuto);
 		chooser.addObject("Forward Autonomous", forwardAuto);
+		chooser.addObject("Auto Spy", spyAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		ui = new ChaosDashboard();
@@ -105,10 +107,9 @@ public class Robot extends IterativeRobot {
 		autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		autoController.autoCase = AutoController.autoState.START;
 		System.out.println("Auto selected: " + autoSelected);
 		SmartDashboard.putString("Debug", "autonomousInit exit ");
-		numberOfCallings = 0;
+		numberOfCallings = 0;		
 	}
 
 	/**
@@ -125,9 +126,14 @@ public class Robot extends IterativeRobot {
 		numberOfCallings ++;
 		if (chooser.getSelected() == forwardAuto) {
 			autoController.autoStateForward(drive);
+		} else if (chooser.getSelected() == backwardAuto) {
+			autoController.autoStateBackward(arm, drive);
+		} else if (chooser.getSelected() == spyAuto) {
+			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor, frontRightOpticalSensor);
 		} else {
 			autoController.autoStateDefault(drive);
 		}
+	
 		
 //		switch (autoSelected) {
 //		case backwardAuto:
@@ -278,7 +284,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		
 	}
 
 }
