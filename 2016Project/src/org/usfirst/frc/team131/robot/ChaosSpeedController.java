@@ -73,6 +73,12 @@ public class ChaosSpeedController implements SpeedController {
 
 		}
 
+		@Override
+		public void stopMotor() {
+			// TODO Auto-generated method stub
+			
+		}
+
 	}
 
 
