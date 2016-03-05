@@ -166,7 +166,7 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		if (updateCycles % 6 == 0) { 
+		if (updateCycles % 9 == 0) { 
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
@@ -178,7 +178,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		updateCycles ++;
-		if (updateCycles % 6 == 0) {
+		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}

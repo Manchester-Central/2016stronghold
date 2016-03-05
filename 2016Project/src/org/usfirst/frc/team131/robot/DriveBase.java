@@ -119,8 +119,8 @@ public class DriveBase extends RobotDrive {
 		leftEncoder.setSamplesToAverage(7);
 
 		rightEncoder.setMaxPeriod(0.1);
-		rightEncoder.setDistancePerPulse(distancePerPulse);
-		rightEncoder.setReverseDirection(true);
+		rightEncoder.setDistancePerPulse(distancePerPulse * 3.6);
+		rightEncoder.setReverseDirection(true); 
 		rightEncoder.setSamplesToAverage(7);
 
 	}
