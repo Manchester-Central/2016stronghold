@@ -44,7 +44,7 @@ public class Camera {
 			}
 
 			/** robot code here! **/
-			Timer.delay(0.005); // wait for a motor update time
+			//Timer.delay(0.005); // wait for a motor update time
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

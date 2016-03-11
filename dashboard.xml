@@ -1,5 +1,14 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="encoder spins" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="30" y="236"/>
+	</widget>
+	<widget field="number of auto loops" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="22" y="206"/>
+	</widget>
+	<widget field="autoSelection" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="68" y="319"/>
+	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="960" y="14"/>
 		<property name="Text" value="Shooter speed"/>
@@ -13,6 +22,8 @@
 		<location x="892" y="32"/>
 		<width>212</width>
 		<height>125</height>
+		<property name="Upper Limit" value="10000.0"/>
+		<property name="Tick Interval" value="1000.0"/>
 	</widget>
 	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="903" y="368"/>

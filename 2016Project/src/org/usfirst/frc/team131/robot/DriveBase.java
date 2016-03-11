@@ -46,6 +46,16 @@ public class DriveBase extends RobotDrive {
 //	}
 
 	/**
+	 *  This function resets the value fo the encoders
+	 *  
+	 * @return
+	 */
+	public void resetEncoders(){
+		leftEncoder.reset();
+		rightEncoder.reset();
+	}
+	
+	/**
 	 * This function gets the distance traveled of the right side motors
 	 * 
 	 * @return (distance traveled)

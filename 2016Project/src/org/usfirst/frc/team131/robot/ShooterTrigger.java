@@ -13,7 +13,7 @@ public class ShooterTrigger {
 	private DigitalInput holdingSensor = new DigitalInput(PortConstants.HOLDING_SENSOR_PORT);
 	
 	private static final double OUTPUT_SPEED = 1.0;
-	private static final double INTAKE_SPEED = -0.5;
+	private static final double INTAKE_SPEED = -1.0;
 	private Talon centeringTalon = new Talon(PortConstants.SHOOTER_TRIGGER_TALON_PORT);
 	
 	

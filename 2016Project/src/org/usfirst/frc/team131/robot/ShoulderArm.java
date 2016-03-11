@@ -22,7 +22,7 @@ public class ShoulderArm implements ArmInfo {
 	// POSITIVE IS AWAY FROM THE ROBOT
 	public static final double DOWN_DPAD_ANGLE = 90.0;
 	public static final double LEFT_DPAD_ANGLE = -70.0;
-	public static final double UP_DPAD_ANGLE = -23.5; //-23.5
+	public static final double UP_DPAD_ANGLE = -22.75; //-23.5//-22.0//-23.25
 	public static final double RIGHT_DPAD_ANGLE = 81.5;
 
 	DigitalInput armLimitSwitch = new DigitalInput(PortConstants.ARM_LIMIT_SWITCH_PORT);

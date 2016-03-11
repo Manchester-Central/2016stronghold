@@ -89,6 +89,11 @@ public class Robot extends IterativeRobot {
 
 		cam = new Camera();
 		cam.Start();
+		
+		if (updateCycles % 9 == 0) { 
+			cam.Capture(arm.getAngle() < 0);
+			updateCycles = 0;
+		}
 	}
 
 	/**
@@ -103,6 +108,7 @@ public class Robot extends IterativeRobot {
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	public void autonomousInit() {
+		drive.resetEncoders();
 		SmartDashboard.putString("Debug", "autonomousInit entry ");
 		autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
@@ -132,6 +138,11 @@ public class Robot extends IterativeRobot {
 			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor, frontRightOpticalSensor);
 		} else {
 			autoController.autoStateDefault(drive);
+		}
+		
+		if (updateCycles % 9 == 0) { 
+			cam.Capture(arm.getAngle() < 0);
+			updateCycles = 0;
 		}
 	
 		
@@ -188,21 +199,23 @@ public class Robot extends IterativeRobot {
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
 
+		/*
 		// Ball Sensor Lights
 		if (shooterTrigger.isBallInSensor()) {
 			// LED.setBlue(false);
 		} else {
 			// LED.setBlue(true);
-		}
+		}*/
 
+		/*
 		// Alarm Button (driver)
 		if (oi.driver.buttonPressed(DriverController.FLASH_RED)) {
 			// LED.turnAlarmOn();
-		}
+		}*/
 
 		// Drive (driver)
 		if(oi.driver.buttonPressed(DriverController.HALF_SPEED)) {
-			drive.setSpeed(oi.driver.getLeftY() / 2.0, oi.driver.getRightY() / 2.0);	
+			drive.setSpeed(oi.driver.getLeftY() *  0.7, oi.driver.getRightY() * 0.7);	
 		}
 		else{
 			drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
@@ -246,6 +259,7 @@ public class Robot extends IterativeRobot {
 		} else {
 			arm.setShoulderSpeed(oi.operator.getLeftY());
 		}
+		
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
 			if(!shooterTrigger.isBallInSensor()){
 				intakeShooter.intakeShooterManual(1.0);
@@ -262,7 +276,7 @@ public class Robot extends IterativeRobot {
 			// Ball Centering/Shoot (operator)
 			if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
 				// center.readyShot();
-				shooterTrigger.ballCenterManual(0.5);
+				shooterTrigger.ballCenterManual(1.0);
 			} else if (oi.operator.buttonPressed(OperatorController.TRIGGER_IN)) {
 				shooterTrigger.ballCenter();
 			} else {

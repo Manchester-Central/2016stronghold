@@ -6,7 +6,7 @@ package org.usfirst.frc.team131.robot;
  *
  */
 public class AngleSpeedModifier {
-	private final double DEAD_BAND = 10;
+	private final double DEAD_BAND = 9;
 	private final double MIN_SPEED = 0.0;
 
 	/**
