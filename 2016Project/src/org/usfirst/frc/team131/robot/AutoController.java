@@ -12,7 +12,7 @@ public class AutoController {
 	}
 
 	// low bar auto
-	public void autoStateBackward(ShoulderArm arm, DriveBase drive) {
+	public void autoStateArmBackward(ShoulderArm arm, DriveBase drive) {
 		arm.presetAngle(DPadDirection.RIGHT);
 		arm.moveToAngle();
 		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
@@ -28,13 +28,16 @@ public class AutoController {
 
 	// drive over rough terrain, moat, or rock wall auto
 	public void autoStateForward(DriveBase drive) {
+		// needs to test
+		drive.leftEncoder.reset();
+		drive.rightEncoder.reset();
+		drive.autoDriveStraight(600, -0.7);
 		
-		
-		if( Math.abs(drive.getRightDistanceInInches()) + Math.abs(drive.getleftDistanceInInches()) >= 300 *2) {
-			drive.setSpeed(0.0, 0.0);
-		}else{
-			drive.setSpeed(-0.7, -0.7);
-		}
+//		if( Math.abs(drive.getRightDistanceInInches()) + Math.abs(drive.getleftDistanceInInches()) >= 300 *2) {
+//			drive.setSpeed(0.0, 0.0);
+//		}else{
+//			drive.setSpeed(-0.7, -0.7);
+//		}
 	}
 	
 	// Start in the Spybox and score

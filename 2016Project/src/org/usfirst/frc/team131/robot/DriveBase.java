@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.Victor;
 public class DriveBase extends RobotDrive {
 	private static final double ENCODER_PULSES_PER_REVOLUTION = 360.0;
 	private static final double ENCODER_GEAR_RATIO = 1.0;
+	private final double ACCEPTED_DEVIATION = 2.0;
+	private final double SPEED_CORRECTION = 0.01;
 	private final double wheelCircumference = 8.0 * Math.PI;
 	double Kp = 0.03;
+	
 
 	/*
 	 * Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR_PORT);
@@ -91,6 +94,7 @@ public class DriveBase extends RobotDrive {
 		 * middleRight.set(rightDirection * rightSpeed);
 		 * backRight.set(rightDirection * rightSpeed);
 		 */
+		
 
 		tankDrive(leftSpeed, rightSpeed);
 	}
@@ -139,6 +143,24 @@ public class DriveBase extends RobotDrive {
 
 		this.drive(speed, (wantedAngle - angle) * Kp);
 		
+	}
+	
+	public void autoDriveStraight(double targetDistance, double startingSpeed){
+		leftEncoder.get();
+		rightEncoder.get();
+		if(Math.abs(rightEncoder.getDistance() + leftEncoder.getDistance()) / 2 <= targetDistance) {
+			if (leftEncoder.getDistance() >= rightEncoder.getDistance() + ACCEPTED_DEVIATION ) {
+				rightSide.set(rightSide.get() - SPEED_CORRECTION );
+			} else if (rightEncoder.getDistance() > leftEncoder.getDistance() + ACCEPTED_DEVIATION) {
+				leftSide.set(leftSide.get() - SPEED_CORRECTION);
+			} else {
+				leftSide.set(startingSpeed);
+				rightSide.set(startingSpeed);
+			}
+		} else {
+			leftSide.set(0.0);
+			rightSide.set(0.0);
+		}
 	}
 
 }

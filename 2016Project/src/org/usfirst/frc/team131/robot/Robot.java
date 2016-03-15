@@ -133,7 +133,7 @@ public class Robot extends IterativeRobot {
 		if (chooser.getSelected() == forwardAuto) {
 			autoController.autoStateForward(drive);
 		} else if (chooser.getSelected() == backwardAuto) {
-			autoController.autoStateBackward(arm, drive);
+			autoController.autoStateArmBackward(arm, drive);
 		} else if (chooser.getSelected() == spyAuto) {
 			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor, frontRightOpticalSensor);
 		} else {
@@ -257,7 +257,7 @@ public class Robot extends IterativeRobot {
 			// drive.setSpeed(0.2, 0.2);
 
 		} else {
-			arm.setShoulderSpeed(oi.operator.getLeftY());
+			arm.setShoulderSpeed(oi.operator.getLeftY() * 0.75);
 		}
 		
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
