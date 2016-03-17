@@ -46,6 +46,7 @@ public class PortConstants {
 	public static final int RG_LED_RELAY_PORT = 0;
 	public static final int B_LED_RELAY_PORT = 1;
 	
+	public static final int BREAK_SPIKE_PORT = 2;
 	// Analog
 	public static final int GYRO = 0;
 	public static final int ARM_POT	 = 1;

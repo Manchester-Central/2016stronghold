@@ -1,8 +1,8 @@
 package org.usfirst.frc.team131.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  * This class is the drive base
@@ -16,6 +16,7 @@ public class DriveBase extends RobotDrive {
 	private final double ACCEPTED_DEVIATION = 2.0;
 	private final double SPEED_CORRECTION = 0.01;
 	private final double wheelCircumference = 8.0 * Math.PI;
+	private final double ROBOT_TURN_RADIUS = 14.0;
 	double Kp = 0.03;
 	
 
@@ -28,7 +29,9 @@ public class DriveBase extends RobotDrive {
 	 * Victor middleRight = new Victor (PortConstants.RIGHT_MIDDLE_VICTOR_PORT);
 	 * Victor backRight = new Victor (PortConstants.RIGHT_BACK_VICTOR_PORT);
 	 */
-
+	
+	public Relay breakSpike = new Relay (PortConstants.BREAK_SPIKE_PORT);
+	
 	private static ChaosSpeedController rightSide = new ChaosSpeedController(PortConstants.RIGHT_FRONT_VICTOR_PORT,
 			PortConstants.RIGHT_MIDDLE_VICTOR_PORT, PortConstants.RIGHT_BACK_VICTOR_PORT);
 
@@ -157,6 +160,21 @@ public class DriveBase extends RobotDrive {
 				leftSide.set(startingSpeed);
 				rightSide.set(startingSpeed);
 			}
+		} else {
+			leftSide.set(0.0);
+			rightSide.set(0.0);
+		}
+	}
+	public void autoTurn(double turnAngleInDegrees){
+		double turnAngleInRadians = turnAngleInDegrees / 180 * Math.PI;
+		double arcLength = turnAngleInRadians * (ROBOT_TURN_RADIUS/2.0);
+		
+		double leftTargetDistance = leftEncoder.getDistance() - arcLength;
+		double rightTargetDistance = rightEncoder.getDistance() + arcLength;
+		
+		if(leftEncoder.getDistance()<= leftTargetDistance && rightEncoder.getDistance() >= rightTargetDistance) {
+			leftSide.set(-0.3);
+			rightSide.set(0.3);
 		} else {
 			leftSide.set(0.0);
 			rightSide.set(0.0);

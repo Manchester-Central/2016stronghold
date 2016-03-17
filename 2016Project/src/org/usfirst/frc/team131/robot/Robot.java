@@ -5,7 +5,9 @@ import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,6 +46,8 @@ public class Robot extends IterativeRobot {
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
+	
+	
 	
 	int numberOfCallings; // use for debug
 	int updateCycles = 0;
@@ -94,6 +98,9 @@ public class Robot extends IterativeRobot {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
+		
+		drive.breakSpike.setDirection(Relay.Direction.kForward);
+		
 	}
 
 	/**
@@ -133,7 +140,7 @@ public class Robot extends IterativeRobot {
 		if (chooser.getSelected() == forwardAuto) {
 			autoController.autoStateForward(drive);
 		} else if (chooser.getSelected() == backwardAuto) {
-			autoController.autoStateArmBackward(arm, drive);
+			autoController.autoStateArmBackward(arm, drive, intakeShooter);
 		} else if (chooser.getSelected() == spyAuto) {
 			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor, frontRightOpticalSensor);
 		} else {
