@@ -19,6 +19,9 @@ public class DriveBase extends RobotDrive {
 	private final double ROBOT_TURN_RADIUS = 14.0;
 	double Kp = 0.03;
 	
+	public boolean isTurning;
+	public boolean isDriving;
+	
 
 	/*
 	 * Victor frontLeft = new Victor(PortConstants.LEFT_FRONT_VICTOR_PORT);
@@ -149,8 +152,6 @@ public class DriveBase extends RobotDrive {
 	}
 	
 	public void autoDriveStraight(double targetDistance, double startingSpeed){
-		leftEncoder.get();
-		rightEncoder.get();
 		if(Math.abs(rightEncoder.getDistance() + leftEncoder.getDistance()) / 2 <= targetDistance) {
 			if (leftEncoder.getDistance() >= rightEncoder.getDistance() + ACCEPTED_DEVIATION ) {
 				rightSide.set(rightSide.get() - SPEED_CORRECTION );
@@ -160,12 +161,34 @@ public class DriveBase extends RobotDrive {
 				leftSide.set(startingSpeed);
 				rightSide.set(startingSpeed);
 			}
+			isDriving = true;
 		} else {
 			leftSide.set(0.0);
 			rightSide.set(0.0);
+			isDriving = false;
 		}
 	}
+	
+	public void autoDriveStraightBackwards(double targetDistance, double startingSpeed){
+		if(Math.abs(rightEncoder.getDistance() + leftEncoder.getDistance()) / 2 >= targetDistance) {
+			if (leftEncoder.getDistance() >= rightEncoder.getDistance() + ACCEPTED_DEVIATION ) {
+				rightSide.set(rightSide.get() - SPEED_CORRECTION );
+			} else if (rightEncoder.getDistance() > leftEncoder.getDistance() + ACCEPTED_DEVIATION) {
+				leftSide.set(leftSide.get() - SPEED_CORRECTION);
+			} else {
+				leftSide.set(startingSpeed);
+				rightSide.set(startingSpeed);
+			}
+			isDriving = true;
+		} else {
+			leftSide.set(0.0);
+			rightSide.set(0.0);
+			isDriving = false;
+		}
+	}
+	
 	public void autoTurn(double turnAngleInDegrees){
+		
 		double turnAngleInRadians = turnAngleInDegrees / 180 * Math.PI;
 		double arcLength = turnAngleInRadians * (ROBOT_TURN_RADIUS/2.0);
 		
@@ -175,9 +198,11 @@ public class DriveBase extends RobotDrive {
 		if(leftEncoder.getDistance()<= leftTargetDistance && rightEncoder.getDistance() >= rightTargetDistance) {
 			leftSide.set(-0.3);
 			rightSide.set(0.3);
+			isTurning = true;
 		} else {
 			leftSide.set(0.0);
 			rightSide.set(0.0);
+			isTurning = false;
 		}
 	}
 
