@@ -5,7 +5,6 @@ import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,7 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
-	final String lowBarAuto = "Backward Auto";
+	final String lowBarLowShotAuto = "Low Bar Low Shot";
+	final String lowBarHighShotAuto = "Low Bar High Shot";
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
 	String autoSelected;
@@ -42,16 +42,15 @@ public class Robot extends IterativeRobot {
 	Command test;
 	LEDController LED;
 	Camera cam;
-	//CameraServer server;
+	// CameraServer server;
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
-	
-	
-	
+
 	int numberOfCallings; // use for debug
 	int updateCycles = 0;
 	int shootState = 0;
+
 	/**
 	 * This function is run when the robot is initially booted up and should be
 	 * used for any initialization code.
@@ -61,13 +60,13 @@ public class Robot extends IterativeRobot {
 
 		// isReverseButtonPressed = false;
 
-        //server = CameraServer.getInstance();
-        //server.setQuality(50);
+		// server = CameraServer.getInstance();
+		// server.setQuality(50);
 		// /*
 		// * the camera name (ex "cam0") can be found through the roborio web
 		// * interface
 		// */
-        //server.startAutomaticCapture("cam0");
+		// server.startAutomaticCapture("cam0");
 
 		oi = new OI();
 		drive = new DriveBase();
@@ -79,7 +78,8 @@ public class Robot extends IterativeRobot {
 
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("Low Bar Auto", lowBarAuto);
+		chooser.addObject("Low Bar Low Shot Auto", lowBarLowShotAuto);
+		chooser.addObject("Low Bar High Shot Auto", lowBarHighShotAuto);
 		chooser.addObject("Forward Autonomous", forwardAuto);
 		chooser.addObject("Auto Spy", spyAuto);
 		SmartDashboard.putData("Auto choices", chooser);
@@ -93,14 +93,14 @@ public class Robot extends IterativeRobot {
 
 		cam = new Camera();
 		cam.Start();
-		
-		if (updateCycles % 9 == 0) { 
+
+		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
-		
+
 		drive.breakSpike.setDirection(Relay.Direction.kForward);
-		
+
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
 		// defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 		SmartDashboard.putString("Debug", "autonomousInit exit ");
-		numberOfCallings = 0;		
+		numberOfCallings = 0;
 	}
 
 	/**
@@ -137,49 +137,52 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		
-		numberOfCallings ++;
-		
+
+		numberOfCallings++;
+
 		if (chooser.getSelected() == forwardAuto) {
 			autoController.driveFowardAuto(drive);
-		} else if (chooser.getSelected() == lowBarAuto) {
+		} else if (chooser.getSelected() == lowBarLowShotAuto) {
 			autoController.lowBarLowShotAuto(arm, drive, intakeShooter, shooterTrigger);
-//		} else if (chooser.getSelected() == spyAuto) {
-//			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor, frontRightOpticalSensor);
+		} else if (chooser.getSelected() == spyAuto) {
+			autoController.spyAuto(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
+					frontRightOpticalSensor);
+		} else if (chooser.getSelected() == lowBarHighShotAuto) {
+			autoController.lowBarHighShotAuto(arm, drive, intakeShooter, shooterTrigger);
 		} else {
 			autoController.doNothingAuto(drive);
 		}
-		
-		if (updateCycles % 9 == 0) { 
+
+		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
-	
-		
-//		switch (autoSelected) {
-//		case backwardAuto:
-//			autoController.autoStateBackward(arm, drive);
-//			break;
-//		case forwardAuto:
-//			autoController.autoStateForward(arm, drive);
-//			break;
-//		case spyAuto:
-//			autoController.autoStateSpy(arm, drive, intakeShooter, shooterTrigger, frontLeftOpticalSensor,
-//					frontRightOpticalSensor);
-//			break;
-//		case defaultAuto:
-//		default:
-//			break;
-		
-//		}
-		//SmartDashboard.putString("Debug", "autonomousPeriodic exit ");
+
+		// switch (autoSelected) {
+		// case backwardAuto:
+		// autoController.autoStateBackward(arm, drive);
+		// break;
+		// case forwardAuto:
+		// autoController.autoStateForward(arm, drive);
+		// break;
+		// case spyAuto:
+		// autoController.autoStateSpy(arm, drive, intakeShooter,
+		// shooterTrigger, frontLeftOpticalSensor,
+		// frontRightOpticalSensor);
+		// break;
+		// case defaultAuto:
+		// default:
+		// break;
+
+		// }
+		// SmartDashboard.putString("Debug", "autonomousPeriodic exit ");
 		SmartDashboard.putString("autoSelection", autoSelected);
 		SmartDashboard.putNumber("number of auto loops", numberOfCallings);
 	}
 
 	@Override
 	public void disabledPeriodic() {
-		updateCycles ++;
+		updateCycles++;
 		SmartDashboard.putString("Debug", "disabledPeriodic entry ");
 		// TODO Auto-generated method stub
 		super.disabledPeriodic();
@@ -187,8 +190,8 @@ public class Robot extends IterativeRobot {
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
-		
-		if (updateCycles % 9 == 0) { 
+
+		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
@@ -199,11 +202,11 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		if (!oi.driver.buttonPressed(DriverController.BREAK)){
+		if (!oi.driver.buttonPressed(DriverController.BREAK)) {
 			drive.breakSpike.setDirection(Relay.Direction.kForward);
-		} 
-		updateCycles ++;
-		
+		}
+		updateCycles++;
+
 		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
@@ -215,24 +218,20 @@ public class Robot extends IterativeRobot {
 		ui.diplayDrive(drive);
 
 		/*
-		// Ball Sensor Lights
-		if (shooterTrigger.isBallInSensor()) {
-			// LED.setBlue(false);
-		} else {
-			// LED.setBlue(true);
-		}*/
+		 * // Ball Sensor Lights if (shooterTrigger.isBallInSensor()) { //
+		 * LED.setBlue(false); } else { // LED.setBlue(true); }
+		 */
 
 		/*
-		// Alarm Button (driver)
-		if (oi.driver.buttonPressed(DriverController.FLASH_RED)) {
-			// LED.turnAlarmOn();
-		}*/
+		 * // Alarm Button (driver) if
+		 * (oi.driver.buttonPressed(DriverController.FLASH_RED)) { //
+		 * LED.turnAlarmOn(); }
+		 */
 
 		// Drive (driver)
-		if(oi.driver.buttonPressed(DriverController.HALF_SPEED)) {
-			drive.setSpeed(oi.driver.getLeftY() *  0.7, oi.driver.getRightY() * 0.7);	
-		}
-		else{
+		if (oi.driver.buttonPressed(DriverController.HALF_SPEED)) {
+			drive.setSpeed(oi.driver.getLeftY() * 0.7, oi.driver.getRightY() * 0.7);
+		} else {
 			drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 		}
 
@@ -272,22 +271,20 @@ public class Robot extends IterativeRobot {
 			// drive.setSpeed(0.2, 0.2);
 
 		} else {
-			arm.setShoulderSpeed(oi.operator.getLeftY() * 0.75);
+			arm.setShoulderSpeed(oi.operator.getLeftY() * 0.6);
 		}
-		
+
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
-			if(!shooterTrigger.isBallInSensor()){
+			if (!shooterTrigger.isBallInSensor()) {
 				intakeShooter.intakeShooterManual(1.0);
 				shooterTrigger.ballCenter();
-			}
-			else{
+			} else {
 				shooterTrigger.ballCenter();
 
 				intakeShooter.intakeShooterManual(0.0);
 			}
-		}
-		else {
-			shootState =0;
+		} else {
+			shootState = 0;
 			// Ball Centering/Shoot (operator)
 			if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
 				// center.readyShot();
@@ -313,7 +310,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		
+
 	}
 
 }

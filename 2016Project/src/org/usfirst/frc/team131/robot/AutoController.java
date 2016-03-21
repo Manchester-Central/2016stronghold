@@ -1,15 +1,13 @@
 package org.usfirst.frc.team131.robot;
 
-import javax.print.attribute.standard.Finishings;
-
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class AutoController {
 	private final double DRIVE_DIRECTION = -1.0;
-	private final double DISTANCE_TO_TOWER = 128;
-	private final double DISTANCE_TO_TOWER_FROM_CORNER = 36.0;
+	private final double DISTANCE_TO_TOWER = 24.0; // 128
+	private final double DISTANCE_TO_TOWER_FROM_CORNER = 12.0; // 36
 	// distances need to be verified. may not be correct.
 
 	private final int START_STATE = 0;
@@ -26,18 +24,19 @@ public class AutoController {
 
 	private int preAutoState = START_STATE;
 	int currentAutoState = FORWARD_DRIVE_STATE;
-	
+
 	// nothing
 	public void doNothingAuto(DriveBase drive) {
 		drive.setSpeed(0.0, 0.0);
 	}
 
 	// low bar auto
-	public void lowBarLowShotAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger shooterTrigger) {
-		//@ TODO add some ifs; make it work; fix
-		switch(currentAutoState)  {
+	public void lowBarLowShotAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter,
+			ShooterTrigger shooterTrigger) {
+		// @ TODO add some ifs; make it work; fix
+		switch (currentAutoState) {
 		case FORWARD_DRIVE_STATE:
-			if(preAutoState != currentAutoState){
+			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 			} else {
@@ -46,7 +45,7 @@ public class AutoController {
 				}
 			}
 			break;
-			
+
 		case ARM_DOWN_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
@@ -115,40 +114,125 @@ public class AutoController {
 			System.out.println("donezo");
 			break;
 		}
-//		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-//			arm.stopShoulderArm();
-//			drive.setSpeed( 0.7 * DRIVE_DIRECTION,  0.7 * DRIVE_DIRECTION);
-//			
-//		}
-//		if (drive.getRightDistanceInInches() >= 150 && drive.getleftDistanceInInches() >= 150) {
-//			drive.setSpeed(0.0, 0.0);
-//			}
+		// if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle()
+		// <= arm.getAngleSetpoint() + 5.0) {
+		// arm.stopShoulderArm();
+		// drive.setSpeed( 0.7 * DRIVE_DIRECTION, 0.7 * DRIVE_DIRECTION);
+		//
+		// }
+		// if (drive.getRightDistanceInInches() >= 150 &&
+		// drive.getleftDistanceInInches() >= 150) {
+		// drive.setSpeed(0.0, 0.0);
+		// }
+	}
+
+	public void lowBarHighShotAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter,
+			ShooterTrigger shooterTrigger) {
+		// @ TODO add some ifs; make it work; fix
+		switch (currentAutoState) {
+		case FORWARD_DRIVE_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
+			} else {
+				if (!drive.isDriving) {
+					currentAutoState = ARM_DOWN_STATE;
+				}
+			}
+			break;
+
+		case ARM_DOWN_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				arm.presetAngle(DPadDirection.RIGHT);
+				arm.moveToAngle();
+			} else {
+				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+					arm.stopShoulderArm();
+					currentAutoState = FORWARD_AGAIN_STATE;
+				}
+			}
+			break;
+		case FORWARD_AGAIN_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders();
+				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION);
+			} else {
+				if (!drive.isDriving) {
+					currentAutoState = ARM_DOWN_STATE;
+				}
+			}
+			break;
+		case TURN_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders();
+				drive.autoTurn(-90);
+			} else {
+				if (!drive.isTurning) {
+					currentAutoState = FORWARD_AGAIN_AGAIN;
+				}
+			}
+			break;
+		case FORWARD_AGAIN_AGAIN:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
+			} else {
+				if (drive.isDriving) {
+					currentAutoState = HIGH_SHOT_STATE;
+				}
+			}
+			break;
+		case HIGH_SHOT_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				intakeShooter.ballShoot1();
+				intakeShooter.updateFlywheelSpeed();
+			} else {
+				intakeShooter.updateFlywheelSpeed();
+				if (intakeShooter.checkShooterSpeed(6000.0)) {
+					shooterTrigger.ballReversal();
+					if (!shooterTrigger.isBallInSensor()) {
+						intakeShooter.flywheelStop();
+						currentAutoState = FINISH_STATE;
+					}
+				}
+			}
+			break;
+		case FINISH_STATE:
+		default:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+			}
+			System.out.println("donezo");
+			break;
 		}
+	}
 
 	// drive over rough terrain, moat, or rock wall auto
 	public void driveFowardAuto(DriveBase drive) {
 		// needs to test
-		switch(currentAutoState){
+		switch (currentAutoState) {
 		case FORWARD_DRIVE_STATE:
-			if (preAutoState != currentAutoState){
+			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
-				drive.autoDriveStraight(600, 0.7 * DRIVE_DIRECTION);
-				} else {
-					if (!drive.isDriving){
-						currentAutoState = FINISH_STATE;
-					}
+				drive.autoDriveStraight(24.0, 0.7 * DRIVE_DIRECTION); // 600
+			} else {
+				if (!drive.isDriving) {
+					currentAutoState = FINISH_STATE;
 				}
+			}
 			break;
 		case FINISH_STATE:
-			if (preAutoState != currentAutoState){
+			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.setSpeed(0.0, 0.0);
 			}
 			System.out.println("donezo");
 			break;
 		}
-			
-
 
 		// if( Math.abs(drive.getRightDistanceInInches()) +
 		// Math.abs(drive.getleftDistanceInInches()) >= 300 *2) {
@@ -159,9 +243,9 @@ public class AutoController {
 	}
 
 	// Start in the Spybox and score
-	/*public void spyAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
-			DigitalInput frontLeftOpticalSensor, DigitalInput frontRightOpticalSensor)
-		switch(currentAutoState) {
+	public void spyAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
+			DigitalInput frontLeftOpticalSensor, DigitalInput frontRightOpticalSensor) {
+		switch (currentAutoState) {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
@@ -191,9 +275,9 @@ public class AutoController {
 				intakeShooter.updateFlywheelSpeed();
 			} else {
 				intakeShooter.updateFlywheelSpeed();
-				if (intakeShooter.checkShooterSpeed(2016.0)) {
-					shooterTrigger.ballReversal();
-					if (!shooterTrigger.isBallInSensor()) {
+				if (intakeShooter.checkShooterSpeed(6000.0)) {
+					center.ballReversal();
+					if (!center.isBallInSensor()) {
 						intakeShooter.flywheelStop();
 						currentAutoState = FINISH_STATE;
 					}
@@ -208,34 +292,57 @@ public class AutoController {
 			System.out.println("donezo");
 			break;
 		}
+	}
+	
+	public void forwardDriveHighShot (DriveBase drive, ShooterTrigger shooterTrigger, ShoulderArm arm, IntakeShooter intakeShooter) {
+		// needs to test
+		switch (currentAutoState) {
+		case FORWARD_DRIVE_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION); // 600
+			} else {
+				if (!drive.isDriving) {
+					currentAutoState = ARM_UP_STATE;
+				}
+			}
+			break;
+		case ARM_UP_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				arm.presetAngle(DPadDirection.LEFT);
+				arm.moveToAngle();
+			} else {
+				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+					arm.stopShoulderArm();
+					currentAutoState = HIGH_SHOT_STATE;
+				}
+			}
+			break;
+		case HIGH_SHOT_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				intakeShooter.ballShoot1();
+				intakeShooter.updateFlywheelSpeed();
+			} else {
+				intakeShooter.updateFlywheelSpeed();
+				if (intakeShooter.checkShooterSpeed(6000.0)) {
+					shooterTrigger.ballReversal();
+					if (!shooterTrigger.isBallInSensor()) {
+						intakeShooter.flywheelStop();
+						currentAutoState = FINISH_STATE;
+					}
+				}
+			}
+			break;
+		case FINISH_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.setSpeed(0.0, 0.0);
+			}
+			System.out.println("donezo");
+			break;
+		}
+	
+	}
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	{
-		if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
-			drive.setSpeed(-0.7, -0.7);
-			arm.stopShoulderArm();
-		}
-		if (drive.getleftDistanceInInches() >= 96 && drive.getRightDistanceInInches() >= 96) {
-			drive.setSpeed(0.7, -0.7);
-		}
-		if (frontLeftOpticalSensor.get() && frontRightOpticalSensor.get()) {
-			drive.setSpeed(0.7, 0.7);
-		}
-		if (drive.getleftDistanceInInches() >= 210 && drive.getRightDistanceInInches() >= 210) {
-			drive.setSpeed(0, 0);
-			intakeShooter.ballShoot1();
-			intakeShooter.updateFlywheelSpeed();
-		}
-		if (intakeShooter.checkShooterSpeed(5500.0)) {
-			center.ballReversal();
-		}
-	}*/
-
-} 

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team131.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -20,8 +19,7 @@ public class IntakeShooter {
 	// PortConstants.SHOOTER_ENCODER_PORT_B);
 	private ShooterSensor shooterSensor = new ShooterSensor(PortConstants.SHOOTER_RATE_SENSOR_PORT);
 
-	private static final double SHOOTER_RANGE = 5.0;
-	private double targetSpeed = 0;
+	private double targetSpeed = 0.0;
 
 	private static final double OUTPUT_SPEED_1 = 6000.0;
 	private static final double OUTPUT_SPEED_2 = 2000.0;
