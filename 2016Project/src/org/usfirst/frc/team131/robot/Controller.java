@@ -148,6 +148,8 @@ public class Controller {
 	 * Right Bumper/Trigger = Raise/Lower Hook Regular Buttons(Diver Preference)
 	 * = Climb/Descend Tower
 	 * 
+	 * -------------------------------------------------------------------------
+	 * 
 	 * Operator: D-Pad = preset Arm Angles Right Bumper/Trigger = Manually Move
 	 * Arm Select Button(9) = Stop Arm
 	 *
@@ -155,7 +157,7 @@ public class Controller {
 	 *
 	 * "X,Y,B Button(1,4,3)" = Set Fly Wheel Speed
 	 * 
-	 * A Button (2) = Center Ball (bring in)
+	 * A Button (2) = Auto Center Ball 
 	 * 
 	 * (subject to change)
 	 */
