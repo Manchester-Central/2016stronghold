@@ -12,14 +12,14 @@ public class AutoController {
 
 	private final int START_STATE = 0;
 	private final int FORWARD_DRIVE_STATE = 1;
-	private final int TURN_STATE = 2;
-	private final int BACKWARDS_DRIVE_STATE = 3;
-	private final int ARM_UP_STATE = 4;
-	private final int ARM_DOWN_STATE = 5;
-	private final int LOW_SHOT_STATE = 6;
-	private final int HIGH_SHOT_STATE = 7;
-	private final int FORWARD_AGAIN_STATE = 8;
-	private final int FORWARD_AGAIN_AGAIN = 9;
+	private final int FORWARD_AGAIN_STATE = 2;
+	private final int FORWARD_AGAIN_AGAIN_STATE = 3;
+	private final int TURN_STATE = 4;
+	private final int BACKWARDS_DRIVE_STATE = 5;
+	private final int ARM_UP_STATE = 6;
+	private final int ARM_DOWN_STATE = 7;
+	private final int LOW_SHOT_STATE = 8;
+	private final int HIGH_SHOT_STATE = 9;
 	private final int FINISH_STATE = 10;
 
 	private int preAutoState = START_STATE;
@@ -171,11 +171,11 @@ public class AutoController {
 				drive.autoTurn(-90);
 			} else {
 				if (!drive.isTurning) {
-					currentAutoState = FORWARD_AGAIN_AGAIN;
+					currentAutoState = FORWARD_AGAIN_AGAIN_STATE;
 				}
 			}
 			break;
-		case FORWARD_AGAIN_AGAIN:
+		case FORWARD_AGAIN_AGAIN_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
