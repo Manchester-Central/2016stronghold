@@ -1,12 +1,17 @@
 
 package org.usfirst.frc.team131.robot;
 
+import java.util.Calendar;
+import java.util.HashMap;
+
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +30,7 @@ public class Robot extends IterativeRobot {
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
 	String autoSelected;
+	//HashMap<String, Long> timer = new HashMap<String, Long>();
 
 	// boolean isManualMode;
 	// boolean isReverseButtonPressed;
@@ -196,26 +202,32 @@ public class Robot extends IterativeRobot {
 			updateCycles = 0;
 		}
 		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
+		
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {
+	public void teleopPeriodic() {  
+		//timer.put("periodic start", (long) Calendar.MILLISECOND);
 		if (!oi.driver.buttonPressed(DriverController.BREAK)) {
 			drive.breakSpike.setDirection(Relay.Direction.kForward);
 		}
-		updateCycles++;
+		//timer.put("spike logic passed", (long) Calendar.MILLISECOND);
 
+		updateCycles++;
 		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
+		//timer.put("camera logic passed", (long) Calendar.MILLISECOND);
+
 		// UI Display
 		ui.displayArmPositions();
 		ui.diplayShooter(intakeShooter, shooterTrigger);
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
+		//timer.put("ui logic passed", (long) Calendar.MILLISECOND);
 
 		/*
 		 * // Ball Sensor Lights if (shooterTrigger.isBallInSensor()) { //
@@ -234,6 +246,7 @@ public class Robot extends IterativeRobot {
 		} else {
 			drive.setSpeed(oi.driver.getLeftY(), oi.driver.getRightY());
 		}
+		//timer.put("arm control logic passed", (long) Calendar.MILLISECOND);
 
 		// Reverse drive direction
 		// if (oi.driver.buttonPressed(DriverController.DRIVE_REVERSE) &&
@@ -253,6 +266,7 @@ public class Robot extends IterativeRobot {
 		} else {
 			hook.setClimbSpeed(0);
 		}
+		//timer.put("climbing hook logic passsed", (long) Calendar.MILLISECOND);
 
 		// // Set to Manual Mode
 		// if (oi.operator.buttonPressed(OperatorController.AUTO_MODE)) {
@@ -268,11 +282,10 @@ public class Robot extends IterativeRobot {
 		if (oi.operator.getDPad() != DPadDirection.NONE) {
 			arm.presetAngle(oi.operator.getDPad());
 			arm.moveToAngle();
-			// drive.setSpeed(0.2, 0.2);
-
 		} else {
 			arm.setShoulderSpeed(oi.operator.getLeftY() * 0.6);
 		}
+		//timer.put("DPad logic passed", (long) Calendar.MILLISECOND);
 
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
 			if (!shooterTrigger.isBallInSensor()) {
@@ -283,6 +296,9 @@ public class Robot extends IterativeRobot {
 
 				intakeShooter.intakeShooterManual(0.0);
 			}
+
+			//timer.put("auto intake logic passed", (long) Calendar.MILLISECOND);
+
 		} else {
 			shootState = 0;
 			// Ball Centering/Shoot (operator)
@@ -294,6 +310,9 @@ public class Robot extends IterativeRobot {
 			} else {
 				shooterTrigger.ballCenterManual(0.0);
 			}
+
+			//timer.put("centering logic passed", (long) Calendar.MILLISECOND);
+
 			// Flywheel Speed Presets (operator)
 			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
 				intakeShooter.intakeShooterManual(-1.0);
@@ -302,15 +321,23 @@ public class Robot extends IterativeRobot {
 			} else {
 				intakeShooter.intakeShooterManual(oi.operator.getRightY());
 			}
+			//timer.put("flywheel logic passed", (long) Calendar.MILLISECOND);
 		}
 
+		//timer.put("teleop end", (long) Calendar.MILLISECOND);
+
+		//SmartDashboard.putData("logic timing", (Sendable) timer);
+
+		//timer.clear();
+		
+		
 	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		//(o.O)
 	}
 
 }

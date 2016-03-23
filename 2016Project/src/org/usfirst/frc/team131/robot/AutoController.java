@@ -38,6 +38,7 @@ public class AutoController {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
+				drive.resetEncoders();
 				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 			} else {
 				if (!drive.isDriving) {
@@ -133,6 +134,7 @@ public class AutoController {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
+				drive.resetEncoders();
 				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 			} else {
 				if (!drive.isDriving) {
@@ -218,6 +220,7 @@ public class AutoController {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
+				drive.resetEncoders();
 				drive.autoDriveStraight(24.0, 0.7 * DRIVE_DIRECTION); // 600
 			} else {
 				if (!drive.isDriving) {
@@ -249,6 +252,7 @@ public class AutoController {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
+				drive.resetEncoders();
 				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
 			} else {
 				if (!drive.isDriving) {
@@ -300,6 +304,7 @@ public class AutoController {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
+				drive.resetEncoders();
 				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION); // 600
 			} else {
 				if (!drive.isDriving) {

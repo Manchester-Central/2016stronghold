@@ -7,8 +7,8 @@ package org.usfirst.frc.team131.robot;
  */
 public class AngleSpeedModifier {
 	private final double DEAD_BAND = 0.5; //needs testing calibration
-	private final double MIN_SPEED = 0.0;
-	private final double PROPORTIONAL_GAIN = 0.3;
+	private final double MIN_SPEED = 0.25;
+	private final double PROPORTIONAL_GAIN = 0.04;
 	
 	/**
 	 * This function adjusts the speed of the angle
@@ -22,12 +22,11 @@ public class AngleSpeedModifier {
 		wantedSpeed = Math.abs(wantedSpeed);
 		double angleDisplacement = Math.abs(currentAngle - targetAngle);
 
-		if (angleDisplacement <= DEAD_BAND) {//was  <= Deadband (DK 8:43 PM 3/3/2016)
-			wantedSpeed = wantedSpeed * (angleDisplacement * PROPORTIONAL_GAIN);
+		if (angleDisplacement >= DEAD_BAND) {//was  <= Deadband (DK 8:43 PM 3/3/2016)
+			wantedSpeed = Math.min(wantedSpeed, (angleDisplacement * PROPORTIONAL_GAIN));
 			wantedSpeed = Math.max(MIN_SPEED, Math.abs(wantedSpeed));
-			if (wantedSpeed < 0.1) {
-				wantedSpeed = 0;
-			}
+		}else{
+			wantedSpeed = 0;
 		}
 		wantedSpeed = wantedSpeed * speedDirection;
 		if (currentAngle > targetAngle) {
