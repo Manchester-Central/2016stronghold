@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	Command test;
 	LEDController LED;
 	Camera cam;
-	// CameraServer server;
+	
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
 	DigitalInput frontRightOpticalSensor = new DigitalInput(PortConstants.FR_OPTICAL_SENSOR_PORT);
@@ -99,12 +99,13 @@ public class Robot extends IterativeRobot {
 
 		cam = new Camera();
 		cam.Start();
-
+        		
+		
 		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
-
+		
 		drive.breakSpike.setDirection(Relay.Direction.kForward);
 
 	}
@@ -159,6 +160,7 @@ public class Robot extends IterativeRobot {
 			autoController.doNothingAuto(drive);
 		}
 
+		
 		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
@@ -197,10 +199,12 @@ public class Robot extends IterativeRobot {
 		ui.displayArm(arm);
 		ui.diplayDrive(drive);
 
+		
 		if (updateCycles % 9 == 0) {
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
 		}
+		
 		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
 		
 	}
@@ -208,7 +212,9 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {  
+	public void teleopPeriodic() {
+		//drive.setSafetyEnabled(false);
+		
 		//timer.put("periodic start", (long) Calendar.MILLISECOND);
 		if (!oi.driver.buttonPressed(DriverController.BREAK)) {
 			drive.breakSpike.setDirection(Relay.Direction.kForward);
@@ -216,10 +222,16 @@ public class Robot extends IterativeRobot {
 		//timer.put("spike logic passed", (long) Calendar.MILLISECOND);
 
 		updateCycles++;
+		
+		/*
 		if (updateCycles % 9 == 0) {
+			
 			cam.Capture(arm.getAngle() < 0);
 			updateCycles = 0;
-		}
+		}else if(updateCycles ==0){
+			//cam.Free();
+		}*/
+		
 		//timer.put("camera logic passed", (long) Calendar.MILLISECOND);
 
 		// UI Display
@@ -288,8 +300,12 @@ public class Robot extends IterativeRobot {
 		//timer.put("DPad logic passed", (long) Calendar.MILLISECOND);
 
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
+			if (updateCycles % 9 == 0) {
+				cam.Capture(arm.getAngle() < 0);
+				updateCycles = 0;
+			}
 			if (!shooterTrigger.isBallInSensor()) {
-				intakeShooter.intakeShooterManual(1.0);
+				intakeShooter.intakeShooterManual(0.7);
 				shooterTrigger.ballCenter();
 			} else {
 				shooterTrigger.ballCenter();
@@ -300,6 +316,7 @@ public class Robot extends IterativeRobot {
 			//timer.put("auto intake logic passed", (long) Calendar.MILLISECOND);
 
 		} else {
+			cam.Free();
 			shootState = 0;
 			// Ball Centering/Shoot (operator)
 			if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
@@ -316,12 +333,38 @@ public class Robot extends IterativeRobot {
 			// Flywheel Speed Presets (operator)
 			if (oi.operator.buttonPressed(OperatorController.FULL_SHOT)) {
 				intakeShooter.intakeShooterManual(-1.0);
+
+				if (updateCycles % 9 == 0) {
+					
+					cam.Capture(arm.getAngle() < 0);
+					updateCycles = 0;
+				}else if(updateCycles ==0){
+					//cam.Free();
+				}
+				
 			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
 				intakeShooter.intakeShooterManual(-0.3);
+				cam.Free();
 			} else {
 				intakeShooter.intakeShooterManual(oi.operator.getRightY());
+				cam.Free();
 			}
 			//timer.put("flywheel logic passed", (long) Calendar.MILLISECOND);
+		}
+		
+//		if(oi.driver.equals(DriverController.RIGHT_TRIGGER)){
+//
+//			if (updateCycles % 9 == 0) {
+//				
+//				cam.Capture(arm.getAngle() < 0);
+//				updateCycles = 0;
+//			}else if(updateCycles ==0){
+//				//cam.Free();
+//			}
+//			
+//			else{
+//				cam.Free();
+//			}
 		}
 
 		//timer.put("teleop end", (long) Calendar.MILLISECOND);
@@ -331,7 +374,7 @@ public class Robot extends IterativeRobot {
 		//timer.clear();
 		
 		
-	}
+	//}
 
 	/**
 	 * This function is called periodically during test mode

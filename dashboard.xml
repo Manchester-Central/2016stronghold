@@ -1,89 +1,76 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="encoder spins" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="30" y="236"/>
-	</widget>
 	<widget field="number of auto loops" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="22" y="206"/>
+		<location x="7" y="223"/>
 	</widget>
 	<widget field="autoSelection" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="68" y="319"/>
+		<location x="5" y="269"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="960" y="14"/>
-		<property name="Text" value="Shooter speed"/>
-	</static-widget>
-	<widget field=" Flywheel Up to Speed " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="905" y="172"/>
-		<width>184</width>
-		<height>69</height>
+	<widget field="encoder spins" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="6" y="246"/>
 	</widget>
 	<widget field=" Current Flywheel Angular Velocity " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
-		<location x="892" y="32"/>
-		<width>212</width>
-		<height>125</height>
+		<location x="1172" y="150"/>
+		<width>167</width>
+		<height>121</height>
 		<property name="Upper Limit" value="10000.0"/>
 		<property name="Tick Interval" value="1000.0"/>
 	</widget>
-	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="903" y="368"/>
-	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
-		<location x="270" y="1"/>
-		<width>617</width>
-		<height>462</height>
-		<property name="FPS" value="60"/>
-	</static-widget>
-	<widget field="Debug" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="13" y="433"/>
-		<width>243</width>
-	</widget>
-	<widget field="right encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="115" y="141"/>
-	</widget>
-	<widget field="left encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="120" y="114"/>
-	</widget>
-	<widget field="Right DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="122" y="88"/>
-	</widget>
-	<widget field="Up DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="132" y="62"/>
-	</widget>
-	<widget field="Left DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="127" y="36"/>
-	</widget>
-	<widget field="Down DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="120" y="8"/>
+	<widget field=" Flywheel Up to Speed " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="773" y="9"/>
+		<width>522</width>
+		<height>27</height>
 	</widget>
 	<widget field=" Ball is in Position " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="904" y="249"/>
-		<width>160</width>
-		<height>66</height>
+		<location x="771" y="45"/>
+		<width>382</width>
+		<height>204</height>
 	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
+		<location x="200" y="4"/>
+		<width>575</width>
+		<height>414</height>
+	</static-widget>
 	<widget field="shoulder speed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1099" y="435"/>
+		<location x="942" y="338"/>
+		<width>151</width>
 	</widget>
-	<widget field="Setpoint " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="908" y="342"/>
+	<widget field="Down DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1162" y="340"/>
 	</widget>
-	<widget field="Shoulder Arm Speed " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="900" y="435"/>
+	<widget field="left encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="13" y="338"/>
+	</widget>
+	<widget field="Debug" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="25" y="370"/>
+	</widget>
+	<widget field="Arm angle " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="962" y="290"/>
+		<width>138</width>
+		<height>39</height>
+	</widget>
+	<widget field="Left DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1167" y="312"/>
 	</widget>
 	<widget field="Auto choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="113" y="336"/>
+		<location x="8" y="76"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="1262" y="2"/>
-		<height>17</height>
-		<property name="Text" value="Robot Conection"/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
-		<location x="1270" y="22"/>
-		<width>64</width>
-		<height>54</height>
-		<property name="Graphics" value="Simple"/>
-	</static-widget>
+	<widget field="Setpoint " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="966" y="258"/>
+		<width>130</width>
+	</widget>
+	<widget field="right encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="8" y="308"/>
+	</widget>
+	<widget field="Up DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1169" y="281"/>
+	</widget>
+	<widget field="Shoulder Arm Speed " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="918" y="369"/>
+	</widget>
+	<widget field="Right DPad " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1163" y="371"/>
+	</widget>
 </dashboard>
 <live-window>
 </live-window>

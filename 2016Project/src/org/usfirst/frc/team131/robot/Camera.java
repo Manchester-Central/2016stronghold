@@ -11,33 +11,50 @@ import edu.wpi.first.wpilibj.Timer;
 public class Camera {
 	int session;
 	Image frame;
+	Image dest;
 
 	public Camera() {
-
+		CameraServer.getInstance().setQuality(15);
+		CameraServer.getInstance().setSize(2);
+		/*
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-
+		dest = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		*/
+		//frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_U8, 0);
 		// the camera name (ex "cam0") can be found through the roborio web
 		// interface
 		session = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 		NIVision.IMAQdxConfigureGrab(session);
+		
 	}
 
 	public void Start() {
 		NIVision.IMAQdxStartAcquisition(session);
 	}
 
+	
+	public void Free(){
+		frame.free();
+		
+	}
+	
 	public void Capture(boolean flipImage) {
+		//frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		dest = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		
 		try {
-			NIVision.IMAQdxGrab(session, frame, 1);
+			NIVision.IMAQdxGrab(session, frame, 0);
 			// NIVision.imaqDrawShapeOnImage(frame, frame, rect,
 			// DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
 			// Image source = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 			// this.camera.getImage(source);
 			if (flipImage) {
-				Image dest = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
+				
 				NIVision.imaqFlip(dest, frame, FlipAxis.CENTER_AXIS);
 
 				CameraServer.getInstance().setImage(dest);
+				//dest.free();
 
 			} else {
 				CameraServer.getInstance().setImage(frame);

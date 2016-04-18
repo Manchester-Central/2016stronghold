@@ -46,7 +46,7 @@ public class DriveBase extends RobotDrive {
 	Encoder leftEncoder = new Encoder(PortConstants.LEFT_ENCODER_PORT_A, PortConstants.LEFT_ENCODER_PORT_B, false,
 			Encoder.EncodingType.k4X);
 
-	double leftDirection = -1.0;
+	double leftDirection = 1.0;
 	double rightDirection = 1.0;
 
 //	public void reverseDirection() {

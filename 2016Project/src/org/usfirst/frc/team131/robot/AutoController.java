@@ -24,6 +24,7 @@ public class AutoController {
 
 	private int preAutoState = START_STATE;
 	int currentAutoState = FORWARD_DRIVE_STATE;
+	
 
 	// nothing
 	public void doNothingAuto(DriveBase drive) {
@@ -216,6 +217,7 @@ public class AutoController {
 	// drive over rough terrain, moat, or rock wall auto
 	public void driveFowardAuto(DriveBase drive) {
 		// needs to test
+		/*
 		switch (currentAutoState) {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
@@ -235,14 +237,16 @@ public class AutoController {
 			}
 			System.out.println("donezo");
 			break;
+		}*/
+		
+		
+		
+		if( Math.abs(drive.getRightDistanceInInches()) +
+			Math.abs(drive.getleftDistanceInInches()) >= 188 *2) { //300  //276 //252 //200
+			drive.setSpeed(0.0, 0.0);
+		}else{
+			drive.setSpeed(-0.8, -0.8);
 		}
-
-		// if( Math.abs(drive.getRightDistanceInInches()) +
-		// Math.abs(drive.getleftDistanceInInches()) >= 300 *2) {
-		// drive.setSpeed(0.0, 0.0);
-		// }else{
-		// drive.setSpeed(-0.7, -0.7);
-		// }
 	}
 
 	// Start in the Spybox and score
