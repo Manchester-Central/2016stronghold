@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
 	ChaosDashboard ui;
 	Command test;
 	LEDController LED;
-	Camera cam;
+//	Camera cam;
 	
 	AnalogGyro gyro = new AnalogGyro(PortConstants.GYRO);
 	DigitalInput frontLeftOpticalSensor = new DigitalInput(PortConstants.FL_OPTICAL_SENSOR_PORT);
@@ -97,14 +97,14 @@ public class Robot extends IterativeRobot {
 
 		// isManualMode = true;
 
-		cam = new Camera();
-		cam.Start();
+//		cam = new Camera();
+//		cam.Start();
         		
 		
-		if (updateCycles % 9 == 0) {
-			cam.Capture(arm.getAngle() < 0);
-			updateCycles = 0;
-		}
+//		if (updateCycles % 9 == 0) {
+//			cam.Capture(arm.getAngle() < 0);
+//			updateCycles = 0;
+//		}
 		
 		drive.breakSpike.setDirection(Relay.Direction.kForward);
 
@@ -161,10 +161,10 @@ public class Robot extends IterativeRobot {
 		}
 
 		
-		if (updateCycles % 9 == 0) {
-			cam.Capture(arm.getAngle() < 0);
-			updateCycles = 0;
-		}
+//		if (updateCycles % 9 == 0) {
+//			cam.Capture(arm.getAngle() < 0);
+//			updateCycles = 0;
+//		}
 
 		// switch (autoSelected) {
 		// case backwardAuto:
@@ -200,10 +200,10 @@ public class Robot extends IterativeRobot {
 		ui.diplayDrive(drive);
 
 		
-		if (updateCycles % 9 == 0) {
-			cam.Capture(arm.getAngle() < 0);
-			updateCycles = 0;
-		}
+//		if (updateCycles % 9 == 0) {
+//			cam.Capture(arm.getAngle() < 0);
+//			updateCycles = 0;
+//		}
 		
 		SmartDashboard.putString("Debug", "disabledPeriodic exit ");
 		
@@ -301,7 +301,7 @@ public class Robot extends IterativeRobot {
 
 		if (oi.operator.buttonPressed(OperatorController.AUTO_INTAKE)) {
 			if (updateCycles % 9 == 0) {
-				cam.Capture(arm.getAngle() < 0);
+//				cam.Capture(arm.getAngle() < 0);
 				updateCycles = 0;
 			}
 			if (!shooterTrigger.isBallInSensor()) {
@@ -316,7 +316,7 @@ public class Robot extends IterativeRobot {
 			//timer.put("auto intake logic passed", (long) Calendar.MILLISECOND);
 
 		} else {
-			cam.Free();
+//			cam.Free();
 			shootState = 0;
 			// Ball Centering/Shoot (operator)
 			if (oi.operator.buttonPressed(OperatorController.TRIGGER_OUT)) {
@@ -336,7 +336,7 @@ public class Robot extends IterativeRobot {
 
 				if (updateCycles % 9 == 0) {
 					
-					cam.Capture(arm.getAngle() < 0);
+//					cam.Capture(arm.getAngle() < 0);
 					updateCycles = 0;
 				}else if(updateCycles ==0){
 					//cam.Free();
@@ -344,10 +344,10 @@ public class Robot extends IterativeRobot {
 				
 			} else if (oi.operator.buttonPressed(OperatorController.HALF_SHOT)) {
 				intakeShooter.intakeShooterManual(-0.3);
-				cam.Free();
+//				cam.Free();
 			} else {
 				intakeShooter.intakeShooterManual(oi.operator.getRightY());
-				cam.Free();
+	//			cam.Free();
 			}
 			//timer.put("flywheel logic passed", (long) Calendar.MILLISECOND);
 		}
