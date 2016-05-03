@@ -3,6 +3,7 @@ package org.usfirst.frc.team131.robot;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the drive base
@@ -113,7 +114,7 @@ public class DriveBase extends RobotDrive {
 		return rightEncoder.getDistance();
 	}
 
-	public double getleftDistanceInInches() {
+	public double getLeftDistanceInInches() {
 		return wheelCircumference * getLeftRotationalDistance();
 	}
 
@@ -152,14 +153,15 @@ public class DriveBase extends RobotDrive {
 	}
 	
 	public void autoDriveStraight(double targetDistance, double startingSpeed){
-		if(Math.abs(rightEncoder.getDistance() + leftEncoder.getDistance()) / 2 <= targetDistance) {
-			if (leftEncoder.getDistance() >= rightEncoder.getDistance() + ACCEPTED_DEVIATION ) {
-				rightSide.set(rightSide.get() - SPEED_CORRECTION );
-			} else if (rightEncoder.getDistance() > leftEncoder.getDistance() + ACCEPTED_DEVIATION) {
-				leftSide.set(leftSide.get() - SPEED_CORRECTION);
+		double distance = (Math.abs(getRightDistanceInInches()) + Math.abs(getLeftDistanceInInches())) / 2;
+		if(distance <= targetDistance) {
+			if (Math.abs(leftEncoder.getDistance()) >= Math.abs(rightEncoder.getDistance()) + ACCEPTED_DEVIATION ) {
+				rightSide.set(-(rightSide.get() - SPEED_CORRECTION) );
+			} else if (Math.abs(rightEncoder.getDistance()) >= Math.abs(leftEncoder.getDistance()) + ACCEPTED_DEVIATION) {
+				leftSide.set(leftSide.get() + SPEED_CORRECTION);
 			} else {
 				leftSide.set(startingSpeed);
-				rightSide.set(startingSpeed);
+				rightSide.set(-startingSpeed);
 			}
 			isDriving = true;
 		} else {
@@ -167,6 +169,7 @@ public class DriveBase extends RobotDrive {
 			rightSide.set(0.0);
 			isDriving = false;
 		}
+		
 	}
 	
 	public void autoDriveStraightBackwards(double targetDistance, double startingSpeed){

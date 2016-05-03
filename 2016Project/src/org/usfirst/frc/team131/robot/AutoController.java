@@ -3,6 +3,7 @@ package org.usfirst.frc.team131.robot;
 import org.usfirst.frc.team131.robot.Controller.DPadDirection;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoController {
 	private final double DRIVE_DIRECTION = -1.0;
@@ -217,14 +218,15 @@ public class AutoController {
 	// drive over rough terrain, moat, or rock wall auto
 	public void driveFowardAuto(DriveBase drive) {
 		// needs to test
-		/*
+		
 		switch (currentAutoState) {
 		case FORWARD_DRIVE_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(24.0, 0.7 * DRIVE_DIRECTION); // 600
+				//drive.autoDriveStraight(24.0, 0.7 * DRIVE_DIRECTION); // 600
 			} else {
+				drive.autoDriveStraight(188.0, 0.7 * DRIVE_DIRECTION);
 				if (!drive.isDriving) {
 					currentAutoState = FINISH_STATE;
 				}
@@ -235,18 +237,17 @@ public class AutoController {
 				preAutoState = currentAutoState;
 				drive.setSpeed(0.0, 0.0);
 			}
-			System.out.println("donezo");
+			SmartDashboard.putString("donzeo", "donezo");
 			break;
-		}*/
-		
-		
-		
-		if( Math.abs(drive.getRightDistanceInInches()) +
-			Math.abs(drive.getleftDistanceInInches()) >= 188 *2) { //300  //276 //252 //200
-			drive.setSpeed(0.0, 0.0);
-		}else{
-			drive.setSpeed(-0.8, -0.8);
 		}
+		
+				
+//		if( Math.abs(drive.getRightDistanceInInches()) +
+//			Math.abs(drive.getleftDistanceInInches()) >= 188 *2) { //300  //276 //252 //200
+//			drive.setSpeed(0.0, 0.0);
+//		}else{
+//			drive.setSpeed(-0.8, -0.8);
+//		}
 	}
 
 	// Start in the Spybox and score

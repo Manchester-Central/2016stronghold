@@ -136,6 +136,10 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+//		SmartDashboard.putNumber("left tagasdaga", drive.getLeftDistanceInInches());
+//		SmartDashboard.putNumber("rightt tagasdaga", drive.getRightDistanceInInches());
+//		SmartDashboard.putNumber("testsdgh", (Math.abs(drive.getRightDistanceInInches()) + Math.abs(drive.getLeftDistanceInInches())) / 2);
+		
 		drive.breakSpike.setDirection(Relay.Direction.kForward);
 		SmartDashboard.putNumber("encoder spins", drive.getLeftRotationalDistance());
 		SmartDashboard.putString("Debug", "autonomousPeriodic entry ");

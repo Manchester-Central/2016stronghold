@@ -57,7 +57,7 @@ public class ChaosDashboard {
 	}
 	
 	public void diplayDrive (DriveBase drive) {
-		SmartDashboard.putNumber("left encoder", drive.getleftDistanceInInches());
+		SmartDashboard.putNumber("left encoder", drive.getLeftDistanceInInches());
 		SmartDashboard.putNumber("right encoder", drive.getRightDistanceInInches());
 	}
 	
