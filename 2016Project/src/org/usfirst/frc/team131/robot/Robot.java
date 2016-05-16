@@ -29,6 +29,9 @@ public class Robot extends IterativeRobot {
 	final String lowBarHighShotAuto = "Low Bar High Shot";
 	final String forwardAuto = "Forward Auto";
 	final String spyAuto = "Spy Auto";
+	final String sadf = "Spinning fedora";
+	final String testedForward = "testedForward";
+	final String newForward = "newForward";
 	String autoSelected;
 	//HashMap<String, Long> timer = new HashMap<String, Long>();
 
@@ -88,6 +91,9 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Low Bar High Shot Auto", lowBarHighShotAuto);
 		chooser.addObject("Forward Autonomous", forwardAuto);
 		chooser.addObject("Auto Spy", spyAuto);
+		chooser.addObject("dank fedora flips & tricks", sadf);
+		chooser.addObject("testedForward", testedForward);
+		chooser.addObject("newForward", newForward);
 		SmartDashboard.putData("Auto choices", chooser);
 
 		ui = new ChaosDashboard();
@@ -160,6 +166,12 @@ public class Robot extends IterativeRobot {
 					frontRightOpticalSensor);
 		} else if (chooser.getSelected() == lowBarHighShotAuto) {
 			autoController.lowBarHighShotAuto(arm, drive, intakeShooter, shooterTrigger);
+		} else if (chooser.getSelected() == sadf) {
+			autoController.turningTest(drive);
+		} else if (chooser.getSelected() == newForward){
+			autoController.driveHighShoot(drive, arm, intakeShooter, shooterTrigger);
+		} else if (chooser.getSelected() == testedForward) {
+			autoController.testedDriveForwardAuto(drive);
 		} else {
 			autoController.doNothingAuto(drive);
 		}

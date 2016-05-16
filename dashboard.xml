@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="donzeo" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
 	<widget field="number of auto loops" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="7" y="223"/>
 	</widget>

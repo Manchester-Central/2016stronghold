@@ -31,6 +31,97 @@ public class AutoController {
 	public void doNothingAuto(DriveBase drive) {
 		drive.setSpeed(0.0, 0.0);
 	}
+	
+	public void driveHighShoot (DriveBase drive, ShoulderArm arm, IntakeShooter intakeShooter, ShooterTrigger shooterTrigger) {
+		switch (currentAutoState) {
+		case FORWARD_DRIVE_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders ();
+			} else {
+				drive.autoDriveStraight(45.0, 0.7 * DRIVE_DIRECTION);
+				if (!drive.isDriving) {
+					currentAutoState = ARM_UP_STATE;
+				}
+			}
+			break;
+		case ARM_UP_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				arm.presetAngle(DPadDirection.RIGHT);
+			} else {
+				arm.moveToAngle();
+				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
+					arm.stopShoulderArm();
+					currentAutoState = HIGH_SHOT_STATE;
+				}
+			}
+			break;
+		case HIGH_SHOT_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				intakeShooter.ballShoot1();
+				intakeShooter.updateFlywheelSpeed();
+			} else {
+				intakeShooter.updateFlywheelSpeed();
+				if (intakeShooter.checkShooterSpeed(6000.0)) {
+					shooterTrigger.ballReversal();
+					if (!shooterTrigger.isBallInSensor()) {
+						intakeShooter.flywheelStop();
+						currentAutoState = FINISH_STATE;
+					}
+				}
+			}
+			break;
+		case FINISH_STATE:
+		default:
+			System.out.println("asdfgghjfdfhfs");
+		}
+	}
+	
+	// sick fedora spins to the tune of "Telephone" by lady Gaga ^\_(0.0)_/^
+	public void turningTest (DriveBase drive) {
+		switch (currentAutoState) {
+		case FORWARD_DRIVE_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders();
+			} else {
+				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
+				if (!drive.isDriving) {
+					currentAutoState = TURN_STATE;
+				}
+			}
+			break;
+		case TURN_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders();
+			} else {
+				drive.autoTurn(90);
+				if (!drive.isTurning) {
+					currentAutoState = FORWARD_AGAIN_STATE;
+				}
+			}
+			break;
+		case FORWARD_AGAIN_STATE:
+			if (preAutoState != currentAutoState) {
+				preAutoState = currentAutoState;
+				drive.resetEncoders();
+			} else {
+				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
+				if (!drive.isDriving) {
+					currentAutoState = FINISH_STATE;;
+				}
+			}
+			break;
+		case FINISH_STATE:
+		default:
+			System.out.println("Asdfg");
+			break;
+			
+		}
+	}
 
 	// low bar auto
 	public void lowBarLowShotAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter,
@@ -41,8 +132,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 			} else {
+				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 				if (!drive.isDriving) {
 					currentAutoState = ARM_DOWN_STATE;
 				}
@@ -53,8 +144,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				arm.presetAngle(DPadDirection.RIGHT);
-				arm.moveToAngle();
 			} else {
+				arm.moveToAngle();
 				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 					arm.stopShoulderArm();
 					currentAutoState = FORWARD_AGAIN_STATE;
@@ -65,9 +156,9 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION);
 			} else {
 				if (!drive.isDriving) {
+					drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION);
 					currentAutoState = ARM_DOWN_STATE;
 				}
 			}
@@ -137,9 +228,9 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 			} else {
 				if (!drive.isDriving) {
+					drive.autoDriveStraight(14.0, 0.7 * DRIVE_DIRECTION);
 					currentAutoState = ARM_DOWN_STATE;
 				}
 			}
@@ -149,8 +240,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				arm.presetAngle(DPadDirection.RIGHT);
-				arm.moveToAngle();
 			} else {
+				arm.moveToAngle();
 				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 					arm.stopShoulderArm();
 					currentAutoState = FORWARD_AGAIN_STATE;
@@ -161,8 +252,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION);
 			} else {
+				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION);
 				if (!drive.isDriving) {
 					currentAutoState = ARM_DOWN_STATE;
 				}
@@ -182,8 +273,8 @@ public class AutoController {
 		case FORWARD_AGAIN_AGAIN_STATE:
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
-				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
 			} else {
+				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
 				if (drive.isDriving) {
 					currentAutoState = HIGH_SHOT_STATE;
 				}
@@ -249,6 +340,16 @@ public class AutoController {
 //			drive.setSpeed(-0.8, -0.8);
 //		}
 	}
+	
+	public void testedDriveForwardAuto (DriveBase drive) {
+
+		if( Math.abs(drive.getRightDistanceInInches()) +
+			Math.abs(drive.getLeftDistanceInInches()) >= 188 *2) { //300  //276 //252 //200
+			drive.setSpeed(0.0, 0.0);
+		}else{
+			drive.setSpeed(-0.8, -0.8);
+		}
+	}
 
 	// Start in the Spybox and score
 	public void spyAuto(ShoulderArm arm, DriveBase drive, IntakeShooter intakeShooter, ShooterTrigger center,
@@ -258,8 +359,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
 			} else {
+				drive.autoDriveStraight(DISTANCE_TO_TOWER_FROM_CORNER, 0.5 * DRIVE_DIRECTION);
 				if (!drive.isDriving) {
 					currentAutoState = ARM_UP_STATE;
 				}
@@ -269,8 +370,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				arm.presetAngle(DPadDirection.LEFT);
-				arm.moveToAngle();
 			} else {
+				arm.moveToAngle();
 				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 					arm.stopShoulderArm();
 					currentAutoState = HIGH_SHOT_STATE;
@@ -310,8 +411,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				drive.resetEncoders();
-				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION); // 600
 			} else {
+				drive.autoDriveStraight(DISTANCE_TO_TOWER, 0.7 * DRIVE_DIRECTION); // 600
 				if (!drive.isDriving) {
 					currentAutoState = ARM_UP_STATE;
 				}
@@ -321,8 +422,8 @@ public class AutoController {
 			if (preAutoState != currentAutoState) {
 				preAutoState = currentAutoState;
 				arm.presetAngle(DPadDirection.LEFT);
-				arm.moveToAngle();
 			} else {
+				arm.moveToAngle();
 				if (arm.getAngle() >= arm.getAngleSetpoint() - 5.0 && arm.getAngle() <= arm.getAngleSetpoint() + 5.0) {
 					arm.stopShoulderArm();
 					currentAutoState = HIGH_SHOT_STATE;

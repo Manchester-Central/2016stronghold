@@ -189,7 +189,6 @@ public class DriveBase extends RobotDrive {
 			isDriving = false;
 		}
 	}
-	
 	public void autoTurn(double turnAngleInDegrees){
 		
 		double turnAngleInRadians = turnAngleInDegrees / 180 * Math.PI;
