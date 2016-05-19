@@ -91,7 +91,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Low Bar High Shot Auto", lowBarHighShotAuto);
 		chooser.addObject("Forward Autonomous", forwardAuto);
 		chooser.addObject("Auto Spy", spyAuto);
-		chooser.addObject("dank fedora flips & tricks", sadf);
+		//chooser.addObject("dank fedora flips & tricks", sadf);
 		chooser.addObject("testedForward", testedForward);
 		chooser.addObject("newForward", newForward);
 		SmartDashboard.putData("Auto choices", chooser);
