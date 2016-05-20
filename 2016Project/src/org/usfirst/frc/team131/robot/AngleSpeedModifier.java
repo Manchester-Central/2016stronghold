@@ -7,7 +7,7 @@ package org.usfirst.frc.team131.robot;
  */
 public class AngleSpeedModifier {
 	private final double DEAD_BAND = 0.5; //needs testing calibration
-	private final double MIN_SPEED = 0.25;
+	private final double MIN_SPEED = 0.30;
 	private final double PROPORTIONAL_GAIN = 0.04;
 	
 	/**

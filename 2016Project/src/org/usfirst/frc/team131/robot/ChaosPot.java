@@ -20,7 +20,7 @@ public class ChaosPot {
 	 * @return (arm angle)
 	 */
 	public double getAngle(){
-		return -pot.get() * (90.0 / 404.0); //212
+		return (-pot.get() * (90.0 / 404.0)) + 15; //212
 	}
 	
 	public double getRawAngle () {

@@ -20,7 +20,7 @@ public class ShoulderArm implements ArmInfo {
 	// 0 DEGREES IS VERTICAL!!!
 	// NEGATIVE IS TOWARDS THE ROBOT
 	// POSITIVE IS AWAY FROM THE ROBOT
-	public static final double DOWN_DPAD_ANGLE = 90.0;
+	public static final double DOWN_DPAD_ANGLE = 96.0;
 	public static final double LEFT_DPAD_ANGLE = -46.0;//-70.0
 	public static final double UP_DPAD_ANGLE = -35.3;  //-23.5//-22.0//-23.25//-32.5//-37.5//-37.25
 	public static final double RIGHT_DPAD_ANGLE = 85;
